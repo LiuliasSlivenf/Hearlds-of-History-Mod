@@ -1,0 +1,758 @@
+add_namespace = hoh_germany
+
+#Germany disunited, Mackensen becomes leader, message for Prussia
+country_event = {
+	id = hoh_germany.1
+	title = hoh_germany.1.t
+	desc = hoh_germany.1.d
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_germany.1.a
+		ai_chance = { 
+      base = 0.1 
+      modifier = {
+        factor = 50
+        OR = {
+          original_tag = SIL
+          original_tag = TEU
+          original_tag = POM
+          original_tag = HES
+          original_tag = SHL
+          original_tag = MEK
+          original_tag = POS
+        }
+      }
+		}
+		hidden_effect = {
+      #load_focus_tree = german_focus
+			set_party_name = { ideology = neutrality long_name = GER_neutrality_party_civil_war name = GER_neutrality_party_civil_war }
+      create_country_leader = {
+        name = "August von Mackensen"
+        desc = "POLITICS_AUGUST_VON_MACKENSEN_DESC"
+        picture = GFX_portrait_ger_august_von_mackensen
+        expire = "1965.1.1"
+        ideology = despotism
+        traits = {
+          great_war_hero
+        }
+      }
+		}
+	}
+	
+	option = { # Reject
+		name = hoh_germany.1.b
+		ai_chance = { factor = 50 }
+	}
+}
+
+#The A-A line suggestion, from Stellarland to Germany
+country_event = {
+	id = hoh_germany.2
+	title = hoh_germany.2.t
+	desc = hoh_germany.2.d
+	picture = GFX_report_event_aa_line
+	
+	is_triggered_only = yes
+	
+	option = { # Agree
+		name = hoh_germany.2.a
+		ai_chance = { factor = 100 }
+		set_global_flag = aa_line_agreement_reached
+		diplomatic_relation = { country = FROM relation = non_aggression_pact }
+		FROM = { country_event = hoh_germany.4 }
+		if = {
+      limit = { 
+        STE = { has_war_with = SOV }
+        NOT = { has_completed_focus = GER_ussr_war_goal }
+      }
+      complete_national_focus = GER_ussr_war_goal
+		}
+	}
+	option = { # Reject
+		name = hoh_germany.2.b
+		ai_chance = { factor = 0 }
+		FROM = { country_event = hoh_germany.5 }
+	}
+}
+
+#The A-A line suggestion, from Germany to Stellarland
+country_event = {
+	id = hoh_germany.3
+	title = hoh_germany.2.t
+	desc = hoh_germany.3.d
+	picture = GFX_report_event_aa_line
+	
+	is_triggered_only = yes
+	
+	option = { # Agree
+		name = hoh_germany.2.a
+		ai_chance = { factor = 100 }
+		set_global_flag = aa_line_agreement_reached
+		diplomatic_relation = { country = FROM relation = non_aggression_pact }
+		FROM = { country_event = hoh_germany.4 }
+		if = {
+      limit = { 
+        GER = { has_war_with = SOV }
+        has_completed_focus = STE_active_intervention_strategy
+        NOT = { has_completed_focus = STE_end_of_the_russian_empire }
+      }
+      complete_national_focus = STE_end_of_the_russian_empire
+		}
+		else_if = {
+      limit = { 
+        GER = { has_war_with = SOV }
+        has_completed_focus = STE_prudent_foreign_policy
+        NOT = { has_completed_focus = STE_support_germany }
+      }
+      complete_national_focus = STE_support_germany
+      complete_national_focus = STE_the_director_behind_the_scenes
+		}
+	}
+	option = { # Reject
+		name = hoh_germany.2.b
+		ai_chance = { factor = 0 }
+		FROM = { country_event = hoh_germany.5 }
+	}
+}
+
+#The A-A line suggestion, FROM agrees
+country_event = {
+	id = hoh_germany.4
+	title = hoh_germany.4.t
+	desc = hoh_germany.4.d
+	picture = GFX_report_event_german_italian_pact
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_germany.4.a
+	}
+}
+
+#The A-A line suggestion, FROM rejects
+country_event = {
+	id = hoh_germany.5
+	title = hoh_germany.5.t
+	desc = hoh_germany.5.d
+	picture = GFX_report_event_bose_meeting
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_germany.5.a
+	}
+}
+
+#German-Starthen Alliance 
+country_event = {
+	id = hoh_germany.6
+	title = hoh_germany.6.t
+	desc = germany.89.d
+	picture = GFX_report_event_british_inspect_troops
+
+	is_triggered_only = yes
+	
+	option = {
+		name = germany.89.a
+		ai_chance = { 
+      base = 10 
+			modifier = {
+				factor = 0.05
+				NOT = {
+          has_game_rule = {
+            rule = STE_ai_behavior
+            option = TEMPORARY_CLAIM_HEAVENLY_STELLAR_EMPIRE
+          }
+          has_country_flag = STE_AI_TEMPORARY_CLAIM_HEAVENLY_STELLAR_EMPIRE
+        }
+			}
+		}
+		GER = {
+			if = {
+					limit = {
+						is_faction_leader = yes
+					}
+					dismantle_faction = yes
+			}
+			else_if = {
+					limit = {
+						is_in_faction  = yes
+					}
+					remove_from_faction = GER
+			}
+			add_named_threat = { threat = 10 name = hoh_news.24.t }
+			every_other_country = {
+				limit = {
+					has_government = fascism 
+				}
+				add_opinion_modifier = { target = GER modifier = communist_collaborators }
+			}
+			every_other_country = {
+				limit = {
+					has_government = democratic 
+				}
+				add_opinion_modifier = { target = GER modifier = unholy_alliance }
+			}
+		}
+		STE = {
+      if = {
+        limit = {
+          is_in_faction = yes
+          is_faction_leader = no
+        }
+        remove_from_faction = STE
+        create_faction = berlin_stellarport_treaty_organization
+      }
+      else_if = {
+        limit = {
+          is_faction_leader = yes
+        }
+        set_faction_name = berlin_stellarport_treaty_organization
+      }
+      else = {
+        create_faction = berlin_stellarport_treaty_organization
+      }
+      add_to_faction = GER
+    }
+    FROM = {
+      country_event = hoh_germany.7
+    }
+		hidden_effect = { 
+			news_event = { hours = 5 id = hoh_news.24 }
+		}
+	}
+	
+	option = {
+		name = hoh_germany.6.b
+		ai_chance = { 
+      base = 1
+			modifier = {
+				factor = 0
+				OR = {
+          has_game_rule = {
+            rule = STE_ai_behavior
+            option = TEMPORARY_CLAIM_HEAVENLY_STELLAR_EMPIRE
+          }
+          has_country_flag = STE_AI_TEMPORARY_CLAIM_HEAVENLY_STELLAR_EMPIRE
+        }
+			} 
+		}
+		FROM = {
+			country_event = hoh_germany.8
+		}
+	}
+}
+
+#German-Starthen alliance, FROM agrees
+country_event = {
+	id = hoh_germany.7
+	title = hoh_germany.4.t
+	desc = hoh_germany.7.d
+	picture = GFX_report_event_british_inspect_troops
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = germany.89.a
+    country_event = { id = hoh_story.2 hours = 36 }
+	}
+}
+
+#German-Starthen alliance, FROM rejects
+country_event = {
+	id = hoh_germany.8
+	title = germany.90.t
+	desc = hoh_germany.8.d
+	picture = GFX_report_event_bose_meeting
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_germany.5.a
+	}
+}
+
+#Germany seeks secret tech share
+country_event = {
+	id = hoh_germany.9
+	title = hoh_germany.9.t
+	desc = hoh_germany.9.d
+	picture = GFX_report_event_german_inspect_troops
+	
+	is_triggered_only = yes
+	
+	option = { # Agree
+		name = hoh_germany.9.a
+		ai_chance = { 
+      factor = 100
+			modifier = {
+				factor = 0
+        is_subject = yes
+			} 
+			modifier = {
+				factor = 0
+        has_war_with = FROM
+			} 
+		}
+		set_global_flag = starthen_german_tech_coop_reached
+    add_to_tech_sharing_group = starthen_german_tech_sharing_group
+    FROM = { add_to_tech_sharing_group = starthen_german_tech_sharing_group }
+    
+		add_tech_bonus = {
+      name = GER_secret_scientific_research_cooperation
+      bonus = 1.0
+      uses = 1
+      category = land_doctrine
+    }
+    add_tech_bonus = {
+      name = GER_secret_scientific_research_cooperation
+      bonus = 1.0
+      uses = 2
+      category = armor
+    }
+		FROM = {
+      add_tech_bonus = {
+        name = GER_secret_scientific_research_cooperation
+        bonus = 1.5
+        uses = 1
+        category = land_doctrine
+      }
+      add_tech_bonus = {
+        name = GER_secret_scientific_research_cooperation
+        bonus = 0.5
+        uses = 1
+        ahead_reduction = 2
+        category = cat_light_armor
+      }
+      add_tech_bonus = {
+        name = GER_secret_scientific_research_cooperation
+        bonus = 0.5
+        uses = 1
+        ahead_reduction = 3
+        category = cat_mechanized_equipment
+      }
+			country_event = hoh_germany.10
+		}
+	}
+	option = { # Reject
+		name = hoh_germany.9.b
+		ai_chance = { 
+      factor = 1
+    }
+		FROM = {
+			country_event = hoh_germany.11
+		}
+	}
+}
+
+#Germany seeks secret tech share, FROM agrees
+country_event = {
+	id = hoh_germany.10
+	title = hoh_germany.9.t
+	desc = hoh_germany.10.d
+	picture = GFX_report_event_british_inspect_troops
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_germany.10.a
+	}
+}
+
+#Germany seeks secret tech share, FROM rejects
+country_event = {
+	id = hoh_germany.11
+	title = hoh_germany.9.t
+	desc = hoh_germany.11.d
+	picture = GFX_report_event_bose_meeting
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = germany.77.a
+	}
+}
+
+# Germany demands puppet, fixed event
+country_event = {
+	id = hoh_germany.12
+	title = hoh_germany.12.t
+	desc = hoh_germany.12.d
+	picture = GFX_report_event_generic_sign_treaty2
+	
+	is_triggered_only = yes
+	
+	option = { # Accept demands
+		name = hoh_germany.12.a
+		ai_chance = {	
+			modifier = {
+				factor = 0
+				OR = {
+					any_other_country = {
+	
+						has_guaranteed = ROOT
+					}
+					any_other_country = {
+
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+			factor = 100	
+		}
+		FROM = { puppet = ROOT }
+	}
+
+	option = { # Refuse
+		name = hoh_germany.12.b
+		ai_chance = {	
+			modifier = {
+				factor = 0
+				NOT = {
+					OR = {
+						any_other_country = {
+
+							has_guaranteed = ROOT
+						}
+						any_other_country = {
+
+							is_in_faction_with = ROOT
+						}
+					}
+				}
+			}
+			factor = 5	
+		}
+		FROM = { country_event = { id = stellarland.9 hours = 6 } }
+		effect_tooltip = {
+			FROM = {
+				create_wargoal = {
+					type = puppet_wargoal_focus
+					target = ROOT		
+				}
+			}			
+		}
+	}
+}
+
+# Danzig for Guarantees from a non-GER tag country, event for Poland
+country_event = {
+	id = hoh_germany.13
+	title = wtt_germany.14.t
+	desc = wtt_germany.14.d
+	picture = GFX_report_event_generic_sign_treaty3
+
+	is_triggered_only = yes
+
+	# Accept
+	option = {
+		name = wtt_germany.14.a
+		ai_chance = {
+			factor = 50
+		}
+		effect_tooltip = {
+			FROM = { transfer_state = 85 }
+			FROM = { transfer_state = 86 }
+			FROM = { transfer_state = 762 }
+			FROM = { add_ideas = anti_soviet_pact }
+			add_ideas = anti_soviet_pact
+			add_opinion_modifier = { target = FROM modifier = danzig_for_guarantees }
+		}
+		FROM = {
+			country_event = { id = wtt_germany.15 days = 1 }
+		}
+	}
+
+	# Decline
+	option = {
+		name = wtt_germany.14.b
+		ai_chance = {
+			#factor = 50
+			modifier = {
+				factor = 0.5
+				strength_ratio = { tag = FROM ratio < 1 }
+			}
+			modifier = {
+				factor = 0.2
+				strength_ratio = { tag = FROM ratio < 0.5 }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { strength_ratio = { tag = SOV ratio > 0.8 } }
+			}
+			modifier = {
+				factor = 0
+				FROM = { strength_ratio = { tag = SOV ratio > 0.8 } }
+				strength_ratio = { tag = FROM ratio < 0.5 }
+			}
+		}
+		FROM = {
+			country_event = { id = wtt_germany.16 days = 1 }
+		}
+	}
+}
+
+#From seeks Root to declare war on SOV
+country_event = {
+	id = hoh_germany.14
+	title = hoh_germany.14.t
+	desc = hoh_germany.14.d
+	picture = GFX_report_event_aa_line
+	
+	is_triggered_only = yes
+	
+	option = { # Agree
+		name = hoh_germany.14.a
+		FROM = {
+			country_event = hoh_germany.15 
+		}
+		if = {
+      limit = { 
+        original_tag = STE 
+        has_completed_focus = STE_active_intervention_strategy
+        NOT = { has_completed_focus = STE_end_of_the_russian_empire }
+      }
+      complete_national_focus = STE_end_of_the_russian_empire
+		}
+		else_if = {
+      limit = { 
+        original_tag = STE 
+        has_completed_focus = STE_prudent_foreign_policy
+        NOT = { has_completed_focus = STE_support_germany }
+      }
+      complete_national_focus = STE_support_germany
+      complete_national_focus = STE_the_director_behind_the_scenes
+		}
+		else_if = {
+      limit = {
+        NOT = { has_completed_focus = GER_ussr_war_goal }
+      }
+      complete_national_focus = GER_ussr_war_goal
+		}
+	}
+	
+	option = { # Reject
+		name = hoh_germany.14.b
+		FROM = {
+			country_event = hoh_germany.16 
+		}
+		set_country_flag = ger_stellarland_suspended_action
+	}
+}
+
+#From seeks Root to declare war on SOV, FROM agrees
+country_event = {
+	id = hoh_germany.15
+	title = hoh_germany.15.t
+	desc = hoh_germany.15.d
+	picture = GFX_report_event_aa_line
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_germany.15.a
+	}
+}
+
+#From seeks Root to declare war on SOV, FROM rejects
+country_event = {
+	id = hoh_germany.16
+	title = hoh_germany.16.t
+	desc = hoh_germany.16.d
+	picture = GFX_report_event_aa_line
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_germany.16.a
+	}
+}
+
+# Germany Claims Schleswig (Denmark)
+country_event = {
+	id = hoh_germany.17
+	title = hoh_germany.17.t
+	desc = hoh_germany.17.d
+	picture = GFX_report_event_generic_read_write
+	
+	is_triggered_only = yes
+	
+	option = { # Accept demands
+		name = baltic.4.a
+		ai_chance = { 
+			factor = 90
+			modifier = {
+				factor = 0
+				NOT = {
+					OR = {
+						is_puppet_of = FROM
+						is_in_faction_with = FROM
+					}
+				}
+				FROM = {
+					surrender_progress > 0.09
+				}
+			}
+			modifier = {
+				factor = 0
+				any_other_country = {
+					is_in_faction_with = ROOT
+					has_war_with = FROM
+				}
+			}
+			modifier = {
+				factor = 0
+				any_other_country = {
+					NOT = {
+						tag = FROM
+					}
+					DEN = {
+						is_puppet_of = PREV
+					}
+					NOT = {
+						is_in_faction_with = FROM
+					}
+				}
+			}
+		}
+		FROM = {
+			country_event = { days = 1 id = hoh_germany.18 }
+		}
+	}
+	option = { # Refuse
+		name = baltic.4.b		
+		ai_chance = { 
+			factor = 10
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+				NOT = {
+					FROM = {
+						surrender_progress > 0.09
+					}
+				}
+				NOT = {
+					any_other_country = {
+						is_in_faction_with = ROOT
+						has_war_with = FROM
+					}
+				}
+				NOT = {
+					any_other_country = {
+						NOT = {
+							tag = FROM
+						}
+						DEN = {
+							is_puppet_of = PREV
+						}
+						NOT = {
+							is_in_faction_with = FROM
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					is_in_faction_with = FROM
+					DEN = {
+						is_puppet_of = FROM
+					}
+				}
+			}
+		}
+		effect_tooltip = {
+			FROM = {
+				create_wargoal = {
+				type = take_state_focus
+				target = DEN
+				generator = { 869 }
+				}
+				country_event = { days = 1 id = hoh_germany.19 }
+			}
+		}
+		hidden_effect = {
+			FROM = {
+				country_event = { days = 1 id = hoh_germany.19 }
+			}
+		}		
+	}
+}
+
+# Claim North Schleswig - Denmark Folds
+country_event = {
+	id = hoh_germany.18
+	title = hoh_germany.18.t
+	desc = hoh_germany.18.d
+	picture = GFX_report_event_vienna_award_hungary
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = germany.22.a
+		ROOT = { 
+			transfer_state = 869
+			add_state_core = 869
+		}
+	}
+}
+
+# Claim North Schleswig - Denmark Rejects Demand
+country_event = {
+	id = hoh_germany.19
+	title = hoh_germany.19.t
+	desc = hoh_germany.19.d
+	picture = GFX_report_event_lithuania_army
+
+	is_triggered_only = yes
+	
+	option = {
+		name = germany.23.a
+		add_state_core = 869
+		create_wargoal = {
+			type = take_state_focus
+			target = FROM
+			generator = { 869 }
+		}
+	}
+}
+
+# Future Direction for East Prussia
+country_event = {
+	id = hoh_germany.20
+	title = hoh_germany.20.t
+	desc = hoh_germany.20.d
+	picture = GFX_report_event_lithuania_army
+
+	is_triggered_only = yes
+	
+	option = {
+		name = hoh_germany.20.a
+		set_country_flag = teu_future_direction
+		
+		set_country_flag = teu_germany_focus
+		clr_country_flag = teu_russia_focus
+		set_party_name = { ideology = neutrality long_name = TEU_neutrality_party_long name = TEU_neutrality_party }
+    set_party_name = { ideology = democratic long_name = TEU_democratic_party_long name = TEU_democratic_party }
+    set_party_name = { ideology = communism long_name = TEU_communism_party_long name = TEU_communism_party }
+    set_party_name = { ideology = fascism long_name = TEU_fascism_party_long name = TEU_fascism_party }
+    drop_cosmetic_tag = yes
+	}
+	
+	option = {
+		name = hoh_germany.20.b
+		set_country_flag = teu_future_direction
+		
+		set_country_flag = teu_russia_focus
+		clr_country_flag = teu_germany_focus
+    set_cosmetic_tag = TEU_SOV
+    set_party_name = { ideology = neutrality long_name = TEU_SOV_neutrality_party_long name = TEU_SOV_neutrality_party }
+    set_party_name = { ideology = democratic long_name = TEU_SOV_democratic_party_long name = TEU_SOV_democratic_party }
+    set_party_name = { ideology = communism long_name = TEU_SOV_communism_party_long name = TEU_SOV_communism_party }
+    set_party_name = { ideology = fascism long_name = TEU_SOV_fascism_party_long name = TEU_SOV_fascism_party }
+
+	}
+}

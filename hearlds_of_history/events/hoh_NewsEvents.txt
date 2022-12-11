@@ -1,0 +1,3325 @@
+﻿###########################
+# News Events
+###########################
+
+add_namespace = urb_news
+add_namespace = hoh_news
+add_namespace = hoh_state_news
+add_namespace = hoh_nation_formed
+
+#Urbanlian Civil War - Starts
+news_event = {
+	id = hoh_news.2
+	title = hoh_news.2.t
+	desc = { 
+		text = hoh_news.2.desc1
+		trigger = {
+			NOT = { has_global_flag = spanish_civil_war }
+		}
+	}
+	desc = {
+		text = hoh_news.2.desc2
+		trigger = {
+			has_global_flag = spanish_civil_war
+		}
+	}
+	picture = GFX_news_event_urbanlian_army_marching
+	
+	major = yes
+	
+	is_triggered_only = yes
+	immediate = {
+		set_global_flag = urbanlian_civilwar_started
+	}
+	
+	option = {
+		name = hoh_news.2.a
+		trigger = {
+      NOT = {
+        capital_scope = {
+          is_on_continent = europe
+        }
+        capital_scope = {
+          is_on_continent = asia
+        }
+      }
+      is_urbanlian_country = no
+      NOT = { original_tag = SPR }
+      NOT = { has_global_flag = spanish_civil_war }
+		}
+	}
+	
+	option = {
+		name = hoh_news.2.a
+		trigger = {
+      OR = {
+        capital_scope = {
+          is_on_continent = europe
+        }
+        capital_scope = {
+          is_on_continent = asia
+        }
+      }
+      NOT = { original_tag = SPR }
+      NOT = { has_global_flag = spanish_civil_war }
+		}
+	}
+	
+	option = {
+		name = hoh_news.2.c
+		trigger = {
+      original_tag = SPR
+      NOT = { has_global_flag = spanish_civil_war }
+		}
+	}
+	
+	option = {
+		name = hoh_news.2.e
+		trigger = {
+      is_urbanlian_country = yes
+		}
+	}
+	
+	option = {
+		name = hoh_news.2.f
+		trigger = {
+      is_urbanlian_country = no
+      has_global_flag = spanish_civil_war
+		}
+	}
+	
+}
+
+#Urbanlian Civil War - Loslenn independents
+news_event = {
+	id = hoh_news.3
+	title = hoh_news.3.t
+	desc = hoh_news.3.d
+	picture = GFX_news_event_german_soldiers
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = hoh_news.3.a
+		trigger = { TAG = URB }
+	}
+	option = {
+		name = hoh_news.3.b
+		trigger = { TAG = UBF }
+	}
+	option = {
+		name = hoh_news.3.c
+		trigger = { 
+      NOT = {
+        TAG = URB
+        TAG = UBF 
+      }
+		}
+	}
+}
+
+#Urbanlian Civil War - Government goes anti-chelenist
+news_event = {
+	id = hoh_news.4
+	title = hoh_news.4.t
+	desc = hoh_news.4.d
+	picture = GFX_news_event_urbanlian_army_marching
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = hoh_news.4.a
+		trigger = { TAG = URB }
+	}
+	option = {
+		name = hoh_news.4.b
+		trigger = { TAG = UBF }
+	}
+	option = {
+		name = hoh_news.4.c
+		trigger = { 
+      OR = {
+        TAG = UBC
+        TAG = UBD 
+      }
+		}
+	}
+	option = {
+		name = hoh_news.4.e
+		trigger = { 
+      NOT = {
+        TAG = URB
+        TAG = UBC
+        TAG = UBD
+        TAG = UBF 
+      }
+		}
+	}
+}
+
+#Urbanlian Civil War - civil war continues
+news_event = {
+	id = hoh_news.5
+	title = hoh_news.5.t
+	desc = hoh_news.5.d
+	picture = GFX_news_event_ger_civil_war
+	
+	major = yes
+	
+	is_triggered_only = yes
+	immediate = {
+		set_global_flag = urb_civil_war_continues
+	}
+	
+	option = {
+		name = hoh_news.5.a
+	}
+}
+
+# Urbanlian Civil War Ends
+news_event = {
+	id = hoh_news.6
+	title = hoh_news.6.t
+	desc = hoh_news.6.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	immediate = {
+    set_global_flag = urbanlian_civilwar_end
+  }
+	
+	option = {
+		name = hoh_news.6.a
+		trigger = { TAG = FROM }
+	}
+	option = {
+		name = hoh_news.6.b
+		trigger = {
+			NOT = {
+				TAG = FROM
+			}
+		}
+	}
+}
+
+# Stellarland intervenes China
+news_event = {
+	id = hoh_news.7
+	title = hoh_news.7.t
+	desc = hoh_news.7.d
+	picture = GFX_news_event_starthen_tank_division_assembly
+	
+	is_triggered_only = yes
+	
+	major = yes
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	immediate = {
+    set_global_flag = urbanlian_civilwar_end
+  }
+	
+	option = {
+		name = hoh_news.7.a
+		trigger = { original_tag = STE }
+	}
+	option = {
+		name = hoh_news.7.b
+		trigger = {
+			is_literally_china = yes
+		}
+	}
+	option = {
+		name = hoh_news.7.c
+		trigger = {
+			NOT = {
+				original_tag = STE
+				is_literally_china = yes
+			}
+		}
+	}
+}
+
+# Starthen Policies in Soviet Union Territories
+news_event = {
+	id = hoh_news.8
+	title = hoh_news.8.t
+	desc = hoh_news.8.d
+	picture = GFX_news_event_starthen_troops_assembly
+	
+	is_triggered_only = yes
+	
+	major = yes
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = hoh_news.8.a
+		trigger = { 
+      original_tag = SOV 
+		}
+	}
+	option = {
+		name = hoh_news.8.b
+		trigger = {
+			NOT = {
+				original_tag = SOV 
+			}
+		}
+	}
+}
+
+# The Second Hokkaido War
+news_event = {
+	id = hoh_news.9
+	title = hoh_news.9.t
+	desc = hoh_news.9.d
+	picture = GFX_news_event_the_second_hokkaido_war
+	
+	is_triggered_only = yes
+	
+	major = yes
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	immediate = {
+    set_global_flag = second_hokkaido_war_broke_out
+  }
+	
+	option = {
+		name = hoh_news.9.a
+		trigger = { 
+      original_tag = STE 
+		}
+	}
+	option = {
+		name = hoh_news.9.b
+		trigger = {
+			original_tag = JAP
+		}
+	}
+	option = {
+		name = hoh_news.9.c
+		trigger = {
+			NOT = {
+				original_tag = STE
+				original_tag = JAP
+			}
+		}
+	}
+}
+
+# The Second Urbanlian Civil War
+news_event = {
+	id = hoh_news.12
+	title = hoh_news.12.t
+	desc = hoh_news.12.d
+	picture = GFX_news_event_urbanlian_army_marching
+	
+	major = yes
+	
+	is_triggered_only = yes
+	immediate = {
+		set_global_flag = urb_the_second_civil_war
+	}
+	
+	option = { 
+		name = hoh_news.12.a
+		trigger = { is_literally_urbanlia = no } 
+	}
+	
+	option = {
+		name = hoh_news.12.b
+		trigger = { is_literally_urbanlia = yes } 
+	}
+}
+
+# Japan condemns Hokkaido's independence
+news_event = {
+	id = hoh_news.13
+	title = hoh_news.13.t
+	desc = hoh_news.13.d
+	picture = GFX_news_event_bose_meeting
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = hoh_news.13.a
+		trigger = {
+			NOT = {
+				TAG = JAP
+        is_independent_china_or_warlord = yes
+			}
+		}
+	}
+	option = {
+		name = hoh_news.13.b
+		trigger = { TAG = JAP }
+	}
+	option = {
+		name = hoh_news.13.c
+		trigger = { 
+      is_independent_china_or_warlord = yes
+    }
+	}
+}
+
+# Japan recognize Hokkaido's independence
+news_event = {
+	id = hoh_news.14
+	title = hoh_news.14.t
+	desc = hoh_news.14.d
+	picture = GFX_news_event_bose_meeting
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = hoh_news.13.a
+		trigger = {
+			NOT = {
+				TAG = JAP
+				TAG = STE
+        is_independent_china_or_warlord = yes
+			}
+		}
+	}
+	option = {
+		name = hoh_news.13.b
+		trigger = { TAG = JAP }
+	}
+	option = {
+		name = hoh_news.13.c
+		trigger = { 
+      is_independent_china_or_warlord = yes
+    }
+	}
+	option = {
+		name = hoh_news.14.e
+		trigger = { TAG = STE }
+	}
+}
+
+# Centralland claims new China
+news_event = {
+	id = hoh_news.15
+	title = hoh_news.15.t
+	desc = hoh_news.15.d
+	picture = GFX_news_event_romania_parliament
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	immediate = {
+		set_global_flag = centralland_claims_new_china
+	}
+	
+	option = {
+		name = hoh_news.15.a
+		trigger = {
+			original_tag = CEN
+		}
+	}
+	option = {
+		name = hoh_news.15.b
+		trigger = {
+			NOT = {
+				original_tag = CEN
+				is_literally_china = yes
+			}
+		}
+	}
+	option = {
+		name = hoh_news.15.c
+		trigger = {
+			is_literally_china = yes
+			NOT = { original_tag = CEN }
+		}
+	}
+}
+
+# Starthen-Soviet Treaty Signed
+news_event = {
+	id = hoh_news.16
+	title = hoh_news.16.t
+	desc = hoh_news.16.d
+	picture = GFX_news_event_009
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	immediate = {
+		set_global_flag = esbdt_signed_global
+	}
+	
+	option = {
+		name = hoh_news.16.a
+		trigger = {
+			NOT = {
+				original_tag = STE
+				original_tag = SOV
+			}
+		}
+	}
+	option = {
+		name = hoh_news.16.b
+		trigger = {
+			original_tag = SOV
+		}
+	}
+	option = {
+		name = hoh_news.16.c
+		trigger = {
+			original_tag = STE
+		}
+	}
+}
+
+# Starthen-Soviet treaty broke down
+news_event = {
+	id = hoh_news.17
+	title = hoh_news.17.t
+	desc = hoh_news.17.d
+	picture = GFX_news_event_012
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	immediate = {
+		set_global_flag = esbdt_broke_down_global
+	}
+	
+	option = {
+		name = hoh_news.17.a
+		trigger = {
+			NOT = {
+				original_tag = STE
+				original_tag = SOV
+			}
+		}
+	}
+	option = {
+		name = hoh_news.17.b
+		trigger = {
+			original_tag = SOV
+		}
+	}
+	option = {
+		name = hoh_news.17.c
+		trigger = {
+			original_tag = STE
+		}
+	}
+}
+
+# Stellarland Officials Training Programme Finished
+news_event = {
+	id = hoh_news.18
+	title = hoh_news.18.t
+	desc = hoh_news.18.d
+	picture = GFX_news_event_ast_parliament_house
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = hoh_news.18.a
+		trigger = {
+			NOT = {
+				original_tag = STE
+			}
+		}
+	}
+	option = {
+		name = hoh_news.18.b
+		trigger = {
+			original_tag = STE
+		}
+	}
+}
+
+# Urbanlia recognizes Surinam independence
+news_event = {
+	id = hoh_news.19
+	title = hoh_news.19.t
+	desc = hoh_news.19.d
+	picture = GFX_news_event_journalists_speech
+	
+	is_triggered_only = yes
+	
+	major = yes
+	immediate = {
+		set_global_flag = sur_urbanlia_recognizes_independence
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = hoh_news.19.a
+		trigger = { TAG = URB }
+	}
+	option = {
+		name = hoh_news.19.b
+		trigger = {
+			NOT = {
+				TAG = URB
+				TAG = SUR
+			}
+		}
+	}
+	option = {
+		name = hoh_news.19.c
+		trigger = { TAG = SUR }
+	}
+}
+
+# Urbanlia refuses to recognize independence of Suriname
+news_event = {
+	id = hoh_news.20
+	title = hoh_news.20.t
+	desc = hoh_news.20.d
+	picture = GFX_news_event_journalists_speech
+	
+	is_triggered_only = yes
+	
+	major = yes
+	immediate = {
+		set_global_flag = sur_urbanlia_refuses_to_recognize_independence
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = hoh_news.20.a
+		trigger = { TAG = URB }
+	}
+	option = {
+		name = hoh_news.20.b
+		trigger = {
+			NOT = {
+				TAG = URB
+				TAG = SUR
+			}
+		}
+	}
+	option = {
+		name = hoh_news.20.c
+		trigger = { TAG = SUR }
+	}
+}
+
+# Suriname claims the orthodoxy
+news_event = {
+	id = hoh_news.21
+	title = hoh_news.21.t
+	desc = hoh_news.21.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	immediate = {
+		set_global_flag = sur_proclaim_urbanlia
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = hoh_news.21.a
+		trigger = { TAG = SUR }
+	}
+	option = {
+		name = hoh_news.21.b
+		trigger = {
+			NOT = {
+				TAG = SUR
+			}
+		}
+	}
+}
+
+# Project Centralland
+news_event = {
+	id = hoh_news.22
+	title = hoh_news.22.t
+	desc = hoh_news.22.d
+	picture = GFX_news_event_generic_read_write
+	
+	is_triggered_only = yes
+	
+	major = yes
+	immediate = {
+		set_global_flag = ste_project_centralland_established
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = hoh_news.22.a
+		trigger = { TAG = STE }
+	}
+	option = {
+		name = hoh_news.22.b
+		trigger = { TAG = CEN }
+	}
+	option = {
+		name = hoh_news.22.c
+		trigger = {
+			NOT = {
+				TAG = STE
+				TAG = CEN
+			}
+		}
+	}
+}
+
+# The Berlin-Stellarport Treaty Organization
+news_event = {
+	id = hoh_news.24
+	title = hoh_news.24.t
+	desc = hoh_news.24.d
+	picture = GFX_news_event_canada_patriation
+	
+	is_triggered_only = yes
+	
+	major = yes
+	immediate = {
+		set_global_flag = berlin_stellarport_treaty_organization_formed
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = hoh_news.24.a
+		trigger = { original_tag = GER }
+	}
+	option = {
+		name = hoh_news.24.b
+		trigger = { original_tag = STE }
+	}
+	option = {
+		name = hoh_news.24.c
+		trigger = {
+      OR = {
+        is_russian_country = yes
+        original_tag = POL
+        original_tag = LIT
+        original_tag = LAT
+        original_tag = EST
+      }
+		}
+	}
+	option = {
+		name = hoh_news.24.e
+		trigger = {
+      NOT = {
+        original_tag = GER
+        original_tag = STE
+        is_russian_country = yes
+        original_tag = POL
+        original_tag = LIT
+        original_tag = LAT
+        original_tag = EST
+      }
+		}
+	}
+	
+}
+
+# Urbanlian Internal Crisis Ends
+news_event = {
+	id = hoh_news.25
+	title = hoh_news.25.t
+	desc = hoh_news.25.d
+	picture = GFX_news_event_generic_parliament
+	
+	major = yes
+	immediate = {
+		set_global_flag = sucw_crisis_ended
+	}
+	
+	is_triggered_only = yes
+	option = { 
+		name = hoh_news.25.a
+		trigger = { TAG = UBL }
+	}
+	option = { 
+		name = hoh_news.25.b
+		trigger = { NOT = { TAG = UBL } }
+	}
+}
+
+#United States Reguarantees Urbanlia
+news_event = {
+	id = hoh_news.26
+	title = hoh_news.26.t
+	desc = hoh_news.26.d
+	picture = GFX_news_event_canada_patriation
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = hoh_news.26.a
+	}
+}
+
+#Urbanlian Civil War - civil war expands
+news_event = {
+	id = hoh_news.27
+	title = hoh_news.27.t
+	desc = hoh_news.27.d
+	picture = GFX_news_event_ger_civil_war
+	
+	major = yes
+	
+	is_triggered_only = yes
+	immediate = {
+		set_global_flag = urb_civil_war_expands
+	}
+	
+	option = { 
+		name = hoh_news.27.a
+		trigger = { is_literally_urbanlia = no } 
+	}
+	
+	option = {
+		name = hoh_news.12.b
+		trigger = { is_literally_urbanlia = yes } 
+	}
+}
+
+#The German-Starthen Alliance
+news_event = {
+	id = hoh_news.28
+	title = hoh_news.28.t
+	desc = hoh_news.28.d
+	picture = GFX_news_event_german_inspect_troops
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = hoh_news.28.a
+		trigger = { 
+      OR = {
+        original_tag = GER
+        original_tag = STE
+        is_subject_of = GER
+        is_subject_of = STE
+        is_in_faction_with = GER
+        is_in_faction_with = STE
+      }
+		} 
+	}
+	
+	option = {
+		name = hoh_news.28.b
+		trigger = { 
+      NOT = {
+        original_tag = GER
+        original_tag = STE
+        is_subject_of = GER
+        is_subject_of = STE
+        is_in_faction_with = GER
+        is_in_faction_with = STE
+      }
+		} 
+	}
+}
+
+# Starthen fleet visits Wilhelmshaven
+news_event = {
+	id = hoh_news.29
+	title = hoh_news.29.t
+	desc = { 
+		text = hoh_news.29.desc1
+		trigger = {
+			ENG = { 
+        NOT = { has_war_with = GER }
+        NOT = { has_war_with = STE }
+      }
+		}
+	}
+	desc = {
+		text = hoh_news.29.desc2
+		trigger = {
+			ENG = { 
+        has_war_with = GER
+        NOT = { has_war_with = STE }
+      }
+		}
+	}
+	desc = { 
+		text = hoh_news.29.desc3
+		trigger = {
+			ENG = { 
+        has_war_with = STE
+      }
+		}
+	}
+	picture = GFX_news_event_bismarck_battleship
+	
+	major = yes
+	
+	is_triggered_only = yes
+	option = { 
+		name = hoh_news.29.a
+		trigger = { 
+      OR = {
+        original_tag = GER 
+        original_tag = STE 
+      }
+		}
+	}
+	option = { 
+		name = hoh_news.29.b
+		trigger = { 
+      NOT = {
+        original_tag = GER 
+        original_tag = STE 
+        original_tag = ENG 
+      }
+      NOT = {
+        has_war_with = GER 
+        has_war_with = STE 
+      }
+		}
+	}
+	option = { 
+		name = hoh_news.29.c
+		trigger = { 
+      NOT = {
+        original_tag = GER 
+        original_tag = STE 
+      }
+      OR = {
+        original_tag = ENG 
+        has_war_with = GER 
+        has_war_with = STE 
+      }
+		}
+	}
+}
+
+#The A-A Line Treaty
+news_event = {
+	id = hoh_news.30
+	title = hoh_news.30.t
+	desc = hoh_news.30.d
+	picture = GFX_news_event_aa_line
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = hoh_news.30.a
+		trigger = { 
+      OR = {
+        original_tag = GER
+        original_tag = STE
+        is_subject_of = GER
+        is_subject_of = STE
+        is_in_faction_with = GER
+        is_in_faction_with = STE
+      }
+		} 
+	}
+	
+	option = {
+		name = hoh_news.30.b
+		trigger = { 
+      NOT = {
+        original_tag = GER
+        original_tag = STE
+        is_subject_of = GER
+        is_subject_of = STE
+        is_in_faction_with = GER
+        is_in_faction_with = STE
+      }
+		} 
+	}
+}
+
+#The General Order No. 1 - Korea Situation
+news_event = {
+	id = hoh_news.31
+	title = hoh_news.31.t
+	desc = hoh_news.31.d
+	picture = GFX_news_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	major = yes
+
+	option = {
+		name = hoh_news.31.a
+		trigger = {
+			tag = JAP
+		}
+	}
+
+	option = {
+		name = hoh_news.31.b
+		trigger = {
+			OR = {
+				event_target:korea_conference_origin = {
+					tag = ROOT
+				}
+				event_target:korea_conference_partner = {
+					tag = ROOT
+				}
+			}
+		}
+	}
+
+	option = {
+		name = hoh_news.31.c
+		trigger = {
+			NOT = {
+				OR = {
+					event_target:korea_conference_origin = {
+						tag = ROOT
+					}
+					event_target:korea_conference_partner = {
+						tag = ROOT
+					}
+				}
+			}
+			has_war_with = JAP				
+		}
+	}
+
+	option = {
+		name = hoh_news.31.e
+		trigger = {
+			NOT = {
+				OR = {
+					event_target:korea_conference_origin = {
+						tag = ROOT
+					}
+					event_target:korea_conference_partner = {
+						tag = ROOT
+					}
+				}
+			}
+			NOT = {
+				has_war_with = JAP
+			}
+			NOT = {
+				tag = JAP
+			}
+		}
+	}
+}
+
+#The Korean War Starts
+news_event = {
+	id = hoh_news.32
+	title = hoh_news.32.t
+	desc = hoh_news.32.d
+	picture = GFX_news_event_north_korean_army
+
+	is_triggered_only = yes
+
+	major = yes
+
+	immediate = {
+		set_global_flag = korean_civil_war_ignited
+	}
+	
+	option = {
+		name = hoh_news.32.a
+		trigger = {
+			OR = {
+				tag = PRK
+				tag = KOR
+			}
+		}
+	}
+
+	option = {
+		name = hoh_news.32.b
+		trigger = {
+			NOT = {
+				tag = PRK
+				tag = KOR
+			}
+			OR = {
+        is_neighbor_of = PRK
+        is_neighbor_of = KOR
+			}			
+		}
+	}
+
+	option = {
+		name = hoh_news.32.c
+		trigger = {
+			NOT = {
+				tag = PRK
+				tag = KOR
+			}
+			NOT = {
+        is_neighbor_of = PRK
+        is_neighbor_of = KOR
+			}			
+		}
+	}
+}
+
+#The Rearmament of Russia
+news_event = {
+	id = hoh_news.33
+	title = hoh_news.33.t
+	desc = hoh_news.33.d
+	picture = GFX_news_event_red_army_victory_parade
+
+	is_triggered_only = yes
+
+	major = yes
+
+	immediate = {
+		set_global_flag = korean_civil_war_ignited
+	}
+	
+	option = {
+		name = hoh_news.33.a
+		trigger = {
+			tag = RUS
+		}
+	}
+
+	option = {
+		name = hoh_news.33.b
+		trigger = {
+			NOT = { tag = RUS }
+      is_neighbor_of = RUS
+      NOT = {
+        is_subject = RUS
+        has_subject = RUS
+      }
+		}
+	}
+
+	option = {
+		name = hoh_news.33.c
+		trigger = {
+			NOT = { tag = RUS }
+			OR = {
+        NOT = { is_neighbor_of = RUS }		
+        is_subject = RUS
+        has_subject = RUS
+      }
+		}
+	}
+}
+
+#War of the Origin
+news_event = {
+	id = hoh_news.36
+	title = hoh_news.36.t
+	desc = hoh_news.36.d
+	picture = GFX_news_event_starthen_tank_division_assembly
+
+	is_triggered_only = yes
+
+	major = yes
+	immediate = {
+		set_global_flag = ste_war_of_the_origin
+	}
+
+	option = {
+		name = hoh_news.36.a
+		trigger = {
+			tag = STE
+		}
+	}
+
+	option = {
+		name = hoh_news.36.b
+		trigger = {
+			OR = {
+        tag = GER
+        is_in_faction_with = GER
+        has_war_with = STE
+			}
+		}
+	}
+
+	option = {
+		name = hoh_news.36.c
+		trigger = {
+			NOT = {
+        tag = STE
+        tag = GER
+        is_in_faction_with = GER
+        has_war_with = STE
+			}		
+		}
+	}
+}
+
+#The Hinggan Uprising
+news_event = {
+	id = hoh_news.37
+	title = hoh_news.37.t
+	desc = hoh_news.37.d
+	picture = GFX_news_event_najua_cavalry
+
+	is_triggered_only = yes
+
+	major = yes
+	immediate = {
+		set_global_flag = ohg_hinggan_uprising
+		play_over_hills_and_dales_effect = yes
+	}
+
+	option = {
+		name = hoh_news.37.a
+		trigger = {
+			is_literally_china = yes
+		}
+	}
+
+	option = {
+		name = hoh_news.37.b
+		trigger = {
+			tag = MAN			
+		}
+	}
+
+	option = {
+		name = hoh_news.37.c
+		trigger = {
+			NOT = {
+				tag = MAN
+			}
+			is_literally_china = no
+		}
+	}
+}
+
+#The Manchurian Independence War
+news_event = {
+	id = hoh_news.38
+	title = hoh_news.38.t
+	desc = hoh_news.38.d
+	picture = GFX_news_event_manchurian_mutiny
+
+	is_triggered_only = yes
+
+	major = yes
+	immediate = {
+		set_global_flag = man_independence_war
+	}
+
+	option = {
+		name = hoh_news.37.a
+		trigger = {
+			is_literally_china = yes
+		}
+	}
+
+	option = {
+		name = hoh_news.38.a
+		trigger = {
+			tag = MAN			
+		}
+	}
+
+	option = {
+		name = hoh_news.38.b
+		trigger = {
+			tag = JAP
+		}
+	}
+	
+	option = {
+		name = hoh_news.37.c
+		trigger = {
+			NOT = {
+				tag = MAN
+				tag = JAP
+			}
+			is_literally_china = no
+		}
+	}
+}
+
+#The Return of the Fengtian Clique
+news_event = {
+	id = hoh_news.39
+	title = hoh_news.39.t
+	desc = hoh_news.39.d
+	picture = GFX_news_event_manchurian_mutiny
+
+	is_triggered_only = yes
+
+	major = yes
+	immediate = {
+		set_global_flag = MAN_rebuilt_fengtian
+	}
+
+	option = {
+		name = hoh_news.39.a
+		trigger = {
+			tag = MAN
+		}
+	}
+
+	option = {
+		name = hoh_news.39.b
+		trigger = {
+			NOT = { tag = MAN	}
+		}
+	}
+}
+
+#China renounce the Sino-Russian Treaty of Peking
+news_event = {
+	id = hoh_news.40
+	title = hoh_news.40.t
+	desc = hoh_news.40.d
+	picture = GFX_news_event_manchuria_map
+
+	is_triggered_only = yes
+
+	major = yes
+	immediate = {
+		set_global_flag = CHI_claim_outer_manchuria
+	}
+
+	option = {
+		name = hoh_news.40.a
+		trigger = {
+			is_literally_china = yes
+		}
+	}
+
+	option = {
+		name = hoh_news.40.b
+		trigger = {
+			OR = { 
+        original_tag = MAN
+        original_tag = MEN
+        original_tag = JAP
+        is_kalperson_country = yes
+			}
+		}
+	}
+	
+	option = {
+		name = hoh_news.40.c
+		trigger = {
+			is_literally_china = no
+      is_kalperson_country = no
+			NOT = { 
+        original_tag = MAN
+        original_tag = MEN
+        original_tag = JAP
+			}
+		}
+	}
+}
+
+#China claims outer northwest territories
+news_event = {
+	id = hoh_news.41
+	title = hoh_news.41.t
+	desc = hoh_news.41.d
+	picture = GFX_news_event_outer_northwest_china_map
+
+	is_triggered_only = yes
+
+	major = yes
+	immediate = {
+		set_global_flag = CHI_claim_outer_northwest
+	}
+
+	option = {
+		name = hoh_news.40.a
+		trigger = {
+			is_literally_china = yes
+		}
+	}
+
+	option = {
+		name = hoh_news.40.b
+		trigger = {
+			OR = { 
+        original_tag = MAN
+        original_tag = MEN
+        original_tag = JAP
+        is_kalperson_country = yes
+			}
+		}
+	}
+	
+	option = {
+		name = hoh_news.41.a
+		trigger = {
+			is_literally_china = no
+      is_kalperson_country = no
+			NOT = { 
+        original_tag = MAN
+        original_tag = MEN
+        original_tag = JAP
+			}
+		}
+	}
+}
+
+#Japanese intervention in Hinggan Uprising
+news_event = {
+	id = hoh_news.42
+	title = hoh_news.42.t
+	desc = hoh_news.42.d
+	picture = GFX_news_event_japanese_invasion
+
+	is_triggered_only = yes
+
+	major = yes
+	immediate = {
+		set_global_flag = CHI_claim_outer_manchuria
+	}
+
+	option = {
+		name = hoh_news.42.a
+		trigger = {
+			is_literally_china = yes
+		}
+	}
+
+	option = {
+		name = hoh_news.42.b
+		trigger = {
+			OR = { 
+        original_tag = MAN
+        original_tag = JAP
+			}
+		}
+	}
+	
+	option = {
+		name = hoh_news.42.c
+		trigger = {
+			is_literally_china = no
+			NOT = { 
+        original_tag = MAN
+        original_tag = JAP
+			}
+		}
+	}
+}
+
+# Oster Conspiracy (Goebbels assumes leadership)
+news_event = {
+	id = hoh_news.43
+	title = news.28.t
+	desc = hoh_news.43.d
+	picture = GFX_news_event_german_officers
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = news.28.a
+		trigger = {
+			NOT = {
+				TAG = GER
+				TAG = FRA
+				TAG = ENG
+				is_in_faction_with = GER
+			}
+		}
+	}
+	option = {
+		name = news.28.b
+		trigger = { 
+			OR = {
+				TAG = GER
+				is_in_faction_with = GER
+			}
+		}	
+	}
+	option = {
+		name = news.28.c
+		trigger = {
+			OR = {
+				TAG = FRA
+				TAG = ENG
+			}
+		}
+	}
+}
+
+# The Fall of New Amsterdam (USA)
+news_event = {
+	id = hoh_state_news.1
+	title = hoh_state_news.1.t
+	desc = hoh_state_news.1.d
+	picture = GFX_news_event_038
+	
+	major = yes
+	
+	is_triggered_only = yes
+	#trigger = {
+	#	358 = { is_controlled_by = USA }
+	#	358 = { is_owned_by = UBL }
+	#	USA = { has_war_with = UBL }
+	#	NOT = { has_global_flag = fall_of_new_amsterdam_usa }
+	#}
+	
+	immediate = {
+		set_global_flag = fall_of_new_amsterdam_usa
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = hoh_state_news.1.a
+		trigger = {
+			NOT = {
+				TAG = UBL
+				TAG = USA
+			}
+		}
+	}
+	option = {
+		name = hoh_state_news.1.b
+		trigger = { TAG = UBL }
+	}
+	option = {
+		name = hoh_state_news.1.c
+		trigger = { TAG = USA }
+	}
+}
+
+# The Fall of Stellar Harbour(Soviet)
+news_event = {
+	id = hoh_state_news.2
+	title = hoh_state_news.2.t
+	desc = hoh_state_news.2.d
+	picture = GFX_news_event_kiev_ruins
+	
+	major = yes
+	
+	is_triggered_only = yes
+	#trigger = {
+	#	809 = { is_controlled_by = SOV }
+	#	809 = { is_owned_by = STE }
+	#	SOV = { has_war_with = STE }
+	#	NOT = { has_global_flag = fall_of_stellar_harbour_sov }
+	#}
+	
+	immediate = {
+		set_global_flag = fall_of_stellar_harbour_sov
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = hoh_state_news.2.a
+		trigger = {
+			NOT = {
+				TAG = STE
+				TAG = SOV
+			}
+		}
+	}
+	option = {
+		name = hoh_state_news.2.b
+		trigger = { TAG = STE }
+	}
+	option = {
+		name = hoh_state_news.2.c
+		trigger = { TAG = SOV }
+	}
+}
+
+# The Fall of Stellar Harbour(Japan)
+news_event = {
+	id = hoh_state_news.3
+	title = hoh_state_news.2.t
+	desc = hoh_state_news.3.d
+	picture = GFX_news_event_kiev_ruins
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_global_flag = fall_of_stellar_harbour_jap
+	}
+	#trigger = {
+	#	809 = { is_controlled_by = JAP }
+	#	809 = { is_owned_by = STE }
+	#	JAP = { has_war_with = STE }
+	#	NOT = { has_global_flag = fall_of_stellar_harbour_jap }
+	#}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = hoh_state_news.2.a
+		trigger = {
+			NOT = {
+				TAG = STE
+				TAG = JAP
+			}
+		}
+	}
+	option = {
+		name = hoh_state_news.2.b
+		trigger = { TAG = STE }
+	}
+	option = {
+		name = hoh_state_news.2.e
+		trigger = { TAG = JAP }
+	}
+}
+
+# The Fall of Stellar Harbour(US)
+news_event = {
+	id = hoh_state_news.4
+	title = hoh_state_news.2.t
+	desc = hoh_state_news.4.d
+	picture = GFX_news_event_kiev_ruins
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_global_flag = fall_of_stellar_harbour_usa
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = hoh_state_news.2.a
+		trigger = {
+			NOT = {
+				TAG = STE
+				TAG = USA
+			}
+		}
+	}
+	option = {
+		name = hoh_state_news.2.b
+		trigger = { TAG = STE }
+	}
+	option = {
+		name = hoh_state_news.2.f
+		trigger = { TAG = USA }
+	}
+}
+
+# The Fall of Evening Post(Soviet)
+news_event = {
+	id = hoh_state_news.5
+	title = hoh_state_news.5.t
+	desc = hoh_state_news.5.d
+	picture = GFX_news_event_kiev_ruins
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_global_flag = fall_of_evening_post_sov
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = hoh_state_news.2.a
+		trigger = {
+			NOT = {
+				TAG = STE
+				TAG = SOV
+			}
+		}
+	}
+	option = {
+		name = hoh_state_news.2.b
+		trigger = { TAG = STE }
+	}
+	option = {
+		name = hoh_state_news.2.c
+		trigger = { TAG = SOV }
+	}
+}
+
+# The Fall of Evening Post(Japan)
+news_event = {
+	id = hoh_state_news.6
+	title = hoh_state_news.5.t
+	desc = hoh_state_news.6.d
+	picture = GFX_news_event_kiev_ruins
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_global_flag = fall_of_evening_post_jap
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = hoh_state_news.2.a
+		trigger = {
+			NOT = {
+				TAG = STE
+				TAG = JAP
+			}
+		}
+	}
+	option = {
+		name = hoh_state_news.2.b
+		trigger = { TAG = STE }
+	}
+	option = {
+		name = hoh_state_news.2.e
+		trigger = { TAG = JAP }
+	}
+}
+
+# The Fall of Evening Post(US)
+news_event = {
+	id = hoh_state_news.7
+	title = hoh_state_news.5.t
+	desc = hoh_state_news.7.d
+	picture = GFX_news_event_kiev_ruins
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_global_flag = fall_of_evening_post_usa
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = hoh_state_news.2.a
+		trigger = {
+			NOT = {
+				TAG = STE
+				TAG = USA
+			}
+		}
+	}
+	option = {
+		name = hoh_state_news.2.b
+		trigger = { TAG = STE }
+	}
+	option = {
+		name = hoh_state_news.2.f
+		trigger = { TAG = USA }
+	}
+}
+
+# The Fall of London (Stellarland)
+news_event = {
+	id = hoh_state_news.8
+	title = hoh_state_news.8.t
+	desc = hoh_state_news.8.d
+	picture = GFX_news_event_french_parade
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_global_flag = fall_of_london_ste
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = news.145.a
+		trigger = {
+			NOT = {
+				TAG = STE
+				TAG = ENG
+			}
+		}
+	}
+	option = {
+		name = news.100.b
+		trigger = { TAG = STE }
+	}
+	option = {
+		name = news.100.c
+		trigger = { TAG = ENG }
+	}
+}
+
+# New Member in STE Faction
+news_event = {
+	id = urb_news.10
+	title = urb_news.10.t
+	desc = urb_news.10.d
+	picture = GFX_news_event_german_soldiers
+	
+	is_triggered_only = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	major = yes
+
+	option = {
+		name = urb_news.10.a
+		trigger = { TAG = STE }
+	}
+	option = {
+		name = urb_news.10.b
+		trigger = {
+			NOT = {
+				TAG = STE
+			}
+		}
+	}
+}
+
+# The Fall of Stellar Harbour(Japan)
+news_event = {
+	id = urb_news.18
+	title = hoh_state_news.2.t
+	desc = urb_news.18.d
+	picture = GFX_news_event_soldiers_marching
+	
+	major = yes
+	
+	trigger = {
+		809 = { is_controlled_by = JAP }
+		809 = { is_owned_by = STE }
+		JAP = { has_war_with = STE }
+		NOT = { has_global_flag = fall_of_stellar_harbour_jap }
+	}
+	
+	immediate = {
+		set_global_flag = fall_of_stellar_harbour_jap
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = hoh_state_news.2.a
+		trigger = {
+			NOT = {
+				TAG = STE
+				TAG = JAP
+			}
+		}
+	}
+	option = {
+		name = hoh_state_news.2.b
+		trigger = { TAG = STE }
+	}
+	option = {
+		name = urb_news.18.a
+		trigger = { TAG = JAP }
+	}
+}
+
+# The Fall of Boston (UBD)
+news_event = {
+	id = urb_news.19
+	title = urb_news.19.t
+	desc = urb_news.19.d
+	picture = GFX_news_event_urbanlian_army_marching
+	
+	major = yes
+	
+	trigger = {
+		818 = { is_controlled_by = UBD }
+		818 = { is_owned_by = UBC }
+		UBD = { has_war_with = UBC }
+		NOT = { has_global_flag = fall_of_boston_ubd }
+	}
+	
+	immediate = {
+		set_global_flag = fall_of_boston_ubd
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = urb_news.19.a
+		trigger = {
+			NOT = {
+				TAG = UBC
+				TAG = UBD
+			}
+		}
+	}
+	option = {
+		name = urb_news.19.b
+		trigger = { TAG = UBC }
+	}
+	option = {
+		name = urb_news.19.c
+		trigger = { TAG = UBD }
+	}
+}
+
+# The Fall of Philadelphia (UBC)
+news_event = {
+	id = urb_news.20
+	title = urb_news.20.t
+	desc = urb_news.20.d
+	picture = GFX_news_event_urbanlian_army_marching
+	
+	major = yes
+	
+	trigger = {
+		360 = { is_controlled_by = UBC }
+		360 = { is_owned_by = UBD }
+		UBC = { has_war_with = UBD }
+		NOT = { has_global_flag = fall_of_philadelphia_ubc }
+	}
+	
+	immediate = {
+		set_global_flag = fall_of_philadelphia_ubc
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = urb_news.19.a
+		trigger = {
+			NOT = {
+				TAG = UBC
+				TAG = UBD
+			}
+		}
+	}
+	option = {
+		name = urb_news.19.c
+		trigger = { TAG = UBC }
+	}
+	option = {
+		name = urb_news.20.a
+		trigger = { TAG = UBD }
+	}
+}
+
+# The Fall of Loslell (UBC)
+news_event = {
+	id = urb_news.21
+	title = urb_news.21.t
+	desc = urb_news.21.d
+	picture = GFX_news_event_urbanlian_army_marching
+	
+	major = yes
+	
+	trigger = {
+		823 = { is_controlled_by = UBC }
+		823 = { is_owned_by = UBF }
+		UBF = { has_war_with = UBC }
+		NOT = { has_global_flag = fall_of_loslell_ubc }
+	}
+	
+	immediate = {
+		set_global_flag = fall_of_loslell_ubc
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = urb_news.19.a
+		trigger = {
+			NOT = {
+				TAG = UBC
+				TAG = UBF
+			}
+		}
+	}
+	option = {
+		name = urb_news.19.c
+		trigger = { TAG = UBC }
+	}
+	option = {
+		name = urb_news.21.a
+		trigger = { TAG = UBF }
+	}
+}
+
+# The Fall of Loslell (UBD)
+news_event = {
+	id = urb_news.22
+	title = urb_news.21.t
+	desc = urb_news.22.d
+	picture = GFX_news_event_urbanlian_army_marching
+	
+	major = yes
+	
+	trigger = {
+		823 = { is_controlled_by = UBD }
+		823 = { is_owned_by = UBF }
+		UBF = { has_war_with = UBD }
+		NOT = { has_global_flag = fall_of_loslell_ubd }
+	}
+	
+	immediate = {
+		set_global_flag = fall_of_loslell_ubd
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = urb_news.19.a
+		trigger = {
+			NOT = {
+				TAG = UBD
+				TAG = UBF
+			}
+		}
+	}
+	option = {
+		name = urb_news.19.c
+		trigger = { TAG = UBD }
+	}
+	option = {
+		name = urb_news.21.a
+		trigger = { TAG = UBF }
+	}
+}
+
+# The foundation of Heavenly Stellar Empire 
+news_event = {
+	id = hoh_nation_formed.1
+	title = hoh_nation_formed.1.t
+	desc = hoh_nation_formed.1.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	immediate = {
+		set_global_flag = form_hse_flag
+		play_creation_and_beyond_effect = yes
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = hoh_nation_formed.1.a
+		trigger = {
+			NOT = {
+				TAG = STE
+			}
+		}
+	}
+	option = {
+		name = hoh_nation_formed.1.b
+		trigger = { TAG = STE }
+	}
+}
+
+# The foundation of NPTO 
+news_event = {
+	id = hoh_nation_formed.2
+	title = hoh_nation_formed.2.t
+	desc = hoh_nation_formed.2.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	immediate = {
+		set_global_flag = form_npto_flag
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = hoh_nation_formed.2.a
+		trigger = {
+			NOT = {
+				TAG = STE
+			}
+		}
+	}
+	option = {
+		name = hoh_nation_formed.2.b
+		trigger = { TAG = STE }
+	}
+}
+
+# The foundation of Ezochi 
+news_event = {
+	id = hoh_nation_formed.3
+	title = hoh_nation_formed.3.t
+	desc = hoh_nation_formed.3.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	immediate = {
+		set_global_flag = form_ezochi_flag
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = hoh_nation_formed.3.a
+		trigger = {
+			NOT = {
+				TAG = HOK 
+			}
+		}
+	}
+	option = {
+		name = hoh_nation_formed.3.b
+		trigger = { TAG = HOK }
+	}
+}
+
+# The unification of Armonlanc 
+news_event = {
+	id = hoh_nation_formed.4
+	title = hoh_nation_formed.4.t
+	desc = hoh_nation_formed.4.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	immediate = {
+		set_global_flag = form_armonlanc_flag_global
+		play_over_hills_and_dales_effect = yes
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = hoh_nation_formed.4.a
+		trigger = { 
+      OR = {
+        original_tag = OKH
+        original_tag = MAG
+        original_tag = CHK
+        original_tag = KYA
+      } 
+    }
+	}
+	option = {
+		name = hoh_nation_formed.4.b
+		trigger = {
+			NOT = {
+        original_tag = OKH
+        original_tag = MAG
+        original_tag = CHK
+        original_tag = KYA
+			}
+		}
+	}
+}
+
+# The foundation of UNE 
+news_event = {
+	id = hoh_nation_formed.5
+	title = hoh_nation_formed.5.t
+	desc = hoh_nation_formed.5.d
+	picture = GFX_news_event_un_flag_sky
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		set_global_flag = form_une_flag
+		play_united_nations_on_the_march_effect = yes
+	}
+	
+	option = { 
+		name = hoh_nation_formed.5.a
+		trigger = { is_kalperson_country = yes }
+	}
+	option = {
+		name = hoh_nation_formed.5.b
+		trigger = { is_kalperson_country = no }
+	}
+}
+
+# The unification of Guyana
+news_event = {
+	id = hoh_nation_formed.6
+	title = hoh_nation_formed.6.t
+	desc = hoh_nation_formed.6.d
+	picture = GFX_news_event_guyana_map
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		set_global_flag = form_guyana_flag
+	}
+	
+	option = { 
+		name = hoh_nation_formed.6.a
+		trigger = { 
+      OR = {
+        original_tag = GYA
+        original_tag = SUR
+        original_tag = CAY
+      } 
+		}
+	}
+	option = {
+		name = hoh_nation_formed.6.b
+		trigger = { 
+      NOT = {
+        original_tag = GYA
+        original_tag = SUR
+        original_tag = CAY
+      }  
+    }
+	}
+}
+
+# The foundation of Sápmi
+news_event = {
+	id = hoh_nation_formed.7
+	title = hoh_nation_formed.7.t
+	desc = hoh_nation_formed.7.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = hoh_nation_formed.7.a
+		trigger = { 
+      original_tag = MRM
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.7.b
+		trigger = { 
+      OR = {
+        original_tag = NOR
+        original_tag = SWE
+        original_tag = FIN
+        original_tag = SOV
+      } 
+		}
+	}
+	option = {
+		name = hoh_nation_formed.7.c
+		trigger = { 
+      NOT = {
+        original_tag = MRM
+        original_tag = NOR
+        original_tag = SWE
+        original_tag = FIN
+        original_tag = SOV
+      }  
+    }
+	}
+}
+
+# The reunification of Germany
+news_event = {
+	id = hoh_nation_formed.8
+	title = hoh_nation_formed.8.t
+	desc = hoh_nation_formed.8.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	immediate = {
+    if = {
+      limit = { FROM = { has_government = communism } }
+      play_auferstanden_aus_ruinen_effect = yes
+    }
+    else = {
+      play_das_deutschlandlied_effect = yes
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = hoh_nation_formed.8.a
+		trigger = { 
+			OR = {
+        is_german_country = yes
+        original_tag = AUS
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.8.b
+		trigger = { 
+			NOT = {
+        is_german_country = yes
+        original_tag = AUS
+			}
+		}
+	}
+}
+
+# The reunification of Soviet Union
+news_event = {
+	id = hoh_nation_formed.9
+	title = hoh_nation_formed.9.t
+	desc = hoh_nation_formed.9.d
+	picture = GFX_news_event_journalists_speech
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		play_hymn_of_the_ussr_effect = yes
+	}
+	
+	option = { 
+		name = hoh_nation_formed.9.a
+		trigger = { 
+			has_government = communism
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.9.b
+		trigger = { 
+			NOT = {
+        has_government = communism
+			}
+		}
+	}
+}
+
+# The restoration of North Germany
+news_event = {
+	id = hoh_nation_formed.10
+	title = hoh_nation_formed.10.t
+	desc = hoh_nation_formed.10.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	immediate = {
+		play_was_ist_des_deutschen_vaterland_effect = yes
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = hoh_nation_formed.10.a
+		trigger = { 
+			OR = {
+        original_tag = PRE
+        original_tag = HAN
+        original_tag = MEK
+        original_tag = SHL
+        original_tag = SIL
+        original_tag = RHI
+        original_tag = KLN
+        original_tag = HES
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.10.b
+		trigger = { 
+			OR = {
+        original_tag = BAY
+        original_tag = WUR
+        original_tag = AUS
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.10.c
+		trigger = { 
+			NOT = {
+        original_tag = PRE
+        original_tag = HAN
+        original_tag = MEK
+        original_tag = SHL
+        original_tag = SIL
+        original_tag = RHI
+        original_tag = KLN
+        original_tag = HES
+        original_tag = BAY
+        original_tag = WUR
+        original_tag = AUS
+			}
+		}
+	}
+}
+
+# The restoration of South Germany
+news_event = {
+	id = hoh_nation_formed.11
+	title = hoh_nation_formed.11.t
+	desc = hoh_nation_formed.11.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	immediate = {
+		play_das_lied_der_deutschen_effect = yes
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = hoh_nation_formed.10.a
+		trigger = { 
+			OR = {
+        original_tag = BAY
+        original_tag = WUR
+        original_tag = AUS
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.11.a
+		trigger = { 
+			OR = {
+        original_tag = PRE
+        original_tag = HAN
+        original_tag = MEK
+        original_tag = SHL
+        original_tag = SIL
+        original_tag = RHI
+        original_tag = KLN
+        original_tag = HES
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.11.b
+		trigger = { 
+			NOT = {
+        original_tag = PRE
+        original_tag = HAN
+        original_tag = MEK
+        original_tag = SHL
+        original_tag = SIL
+        original_tag = RHI
+        original_tag = KLN
+        original_tag = HES
+        original_tag = BAY
+        original_tag = WUR
+        original_tag = AUS
+			}
+		}
+	}
+}
+
+# The reunification of Siberian Krai
+news_event = {
+	id = hoh_nation_formed.12
+	title = hoh_nation_formed.12.t
+	desc = hoh_nation_formed.12.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		#play_hymn_of_the_ussr_effect = yes
+	}
+	
+	option = { 
+		name = hoh_nation_formed.12.a
+		trigger = { 
+			OR = {
+        original_tag = OMS
+        original_tag = NSB
+        original_tag = KNY
+        original_tag = IRK
+        #original_tag = ALT
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.12.b
+		trigger = { 
+			NOT = {
+        original_tag = OMS
+        original_tag = NSB
+        original_tag = KNY
+        original_tag = IRK
+        #original_tag = ALT
+			}
+		}
+	}
+}
+
+# The reunification of Urals
+news_event = {
+	id = hoh_nation_formed.13
+	title = hoh_nation_formed.13.t
+	desc = hoh_nation_formed.13.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		#play_hymn_of_the_ussr_effect = yes
+	}
+	
+	option = { 
+		name = hoh_nation_formed.13.a
+		trigger = { 
+			OR = {
+        original_tag = SVD
+        original_tag = PEM
+        original_tag = ORB
+        #original_tag = YAM
+        #original_tag = OVO
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.13.b
+		trigger = { 
+			NOT = {
+        original_tag = SVD
+        original_tag = PEM
+        #original_tag = YAM
+        #original_tag = OVO
+			}
+		}
+	}
+}
+
+# The restoration of Far Eastern Republic
+news_event = {
+	id = hoh_nation_formed.14
+	title = hoh_nation_formed.14.t
+	desc = hoh_nation_formed.14.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		#play_hymn_of_the_ussr_effect = yes
+	}
+	
+	option = { 
+		name = hoh_nation_formed.14.a
+		trigger = { 
+			OR = {
+        original_tag = AMU
+        original_tag = BZH
+        original_tag = KHR
+        original_tag = PRM
+        original_tag = TRM
+        #original_tag = OKH
+        #original_tag = SKH
+        #original_tag = MAG
+        #original_tag = KAM
+        original_tag = CHT
+        original_tag = BYA
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.14.b
+		trigger = { 
+			NOT = {
+        original_tag = AMU
+        original_tag = BZH
+        original_tag = KHR
+        original_tag = PRM
+        original_tag = TRM
+        #original_tag = OKH
+        #original_tag = SKH
+        #original_tag = MAG
+        #original_tag = KAM
+        original_tag = CHT
+        original_tag = BYA
+			}
+		}
+	}
+}
+
+# The reunification of Russia
+news_event = {
+	id = hoh_nation_formed.15
+	title = hoh_nation_formed.15.t
+	desc = hoh_nation_formed.15.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		play_the_patriotic_song_effect = yes
+	}
+	
+	option = { 
+		name = hoh_nation_formed.15.a
+		trigger = { 
+			has_country_flag = reunite_russia_flag
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.15.b
+		trigger = { 
+			NOT = {
+        has_country_flag = reunite_russia_flag
+			}
+			is_russian_country = yes
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.15.c
+		trigger = { 
+			NOT = {
+        has_country_flag = reunite_russia_flag
+			}
+			is_russian_country = no
+		}
+	}
+}
+
+# The reunification of Northen Oblast
+news_event = {
+	id = hoh_nation_formed.16
+	title = hoh_nation_formed.16.t
+	desc = hoh_nation_formed.16.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		#play_hymn_of_the_ussr_effect = yes
+	}
+	
+	option = { 
+		name = hoh_nation_formed.16.a
+		trigger = { 
+			OR = {
+        original_tag = WHS
+        original_tag = VLG
+        #original_tag = KOM
+        #original_tag = NNE
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.16.b
+		trigger = { 
+			OR = {
+        original_tag = FIN
+        original_tag = NOV
+        original_tag = MOS
+        original_tag = MRM
+        original_tag = PRM
+        original_tag = KRV
+        #original_tag = KAR
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.16.c
+		trigger = { 
+			NOT = {
+        original_tag = WHS
+        original_tag = VLG
+        original_tag = FIN
+        original_tag = NOV
+        original_tag = MOS
+        original_tag = MRM
+        original_tag = PRM
+        original_tag = KRV
+        #original_tag = KOM
+        #original_tag = NNE
+        #original_tag = KAR
+			}
+		}
+	}
+}
+
+# The reunification of Western Oblast/Lithuania-White Ruthenia
+news_event = {
+	id = hoh_nation_formed.17
+	title = hoh_nation_formed.17.t
+	desc = hoh_nation_formed.17.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		#play_hymn_of_the_ussr_effect = yes
+	}
+	
+	option = { 
+		name = hoh_nation_formed.17.a
+		trigger = { 
+			OR = {
+        original_tag = SMO
+        original_tag = BLR
+        original_tag = LIT
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.16.b
+		trigger = { 
+			OR = {
+        original_tag = LAT
+        original_tag = EST
+        original_tag = NOV
+        original_tag = MOS
+        original_tag = PSK
+        original_tag = UKR
+        original_tag = POL
+        original_tag = GER
+        original_tag = GAL
+        original_tag = MRU
+        original_tag = OKA
+        original_tag = TVE
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.17.c
+		trigger = { 
+			NOT = {
+        original_tag = SMO
+        original_tag = BLR
+        original_tag = LIT
+        original_tag = LAT
+        original_tag = EST
+        original_tag = NOV
+        original_tag = MOS
+        original_tag = PSK
+        original_tag = UKR
+        original_tag = POL
+        original_tag = GER
+        original_tag = GAL
+        original_tag = MRU
+        original_tag = OKA
+        original_tag = TVE
+			}
+		}
+	}
+}
+
+# The reunification of Stellarland 
+news_event = {
+	id = hoh_nation_formed.18
+	title = hoh_nation_formed.18.t
+	desc = hoh_nation_formed.18.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	immediate = {
+		set_global_flag = reunite_stellarland_flag
+		play_gravitational_constant_effect = yes
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = hoh_nation_formed.18.a
+		trigger = { 
+      original_tag = KAM
+    }
+	}
+	option = {
+		name = hoh_nation_formed.18.b
+		trigger = {
+			NOT = {
+        original_tag = KAM
+			}
+		}
+	}
+}
+
+# The establishment of West Germany 
+news_event = {
+	id = hoh_nation_formed.19
+	title = hoh_nation_formed.19.t
+	desc = hoh_nation_formed.19.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	immediate = {
+    play_das_deutschlandlied_effect = yes
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = hoh_nation_formed.19.a
+		trigger = { 
+      OR = {
+        original_tag = WGR
+        original_tag = HAN
+        original_tag = SHL
+        original_tag = RHI
+        original_tag = HES
+        original_tag = KLN
+        original_tag = BAY
+        original_tag = WUR
+			}
+			has_government = democratic
+    }
+	}
+	option = {
+		name = hoh_nation_formed.19.b
+		trigger = {
+      OR = {
+        original_tag = DDR
+        original_tag = HAN
+        original_tag = SHL
+        original_tag = RHI
+        original_tag = HES
+        original_tag = KLN
+        original_tag = BAY
+        original_tag = WUR
+        AND = {
+          OR = {
+            original_tag = WGR
+            original_tag = HAN
+            original_tag = SHL
+            original_tag = RHI
+            original_tag = HES
+            original_tag = KLN
+            original_tag = BAY
+            original_tag = WUR
+          }
+          NOT = { has_government = democratic }
+        }
+			}
+		}
+	}
+	option = {
+		name = hoh_nation_formed.19.c
+		trigger = {
+			NOT = {
+        original_tag = WGR
+        original_tag = HAN
+        original_tag = SHL
+        original_tag = RHI
+        original_tag = HES
+        original_tag = KLN
+        original_tag = BAY
+        original_tag = WUR
+        original_tag = DDR
+        original_tag = HAN
+        original_tag = SHL
+        original_tag = RHI
+        original_tag = HES
+        original_tag = KLN
+        original_tag = BAY
+        original_tag = WUR
+			}
+		}
+	}
+}
+
+# The establishment of East Germany 
+news_event = {
+	id = hoh_nation_formed.20
+	title = hoh_nation_formed.20.t
+	desc = hoh_nation_formed.20.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	immediate = {
+    play_auferstanden_aus_ruinen_effect = yes
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = hoh_nation_formed.19.a
+		trigger = { 
+      OR = {
+        original_tag = DDR
+        original_tag = PRE
+        original_tag = MEK
+        original_tag = SIL
+        original_tag = TEU
+        original_tag = POM
+        original_tag = SAX
+        original_tag = POS
+			}
+			has_government = communism
+    }
+	}
+	option = {
+		name = hoh_nation_formed.19.b
+		trigger = {
+      OR = {
+        original_tag = WGR
+        original_tag = HAN
+        original_tag = SHL
+        original_tag = RHI
+        original_tag = HES
+        original_tag = KLN
+        original_tag = BAY
+        original_tag = WUR
+        AND = {
+          OR = {
+            original_tag = DDR
+            original_tag = PRE
+            original_tag = MEK
+            original_tag = SIL
+            original_tag = TEU
+            original_tag = POM
+            original_tag = SAX
+            original_tag = POS
+          }
+          NOT = { has_government = communism }
+        }
+			}
+		}
+	}
+	option = {
+		name = hoh_nation_formed.20.c
+		trigger = {
+			NOT = {
+        original_tag = WGR
+        original_tag = HAN
+        original_tag = SHL
+        original_tag = RHI
+        original_tag = HES
+        original_tag = KLN
+        original_tag = BAY
+        original_tag = WUR
+        original_tag = DDR
+        original_tag = HAN
+        original_tag = SHL
+        original_tag = RHI
+        original_tag = HES
+        original_tag = KLN
+        original_tag = BAY
+        original_tag = WUR
+			}
+		}
+	}
+}
+
+# The reunification of Central Black Earth Region
+news_event = {
+	id = hoh_nation_formed.21
+	title = hoh_nation_formed.21.t
+	desc = hoh_nation_formed.21.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		#play_hymn_of_the_ussr_effect = yes
+	}
+	
+	option = { 
+		name = hoh_nation_formed.21.a
+		trigger = { 
+			OR = {
+        original_tag = VRO
+        original_tag = OKA
+        original_tag = TAM
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.21.b
+		trigger = { 
+			NOT = {
+        original_tag = VRO
+        original_tag = OKA
+        original_tag = TAM
+			}
+			OR = {
+        is_neighbor_of = VRO
+        is_neighbor_of = OKA
+        is_neighbor_of = TAM
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.21.c
+		trigger = { 
+			NOT = {
+        original_tag = VRO
+        original_tag = OKA
+        original_tag = TAM
+			}
+			NOT = {
+        is_neighbor_of = VRO
+        is_neighbor_of = OKA
+        is_neighbor_of = TAM
+			}
+		}
+	}
+}
+
+# The reunification of North Caucasia
+news_event = {
+	id = hoh_nation_formed.22
+	title = hoh_nation_formed.22.t
+	desc = hoh_nation_formed.22.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		#play_hymn_of_the_ussr_effect = yes
+	}
+	
+	option = { 
+		name = hoh_nation_formed.22.a
+		trigger = { 
+			OR = {
+        original_tag = DON
+        original_tag = KUB
+        original_tag = CRI
+        original_tag = DBS
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.22.b
+		trigger = { 
+			NOT = {
+        original_tag = DON
+        original_tag = KUB
+        original_tag = CRI
+        original_tag = DBS
+			}
+			OR = {
+        is_neighbor_of = DON
+        is_neighbor_of = KUB
+        is_neighbor_of = CRI
+        is_neighbor_of = DBS
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.22.c
+		trigger = { 
+			NOT = {
+        original_tag = DON
+        original_tag = KUB
+        original_tag = CRI
+        original_tag = DBS
+			}
+			NOT = {
+        is_neighbor_of = DON
+        is_neighbor_of = KUB
+        is_neighbor_of = CRI
+        is_neighbor_of = DBS
+			}
+		}
+	}
+}
+
+# The restoration of West Ukraine
+news_event = {
+	id = hoh_nation_formed.23
+	title = hoh_nation_formed.23.t
+	desc = hoh_nation_formed.23.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		#play_hymn_of_the_ussr_effect = yes
+	}
+	
+	option = { 
+		name = hoh_nation_formed.23.a
+		trigger = { 
+			OR = {
+        original_tag = CRP
+        original_tag = UKR
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.23.b
+		trigger = { 
+			OR = {
+        original_tag = POL
+        original_tag = BLR
+        original_tag = GAL
+        original_tag = HUN
+        original_tag = ROM
+        original_tag = CZE
+        original_tag = SLO
+			}
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.23.c
+		trigger = { 
+			NOT = {
+        original_tag = CRP
+        original_tag = UKR
+        original_tag = POL
+        original_tag = BLR
+        original_tag = GAL
+        original_tag = HUN
+        original_tag = ROM
+        original_tag = CZE
+        original_tag = SLO
+			}
+		}
+	}
+}
+
+# The reunification of Ukraine
+news_event = {
+	id = hoh_nation_formed.24
+	title = hoh_nation_formed.24.t
+	desc = hoh_nation_formed.24.d
+	picture = GFX_news_event_generic_parliament
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		#play_hymn_of_the_ussr_effect = yes
+	}
+	
+	option = { 
+		name = hoh_nation_formed.24.a
+		trigger = { 
+			OR = {
+        original_tag = CRP
+        original_tag = UKR
+			}
+			has_country_flag = reunite_ukraine_flag
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.24.b
+		trigger = { 
+			OR = {
+        original_tag = MRU
+        original_tag = NRU
+        original_tag = DBS
+			}
+			has_country_flag = reunite_ukraine_flag
+		}
+	}
+	option = { 
+		name = hoh_nation_formed.24.c
+		trigger = { 
+			NOT = {
+        original_tag = CRP
+        original_tag = UKR
+        original_tag = MRU
+        original_tag = NRU
+        original_tag = DBS
+			}
+		}
+	}
+}

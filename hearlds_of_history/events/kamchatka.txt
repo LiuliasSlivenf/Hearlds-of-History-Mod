@@ -1,0 +1,133 @@
+add_namespace = kamchatka
+
+# Stellarland is back, message for Kamchatka
+country_event = {
+	id = kamchatka.1
+	title = kamchatka.1.t
+	desc = kamchatka.1.d
+	picture = GFX_report_event_soviet_japanese_pact
+	
+	is_triggered_only = yes
+	immediate = {
+		set_global_flag = kamchatka_1_triggered
+	}
+	
+	option = { # Change tag to STE
+		name = kamchatka.1.a
+		ai_chance = { factor = 100 }
+		STE = {
+      annex_country = { target = KAM transfer_troops = yes } 
+      annex_country = { target = SKH transfer_troops = yes } 
+      annex_country = { target = CHK transfer_troops = yes } 
+      annex_country = { target = MAG transfer_troops = yes } 
+      annex_country = { target = OKH transfer_troops = yes } 
+      annex_country = { target = KYA transfer_troops = yes } 
+      annex_country = { target = AML transfer_troops = yes } 
+    }
+    if = {
+      limit = { KAM = { is_ai = no } }
+      STE = { change_tag_from = KAM }
+    }
+    if = {
+      limit = { SKH = { is_ai = no } }
+      STE = { change_tag_from = SKH }
+    }
+    if = {
+      limit = { CHK = { is_ai = no } }
+      STE = { change_tag_from = CHK }
+    }
+    if = {
+      limit = { MAG = { is_ai = no } }
+      STE = { change_tag_from = MAG }
+    }
+    if = {
+      limit = { OKH = { is_ai = no } }
+      STE = { change_tag_from = OKH }
+    }
+    if = {
+      limit = { KYA = { is_ai = no } }
+      STE = { change_tag_from = KYA }
+    }
+    if = {
+      limit = { AML = { is_ai = no } }
+      STE = { change_tag_from = AML }
+    }
+    hidden_effect = {
+      clr_global_flag = kamchatka_1_triggered
+      STE = {
+        load_oob = "STE_1939"
+        set_politics = {
+          ruling_party = neutrality
+          last_election = "1933.3.5"
+          election_frequency = 50
+          elections_allowed = no
+        }
+        set_popularities = {
+          neutrality = 100
+        }
+      }
+      every_state = {
+        limit = {
+          OR = { 
+            is_core_of = ROOT
+            is_core_of = SKH
+            is_core_of = CHK
+            is_core_of = MAG
+            is_core_of = OKH
+            is_core_of = KYA
+            is_core_of = AML
+            is_controlled_by = ROOT
+            is_controlled_by = SKH
+            is_controlled_by = CHK
+            is_controlled_by = MAG
+            is_controlled_by = OKH
+            is_controlled_by = KYA
+            is_controlled_by = AML
+          }
+        }
+        add_core_of = STE
+        remove_core_of = ROOT
+        remove_core_of = SKH
+        remove_core_of = CHK
+        remove_core_of = MAG
+        remove_core_of = OKH
+        remove_core_of = KYA
+        remove_core_of = AML
+      }
+      STE = {
+        drop_cosmetic_tag = yes
+      }
+    }
+	}
+	
+	option = { # Continue as KAM
+		name = kamchatka.1.b
+		ai_chance = { factor = 0 }
+    set_global_flag = kam_continue_as_kamchatka
+    #hidden_effect = {
+    #  637 = { 
+    #    set_state_name = "Central Kamchatka" 
+    #    add_manpower = -14090000
+    #  }
+    #  808 = { 
+    #    set_state_name = "South Kamchatka" 
+    #    add_manpower = -1409000
+    #  }
+    #  809 = { 
+    #    set_state_name = "West Kamchatka" 
+    #    add_manpower = 20000540
+    #  }
+    #  816 = { 
+    #    add_manpower = 3448900
+    #  }
+    #  813 = { 
+    #    set_state_name = "East Kamchatka" 
+    #    add_manpower = -10500000
+    #  }
+    #  set_province_name = { id = 7878 name = "East Kamchatka" }
+    #  set_province_name = { id = 12522 name = "West Kamchatka" }
+    #  set_province_name = { id = 1839 name = "Central Kamchatka" }
+    #  set_province_name = { id = 4728 name = "South Kamchatka" }
+    #}
+	}
+}

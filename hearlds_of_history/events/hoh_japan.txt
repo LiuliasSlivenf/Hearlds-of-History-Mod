@@ -1,0 +1,780 @@
+add_namespace = hoh_japan
+
+#Operation Hokkaido, message for Stellarland
+country_event = {
+	id = hoh_japan.1
+	title = hoh_japan.1.t
+	desc = hoh_japan.1.d
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+	
+	option = { # Set a puppet state
+		name = hoh_japan.1.a
+		ai_chance = { factor = 90 }
+    add_political_power = 100
+    HOK = { transfer_state = 536 }
+		puppet = HOK
+    JAP = { 
+      country_event = hoh_japan.2
+    }
+	}
+	option = { # Set them free
+		name = hoh_japan.1.b
+		ai_chance = { factor = 0 }
+		trigger = {
+      HOK = { exists = no }
+		}
+    HOK = { transfer_state = 536 }
+    JAP = { 
+      country_event = hoh_japan.3
+    }
+	}
+	option = { # Keep our occupation
+		name = hoh_japan.1.c
+		ai_chance = { 
+      factor = 10 
+			modifier = {
+				has_war_with = HOK
+				factor = 100
+			}
+			modifier = {
+				divisions_in_state = {
+						state = 536
+						size > 10 
+				}
+				factor = 100
+			}
+		}
+    add_political_power = -20
+		add_state_claim = 536
+	}
+}
+
+#Operation Hokkaido, Stellarland sets a puppet, message for Japan
+country_event = {
+	id = hoh_japan.2
+	title = hoh_japan.2.t
+	desc = hoh_japan.2.d
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+	
+	option = { # We will fight them back
+		name = hoh_japan.2.a
+		ai_chance = { factor = 90 }
+    add_war_support = 0.05
+		add_state_claim = 536
+    news_event = { hours = 6 id = hoh_news.13 }
+	}
+	option = { # Recognize their independence
+		name = hoh_japan.2.b
+		ai_chance = { factor = 10 }
+    add_political_power = -10
+    add_war_support = -0.05
+    remove_state_core = 536
+    news_event = { hours = 6 id = hoh_news.14 }
+    every_other_country = {
+      limit = {
+        is_subject_of = ROOT
+      }
+      add_timed_idea = { idea = gain_inspiration_from_hokkaido days = 730 }
+    }
+	}
+}
+
+#Operation Hokkaido, Stellarland sets Hokkaido free, message for Japan
+country_event = {
+	id = hoh_japan.3
+	title = hoh_japan.2.t
+	desc = hoh_japan.3.d
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+	
+	option = { # Declare war on Hokkaido
+		name = hoh_japan.2.a
+		ai_chance = { factor = 90 }
+    add_war_support = 0.05
+    create_wargoal = {
+      type = take_core_state
+      target = HOK
+      generator = { 536 }
+    }
+    news_event = { hours = 6 id = hoh_news.13 }
+	}
+	option = { # Recognize their independence
+		name = hoh_japan.2.a
+		ai_chance = { factor = 10 }
+    add_political_power = -10
+    add_war_support = -0.05
+		white_peace = HOK
+		if = {
+      limit = {
+        HOK = { is_in_faction = yes }
+      }
+      HOK = { leave_faction = yes }
+		}
+    #diplomatic_relation = {
+    #  country = HOK
+    #  relation = white_peace
+    #  active = yes
+    #}
+    every_other_country = {
+      limit = {
+        is_subject_of = ROOT
+      }
+      add_timed_idea = { idea = gain_inspiration_from_hokkaido days = 730 }
+    }
+    news_event = { hours = 6 id = hoh_news.14 }
+	}
+}
+
+#Operation Hokkaido, which way to choose, message for Stellarland
+country_event = {
+	id = hoh_japan.4
+	title = hoh_japan.4.t
+	desc = hoh_japan.4.d
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+	
+	option = { # penetrate
+		name = hoh_japan.4.a
+		ai_chance = { factor = 10 }
+		set_country_flag = ste_penetrate_hokkaido
+    unlock_decision_tooltip = { decision = penetrate_hokkaido show_effect_tooltip = no show_modifiers = no }
+	}
+	option = { # strategic bombing
+		name = hoh_japan.4.b
+		ai_chance = { factor = 90 }
+		trigger = {
+      has_completed_focus = STE_military_focus_13
+		}
+		set_country_flag = ste_bomb_hokkaido
+    unlock_decision_tooltip = { decision = strike_garrison_in_hokkaido show_effect_tooltip = no show_modifiers = no }
+	}
+}
+
+#Hokkaido garrison bombed by STE, which way to choose, message for Japan
+country_event = {
+	id = hoh_japan.5
+	title = hoh_japan.5.t
+	desc = hoh_japan.5.d
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_japan.5.a
+		ai_chance = { factor = 10 }
+	}
+}
+
+#Manchukuo seeks intervention in war with Hinggan, message for Japan
+country_event = {
+	id = hoh_japan.6
+	title = hoh_japan.6.t
+	desc = hoh_japan.6.d
+	picture = GFX_report_event_japanese_soldiers_01
+	
+	is_triggered_only = yes
+	
+	option = { # Accept
+		name = hoh_japan.6.a
+		ai_chance = { 
+      factor = 5 
+			modifier = {
+				factor = 0
+        has_defensive_war = yes
+			}
+    }
+		FROM = {
+			country_event = hoh_japan.7
+      add_to_war = { targeted_alliance = ROOT enemy = OHG hostility_reason = asked_to_join }
+		}
+    news_event = { hours = 6 id = hoh_news.42 }
+	}
+	option = { # Reject
+		name = hoh_japan.6.b
+		ai_chance = { 
+      factor = 1 
+			modifier = {#Low down the difficulty for OHG player
+				factor = 20
+        OHG = { is_ai = no }
+			}
+			modifier = {#Do not intervene in a losing war
+				factor = 20
+        FROM = { surrender_progress > 0.7 }
+			}
+			modifier = {#Do not get into a world war
+				factor = 50
+        OHG = { is_in_faction = yes }
+			}
+    }
+		FROM = {
+			country_event = hoh_japan.8
+    }
+	}
+}
+
+#Manchukuo seeks intervention in war with Hinggan, Japan accepts, message for Manchukuo
+country_event = {
+	id = hoh_japan.7
+	title = hoh_japan.7.t
+	desc = hoh_japan.7.d
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_japan.7.a
+		ai_chance = { factor = 10 }
+    add_autonomy_score = {
+      value = -100
+      localization = "hoh_japan.6"
+    }
+    OHG = { country_event = centralland.28 }
+	}
+}
+
+#Manchukuo seeks intervention in war with Hinggan, Japan rejects, message for Manchukuo
+country_event = {
+	id = hoh_japan.8
+	title = hoh_japan.8.t
+	desc = hoh_japan.8.d
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_japan.8.a
+		ai_chance = { factor = 10 }
+		remove_ideas = MAN_kwantung_veto
+    add_autonomy_score = {
+      value = 150
+      localization = "hoh_japan.6"
+    }
+	}
+}
+
+# Event for China that Japan wants to surrender, fixed in hoh
+country_event = {
+	id = hoh_japan.9
+	title = wtt_japan.126.t
+	desc = wtt_japan.126.desc
+	picture = GFX_report_event_japanese_chinese_surrender
+
+	is_triggered_only = yes
+	
+	# We accept their surrender.
+	option = {
+		name = wtt_japan.126.a
+		effect_tooltip = {
+      if = {
+        limit = {
+          525 = { NOT = { is_controlled_by = FROM } }
+          527 = { NOT = { is_controlled_by = FROM } }
+        }
+        525 = {
+          CONTROLLER = { transfer_state = 525 }
+        }
+        527 = {
+          CONTROLLER = { transfer_state = 527 }
+        }
+      }
+			else = {
+				FROM = { release = KOR }
+				puppet = KOR
+			}
+			if = {
+				limit = {
+					524 = {
+						is_controlled_by = FROM
+					}
+				}
+				event_target:WTT_current_china_leader = {
+					transfer_state = 524
+				}
+			}
+			if = {
+				limit = {
+					526 = {
+						is_controlled_by = FROM
+					}
+				}
+				event_target:WTT_current_china_leader = {
+					transfer_state = 526
+				}
+			}
+			if = {
+				limit = {
+					event_target:WTT_current_china_leader = { #Chinese United Front
+						is_faction_leader = yes
+					}
+				}
+				every_country = {
+					limit = {
+						is_literally_china = yes
+						has_war_with = FROM
+						is_in_faction_with = event_target:WTT_current_china_leader
+					}
+					every_controlled_state = {
+						limit = {
+							OWNER = {
+								OR = {
+									original_tag = FROM
+									is_subject_of = FROM
+									is_in_faction_with = FROM
+								}
+							}
+						}
+						CONTROLLER = {
+							transfer_state = PREV
+						}
+					}
+				}
+				every_other_country = {
+					limit = {
+						is_literally_china = yes
+						has_war_with = FROM
+						is_in_faction_with = event_target:WTT_current_china_leader
+					}
+					white_peace = FROM
+				}
+			}
+			else = {
+				every_other_country = {
+					limit = {
+						is_literally_china = yes
+						has_war_with = FROM
+					}
+					every_controlled_state = {
+						limit = {
+							OWNER = {
+								OR = {
+									original_tag = FROM
+									is_subject_of = FROM
+									is_in_faction_with = FROM
+								}
+							}
+						}
+						CONTROLLER = {
+							transfer_state = PREV
+						}
+					}
+				}
+				every_other_country = {
+					limit = {
+						is_literally_china = yes
+						has_war_with = FROM
+					}
+					white_peace = FROM
+				}
+			}
+		}
+		FROM = {
+			country_event = { id = hoh_japan.10 }
+		}
+		set_country_flag = achievement_JAP_sue_for_peace_CHI_completed
+		
+		ai_chance = {
+			factor = 90
+		}
+	}
+
+	# No surrender! We want total victory!
+	option = {
+		name = wtt_japan.126.b
+		FROM = {
+			country_event = { id = wtt_japan.128 }
+		}
+		
+		ai_chance = { # If Japan has lots of major enemies, the AI will not make a separate peace
+			factor = 10
+			modifier = {
+				add = 50
+				any_other_country = {
+          is_major = yes
+					has_war_with = FROM
+					NOT = {
+						has_war_with = ROOT
+					}
+				}
+			}
+			modifier = {
+				add = 50
+				USA = {
+					has_war_with = FROM
+					NOT = {
+						has_war_with = ROOT
+					}
+				}
+			}
+			modifier = {
+				add = 40
+				ENG = {
+					has_war_with = FROM
+					NOT = {
+						has_war_with = ROOT
+					}
+				}
+			}
+			modifier = {
+				add = 30
+				SOV = {
+					has_war_with = FROM
+					NOT = {
+						has_war_with = ROOT
+					}
+				}
+			}
+			modifier = {
+				add = 20
+				FRA = {
+					has_war_with = FROM
+					NOT = {
+						has_war_with = ROOT
+					}
+				}
+			}
+			modifier = {
+				add = 10
+				GER = {
+					has_war_with = FROM
+					NOT = {
+						has_war_with = ROOT
+					}
+				}
+			}
+			modifier = {
+				add = 10
+				HOL = {
+					has_war_with = FROM
+					NOT = {
+						has_war_with = ROOT
+					}
+				}
+			}
+			modifier = {
+				add = 10
+				ITA = {
+					has_war_with = FROM
+					NOT = {
+						has_war_with = ROOT
+					}
+				}
+			}
+			modifier = {
+				add = 10
+				STE = {
+					has_war_with = FROM
+					NOT = {
+						has_war_with = ROOT
+					}
+				}
+			}
+		}
+	}
+}
+
+# Event for Japan that China has accepted
+country_event = {
+	id = hoh_japan.10
+	title = wtt_japan.127.t
+	desc = wtt_japan.127.desc
+	picture = GFX_report_event_japanese_chinese_surrender
+
+	is_triggered_only = yes
+	
+	# They have accepted.
+	option = {
+		name = wtt_japan.127.a
+    if = {
+      limit = {
+        525 = { NOT = { is_controlled_by = ROOT } }
+        527 = { NOT = { is_controlled_by = ROOT } }
+      }
+      525 = {
+        CONTROLLER = { transfer_state = 525 }
+      }
+      527 = {
+        CONTROLLER = { transfer_state = 527 }
+      }
+    }
+		else = {
+			release = KOR 
+			FROM = { puppet = KOR }
+		}
+		if = {
+			limit = {
+				524 = { #Taiwan
+					is_controlled_by = ROOT
+				}
+			}
+			event_target:WTT_current_china_leader = {
+				transfer_state = 524
+			}
+		}
+		if = {
+			limit = {
+				526 = { #Ryukyu
+					is_controlled_by = ROOT
+				}
+			}
+			event_target:WTT_current_china_leader = {
+				transfer_state = 526
+			}
+		}
+		if = {
+			limit = {
+				event_target:WTT_current_china_leader = { #Chinese United Front
+					is_faction_leader = yes
+				}
+			}
+			every_country = {
+				limit = {
+					is_literally_china = yes
+					has_war_with = ROOT
+					is_in_faction_with = event_target:WTT_current_china_leader
+				}
+				every_controlled_state = {
+					limit = {
+						OWNER = {
+							OR = {
+								original_tag = ROOT
+								is_subject_of = ROOT
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+					CONTROLLER = {
+						transfer_state = PREV
+					}
+				}
+			}
+			every_other_country = {
+				limit = {
+					is_literally_china = yes
+					has_war_with = ROOT
+					is_in_faction_with = event_target:WTT_current_china_leader
+				}
+				white_peace = ROOT
+			}
+		}
+		else = {
+			every_other_country = {
+				limit = {
+					is_literally_china = yes
+					has_war_with = ROOT
+				}
+				every_controlled_state = {
+					limit = {
+						OWNER = {
+							OR = {
+								original_tag = ROOT
+								is_subject_of = ROOT
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+					CONTROLLER = {
+						transfer_state = PREV
+					}
+				}
+			}
+			every_other_country = {
+				limit = {
+					is_literally_china = yes
+					has_war_with = ROOT
+				}
+				white_peace = ROOT
+			}
+		}
+		hidden_effect = {
+			set_truce = {
+				target = PRC
+				days = 730
+			}
+			set_truce = {
+				target = CHI
+				days = 730
+			}
+			set_truce = {
+				target = XSM
+				days = 730
+			}
+			set_truce = {
+				target = SHX
+				days = 730
+			}
+			set_truce = {
+				target = GXC
+				days = 730
+			}
+			set_truce = {
+				target = YUN
+				days = 730
+			}
+			set_truce = {
+				target = SIK
+				days = 730
+			}
+		}
+	}
+}
+
+# Event for MAN that Japan wants to surrender, fixed in hoh
+country_event = {
+	id = hoh_japan.11
+	title = wtt_japan.126.t
+	desc = wtt_japan.126.desc
+	picture = GFX_report_event_japanese_chinese_surrender
+
+	is_triggered_only = yes
+	
+	# We accept their surrender.
+	option = {
+		name = wtt_japan.126.a
+		ai_chance = {
+			factor = 1
+		}
+		effect_tooltip = {
+      if = {
+        limit = {
+          525 = { NOT = { is_controlled_by = FROM } }
+          527 = { NOT = { is_controlled_by = FROM } }
+        }
+        525 = {
+          CONTROLLER = { transfer_state = 525 }
+        }
+        527 = {
+          CONTROLLER = { transfer_state = 527 }
+        }
+      }
+			else = {
+				FROM = { release = KOR }
+				puppet = KOR
+			}
+			if = {
+				limit = {
+					524 = {
+						is_controlled_by = FROM
+					}
+				}
+				transfer_state = 524
+			}
+			if = {
+				limit = {
+					526 = {
+						is_controlled_by = FROM
+					}
+				}
+				transfer_state = 526
+			}
+			ROOT = {
+				every_controlled_state = {
+					limit = {
+						OR = {
+							is_owned_by = FROM
+							AND = {
+								is_owned_by = MEN
+								MEN = { is_subject_of = FROM }
+							}
+						}
+						NOT = {
+							state = 525
+							state = 527
+						}
+					}
+					every_country = {
+						limit = {
+							original_tag = ROOT
+							controls_state = PREV
+						}
+						transfer_state = PREV
+					}
+				}
+				white_peace = FROM
+			}
+		}
+		FROM = {
+			country_event = { id = hoh_japan.12 }
+		}
+	}
+
+	# No surrender! We want total victory!
+	option = {
+		name = wtt_japan.126.b
+		ai_chance = {
+			factor = 0
+		}
+		FROM = {
+			country_event = { id = wtt_japan.128 }
+		}
+	}
+}
+
+# Event for Japan that MAN has accepted
+country_event = {
+	id = hoh_japan.12
+	title = wtt_japan.127.t
+	desc = wtt_japan.127.desc
+	picture = GFX_report_event_japanese_chinese_surrender
+
+	is_triggered_only = yes
+	
+	# They have accepted.
+	option = {
+		name = wtt_japan.127.a
+    if = {
+      limit = {
+        525 = { NOT = { is_controlled_by = ROOT } }
+        527 = { NOT = { is_controlled_by = ROOT } }
+      }
+      525 = {
+        CONTROLLER = { transfer_state = 525 }
+      }
+      527 = {
+        CONTROLLER = { transfer_state = 527 }
+      }
+    }
+		else = {
+			release = KOR 
+			FROM = { puppet = KOR }
+		}
+		if = {
+			limit = {
+				524 = { #Taiwan
+					is_controlled_by = ROOT
+				}
+			}
+			FROM = { transfer_state = 524 }
+		}
+		if = {
+			limit = {
+				526 = { #Ryukyu
+					is_controlled_by = ROOT
+				}
+			}
+			FROM = { transfer_state = 526 }
+		}
+		FROM = {
+			every_controlled_state = {
+				limit = {
+					OR = {
+						is_owned_by = ROOT
+						AND = {
+							is_owned_by = MEN
+							MEN = { is_subject_of = ROOT }
+						}
+					}
+				}
+				FROM = {
+					transfer_state = PREV
+				}
+			}
+			white_peace = ROOT
+		}
+	}
+}

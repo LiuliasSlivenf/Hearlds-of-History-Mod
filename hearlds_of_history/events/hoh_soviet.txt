@@ -1,0 +1,351 @@
+add_namespace = hoh_soviet
+
+# Reconcile Stellarland, message for STE
+country_event = {
+	id = hoh_soviet.1
+	title = hoh_soviet.1.t
+	desc = hoh_soviet.1.d
+	picture = GFX_report_event_soviet_japanese_pact
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_soviet.1.a
+		ai_chance = { factor = 100 }
+		add_opinion_modifier = {
+			target = FROM
+			modifier = sov_reconcile_stellarland
+	  }
+	  FROM = {
+      add_opinion_modifier = {
+        target = ROOT
+        modifier = sov_reconcile_stellarland
+      }
+	  }
+	}
+}
+
+# Restore Cooperation with Stellarland, message for Stellarland
+country_event = {
+	id = hoh_soviet.2
+	title = hoh_soviet.2.t
+	desc = hoh_soviet.2.d
+	picture = GFX_report_event_soviet_german_soldier_handshake
+	
+	is_triggered_only = yes
+	
+	option = { # We can cooperate
+		name = hoh_soviet.2.a
+		ai_chance = { 
+      base = 60 
+			modifier = {
+				has_war = yes
+				is_in_faction = no
+				add = 100
+			}
+			modifier = {
+				is_in_faction_with = FROM
+				add = 100
+			}
+			modifier = {
+				FROM = { has_war = yes }
+				add = 100
+			}
+		}
+    add_opinion_modifier = { target = FROM modifier = RUS_restore_cooperation_with_stellarland }
+    add_tech_bonus = {
+      name = SOV_restore_cooperation_with_stellarland
+      bonus = 1.0
+      category = land_doctrine
+    }
+    add_tech_bonus = {
+      name = SOV_restore_cooperation_with_stellarland
+      bonus = 1.0
+      uses = 1
+      category = armor
+    }
+    FROM = {
+			add_tech_bonus = {
+				name = SOV_restore_cooperation_with_stellarland
+				bonus = 1.0
+				uses = 1
+        ahead_reduction = 2
+				category = land_doctrine
+			}
+      add_tech_bonus = {
+        name = SOV_restore_cooperation_with_stellarland
+        bonus = 1.0
+        uses = 1
+				ahead_reduction = 1
+        category = cat_light_armor
+      }
+			add_tech_bonus = {
+				name = SOV_restore_cooperation_with_stellarland
+				bonus = 1.0
+				uses = 1
+				ahead_reduction = 3
+				category = cat_mechanized_equipment
+			}
+		}
+		effect_tooltip = {
+      FROM = {
+        give_resource_rights = { receiver = ROOT state = 222 }
+        give_resource_rights = { receiver = ROOT state = 229 }
+        give_resource_rights = { receiver = ROOT state = 560 }
+        give_resource_rights = { receiver = ROOT state = 581 }
+        give_resource_rights = { receiver = ROOT state = 586 }
+      }
+		}
+	}
+	option = { # Nope, thank you
+		name = hoh_soviet.2.b
+		ai_chance = { factor = 40 }
+    add_opinion_modifier = { target = FROM modifier = RUS_restore_cooperation_with_stellarland }
+    add_offsite_building = { type = industrial_complex level = 2 }
+    add_offsite_building = { type = arms_factory level = 2 }
+    FROM = { 
+      add_offsite_building = { type = industrial_complex level = 2 }
+      add_offsite_building = { type = arms_factory level = 4 } 
+    }
+		effect_tooltip = {
+      FROM = {
+        give_resource_rights = { receiver = ROOT state = 222 }
+        give_resource_rights = { receiver = ROOT state = 229 }
+        give_resource_rights = { receiver = ROOT state = 560 }
+        give_resource_rights = { receiver = ROOT state = 581 }
+        give_resource_rights = { receiver = ROOT state = 586 }
+      }
+		}
+	}
+}
+
+# Russia seeks alliance, message for STE
+country_event = {
+	id = hoh_soviet.3
+	title = hoh_soviet.3.t
+	desc = hoh_soviet.3.d
+	picture = GFX_report_event_generic_sign_treaty3
+	
+	is_triggered_only = yes
+	
+	option = { # Join their faction
+		name = hoh_soviet.3.a
+		ai_chance = { 
+      factor = 30 
+			modifier = {
+				has_war = yes
+				is_in_faction = no
+				factor = 100
+			}
+			modifier = {
+				has_government = neutrality 
+				factor = 15
+			}
+			modifier = {
+        has_opinion = { target = FROM value > 74 }
+				factor = 80
+			}
+    }
+		hidden_effect = {
+      if = {
+        limit = {
+          is_in_faction = yes
+          is_faction_leader = no
+        }
+        leave_faction = yes
+      }
+      if = {
+        limit = {
+          is_faction_leader = yes 
+        }
+        every_other_country = {
+          limit = {
+            NOT = { tag = FROM }
+            is_in_faction_with = ROOT
+          }
+          set_country_flag = sov_starthen_faction_member
+        }
+        dismantle_faction = yes
+      }
+      FROM = { 
+        add_to_faction = ROOT 
+        every_other_country = {
+          limit = {
+            has_country_flag = sov_starthen_faction_member
+          }
+          FROM = { add_to_faction = PREV }
+          clr_country_flag = sov_starthen_faction_member
+        }
+        country_event = urbanlia.8
+      }
+			news_event = { hours = 1 id = news.289 }
+		}
+	}
+	option = { # Only non aggression pact
+		name = hoh_soviet.3.b
+		ai_chance = { 
+      factor = 40 
+			modifier = {
+				has_war = yes
+				is_in_faction = no
+				factor = 0
+			}
+			modifier = {
+				has_government = neutrality 
+				factor = 75
+			}
+			modifier = {
+        has_opinion = { target = FROM value > 74 }
+				factor = 10 # would rather choose to join them 
+			}
+    }
+		diplomatic_relation = { country = FROM relation = non_aggression_pact }
+	}
+	option = { # Reject
+		name = hoh_soviet.3.c
+		ai_chance = { 
+      factor = 30 
+			modifier = {
+				has_war = yes
+				is_in_faction = yes
+				is_faction_leader = no
+				factor = 0
+			}
+			modifier = {
+				has_government = neutrality 
+				any_neighbor_country = { 
+          OR = {
+            has_government = communism
+            has_government = fascism 
+          }
+          NOT = { tag = FROM }
+        }
+				factor = 0
+			}
+		}
+	  FROM = {
+			country_event = urbanlia.9
+    }
+	}
+}
+
+# Detain Starthen Ambassadors, message for STE
+country_event = {
+	id = hoh_soviet.4
+	title = hoh_soviet.4.t
+	desc = hoh_soviet.4.d
+	picture = GFX_report_event_czech_soldiers_01
+	
+	is_triggered_only = yes
+	
+	option = { # Prefer diplomatic solution
+		name = hoh_soviet.4.a
+		ai_chance = { factor = 70 }
+	  FROM = {
+			country_event = hoh_soviet.5
+      add_opinion_modifier = { target = ROOT modifier = detain_starthen_ambassadors_concession }
+    }
+	}
+	
+	option = { # Prefer tough attitude
+		name = hoh_soviet.4.b
+		ai_chance = { factor = 30 }
+	  FROM = {
+			country_event = hoh_soviet.6
+    }
+	}
+	
+}
+
+# Detain Starthen Ambassadors, Stellarland seeks diplomatic solution
+country_event = {
+	id = hoh_soviet.5
+	title = hoh_soviet.5.t
+	desc = hoh_soviet.5.d
+	picture = GFX_report_event_molotov_ribentrop_handshake
+	
+	is_triggered_only = yes
+	
+	option = { # Seek concessions
+		name = hoh_soviet.5.a
+		ai_chance = { factor = 80 }
+	  FROM = {
+			country_event = hoh_soviet.7
+    }
+	}
+	
+	option = { # Prefer tough attitude
+		name = hoh_soviet.5.b
+		ai_chance = { factor = 20 }
+	  FROM = {
+			country_event = hoh_soviet.8
+    }
+	}
+	
+}
+
+# Detain Starthen Ambassadors, Stellarland shows tough attitude
+country_event = {
+	id = hoh_soviet.6
+	title = hoh_soviet.6.t
+	desc = hoh_soviet.6.d
+	picture = GFX_report_event_czech_soldiers_01
+	
+	is_triggered_only = yes
+	
+	option = { # Condemn
+		name = hoh_soviet.6.a
+		ai_chance = { factor = 100 }
+		add_opinion_modifier = { target = FROM modifier = detain_starthen_ambassadors_tough_attitude }
+	  FROM = {
+			country_event = hoh_soviet.9
+    }
+	}
+}
+
+# Detain Starthen Ambassadors, Russia seeks concessions
+country_event = {
+	id = hoh_soviet.7
+	title = hoh_soviet.7.t
+	desc = hoh_soviet.7.d
+	picture = GFX_report_event_molotov_ribentrop_handshake
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_soviet.7.a
+		ai_chance = { factor = 100 }
+		add_opinion_modifier = { target = FROM modifier = detain_starthen_ambassadors_concession }
+	}
+}
+
+# Detain Starthen Ambassadors, Russia shows tough attitude
+country_event = {
+	id = hoh_soviet.8
+	title = hoh_soviet.8.t
+	desc = hoh_soviet.8.d
+	picture = GFX_report_event_czech_soldiers_01
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_soviet.8.a
+		ai_chance = { factor = 100 }
+		add_opinion_modifier = { target = FROM modifier = detain_starthen_ambassadors_tough_attitude }
+	}
+}
+
+# Detain Starthen Ambassadors, Russia condemns
+country_event = {
+	id = hoh_soviet.9
+	title = hoh_soviet.9.t
+	desc = hoh_soviet.9.d
+	picture = GFX_report_event_czech_soldiers_01
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_soviet.9.a
+		ai_chance = { factor = 100 }
+	}
+}

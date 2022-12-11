@@ -1,0 +1,167 @@
+add_namespace = hoh_italy
+add_namespace = hoh_italy_rescue_gramsci
+
+# Antonio Gramsci saved, event for Stellarland
+country_event = {
+	id = hoh_italy_rescue_gramsci.1
+	title = hoh_italy_rescue_gramsci.1.t
+	desc = hoh_italy_rescue_gramsci.1.d
+	picture = GFX_report_event_antonio_gramsci
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_italy_rescue_gramsci.1.a
+		ai_chance = { factor = 100 }
+		set_global_flag = flag_gramsci_rescued
+		hidden_effect = {
+      ITA = { country_event = { id = hoh_italy_rescue_gramsci.4 hours = 3 } }
+		}
+	}
+}
+
+# Antonio Gramsci saved but died halfway, event for Stellarland
+country_event = {
+	id = hoh_italy_rescue_gramsci.2
+	title = hoh_italy_rescue_gramsci.2.t
+	desc = hoh_italy_rescue_gramsci.2.d
+	picture = GFX_report_event_antonio_gramsci
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_italy_rescue_gramsci.2.a
+		set_global_flag = flag_gramsci_rescue_failed
+		ai_chance = { factor = 100 }
+		hidden_effect = {
+      
+		}
+	}
+}
+
+# Stellarland wants to rescue Gramsci but failed, event for Italy
+country_event = {
+	id = hoh_italy_rescue_gramsci.3
+	title = hoh_italy_rescue_gramsci.3.t
+	desc = hoh_italy_rescue_gramsci.3.d
+	picture = GFX_report_event_antonio_gramsci
+	
+	is_triggered_only = yes
+	
+	option = { # Send their men back
+		name = hoh_italy_rescue_gramsci.3.a
+		ai_chance = { 
+      factor = 100
+      modifier = {
+        has_war_with = FROM
+        factor = 0
+      } 
+		}
+		set_global_flag = flag_gramsci_rescue_failed
+		effect_tooltip = {
+      FROM = {
+        free_random_operative = {
+          captured_by = ROOT
+          all = yes
+        }
+      }
+		}
+		hidden_effect = {
+      FROM = { country_event = { id = hoh_italy_rescue_gramsci.5 hours = 3 } }
+		}
+	}
+	option = { # Trail!
+		name = hoh_italy_rescue_gramsci.3.b
+		ai_chance = { 
+      base = 0
+      modifier = {
+        add = 10
+				strength_ratio = {
+					tag = FROM
+					ratio > 1
+				}
+      } 
+		}
+		set_global_flag = flag_gramsci_rescue_failed
+		set_global_flag = flag_gramsci_rescue_failed_ita_trail
+		add_political_power = -50
+		hidden_effect = {
+      FROM = { country_event = { id = hoh_italy_rescue_gramsci.5 hours = 3 } }
+		}
+		effect_tooltip = {
+      FROM = {
+        add_war_support = 0.05
+				create_wargoal = {
+					type = puppet_wargoal_focus
+					target = PREV
+				}
+			}
+		}
+	}
+}
+
+# Antonio Gramsci saved, event for Italy
+country_event = {
+	id = hoh_italy_rescue_gramsci.4
+	title = hoh_italy_rescue_gramsci.4.t
+	desc = hoh_italy_rescue_gramsci.4.d
+	picture = GFX_report_event_antonio_gramsci
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_italy_rescue_gramsci.4.a
+		ai_chance = { factor = 100 }
+		add_stability = -0.01
+		hidden_effect = {
+      
+		}
+	}
+}
+
+# Operation failed, event for Stellarland
+country_event = {
+	id = hoh_italy_rescue_gramsci.5
+	title = hoh_italy_rescue_gramsci.2.t
+	desc = { 
+		text = hoh_italy_rescue_gramsci.5.d1
+		trigger = {
+			NOT = { has_global_flag = flag_gramsci_rescue_failed_ita_trail }
+		}
+	}
+	desc = {
+		text = hoh_italy_rescue_gramsci.5.d2
+		trigger = {
+			has_global_flag = flag_gramsci_rescue_failed_ita_trail
+		}
+	}
+	picture = GFX_report_event_antonio_gramsci
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = hoh_italy_rescue_gramsci.5.a
+		ai_chance = { factor = 10 }
+		trigger = {
+      NOT = { has_global_flag = flag_gramsci_rescue_failed_ita_trail }
+		}
+		ROOT = {
+			free_random_operative = {
+				captured_by = FROM
+				all = yes
+			}
+		}
+	}
+	option = { # Declare war
+		name = hoh_italy_rescue_gramsci.5.b
+		ai_chance = { factor = 100 }
+		trigger = {
+      has_global_flag = flag_gramsci_rescue_failed_ita_trail
+		}
+    add_war_support = 0.05
+		create_wargoal = {
+			type = puppet_wargoal_focus
+			target = FROM
+		}
+	}
+}

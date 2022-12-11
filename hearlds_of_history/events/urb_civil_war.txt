@@ -1,0 +1,3289 @@
+add_namespace = urbanlian_civilwar
+add_namespace = urbanlia_sucw
+
+# UBF independents, tag to UBF
+country_event = {
+	id = urbanlian_civilwar.1
+	title = urbanlian_civilwar.1.t
+	desc = urbanlian_civilwar.1.d
+	picture = GFX_report_event_chinese_soldiers_fighting
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = urbanlian_civilwar.1.a
+		ai_chance = { factor = 0 }
+    set_global_flag = urb_chelenist_deseperated
+		if = {
+      limit = {
+        country_exists = LSN
+      }
+      LSN = { change_tag_from = ROOT }
+      transfer_units_fraction = {
+        target = LSN
+        size = 0.15
+      }
+      else = {
+        UBF = { change_tag_from = ROOT }
+        transfer_units_fraction = {
+          target = UBF
+          size = 0.15
+        }
+      }
+		}
+		hidden_effect = {
+      if = {
+        limit = {
+          country_exists = LSN
+        }
+        LSN = { 
+          inherit_technology = ROOT 
+          load_focus_tree = { tree = URB_civilwar_warlord_focus keep_completed = no }
+          complete_national_focus = URB_civilwar_warlord_1
+          complete_national_focus = URB_civilwar_warlord_2
+          set_popularities = {
+            fascism = 70
+            neutrality = 10
+            communism = 10
+            democratic = 10
+          }
+          set_politics = {
+            ruling_party = fascism
+            elections_allowed = no
+          }
+        }
+      }
+      else = {
+        UBF = { 
+          inherit_technology = ROOT 
+          load_focus_tree = { tree = URB_civilwar_warlord_focus keep_completed = no }
+          complete_national_focus = URB_civilwar_warlord_1
+          complete_national_focus = URB_civilwar_warlord_2
+          set_popularities = {
+            fascism = 70
+            neutrality = 10
+            communism = 10
+            democratic = 10
+          }
+          set_politics = {
+            ruling_party = fascism
+            elections_allowed = no
+          }
+        }
+      }
+      news_event = { hours = 2 id = hoh_news.3 }
+		}
+	}
+	option = { # Reject
+		name = urbanlian_civilwar.1.b
+		ai_chance = { factor = 100 }
+		set_global_flag = urb_chelenist_deseperated
+		if = {
+      limit = {
+        country_exists = LSN
+      }
+      transfer_units_fraction = {
+        target = LSN
+        size = 0.15
+      }
+      else = {
+        transfer_units_fraction = {
+          target = UBF
+          size = 0.15
+        }
+      }
+		}
+		hidden_effect = {
+      if = {
+        limit = {
+          country_exists = LSN
+        }
+        LSN = { 
+          inherit_technology = ROOT 
+          load_focus_tree = { tree = URB_civilwar_warlord_focus keep_completed = no }
+          complete_national_focus = URB_civilwar_warlord_1
+          complete_national_focus = URB_civilwar_warlord_2
+          set_popularities = {
+            fascism = 70
+            neutrality = 10
+            communism = 10
+            democratic = 10
+          }
+          set_politics = {
+            ruling_party = fascism
+            elections_allowed = no
+          }
+        }
+      }
+      else = {
+        UBF = { 
+          inherit_technology = ROOT 
+          load_focus_tree = { tree = URB_civilwar_warlord_focus keep_completed = no }
+          complete_national_focus = URB_civilwar_warlord_1
+          complete_national_focus = URB_civilwar_warlord_2
+          set_popularities = {
+            fascism = 70
+            neutrality = 10
+            communism = 10
+            democratic = 10
+          }
+          set_politics = {
+            ruling_party = fascism
+            elections_allowed = no
+          }
+        }
+      }
+      news_event = { hours = 2 id = hoh_news.3 }
+		}
+	}
+}
+
+#Warlord wants to settle down, message for Suriname
+country_event = {
+	id = urbanlian_civilwar.2
+	title = urbanlian_civilwar.2.t
+	desc = urbanlian_civilwar.2.d
+	picture = GFX_report_event_chinese_soldiers_fighting
+	
+	is_triggered_only = yes
+	option = { # Agree
+		name = urbanlian_civilwar.2.a
+		ai_chance = {
+			base = 10 
+			modifier = {
+				OR = {
+					has_completed_focus = SUR_focus_23 
+					has_completed_focus = SUR_focus_25 
+					has_completed_focus = SUR_focus_26
+					has_idea = idealism_with_surinam_characteristics 
+				}
+				factor = 0
+			}
+			modifier = {
+				OR = {
+					has_idea = development_dilemma_1 
+					has_idea = development_dilemma_2 
+					has_idea = development_dilemma_3
+				}
+				factor = 100
+			}
+			modifier = {
+        FROM = {
+          tag = UBC
+        }
+				has_completed_focus = SUR_focus_32 
+				factor = 100
+			}
+			modifier = {
+        FROM = {
+          tag = UBD
+        }
+				has_completed_focus = SUR_focus_35 
+				factor = 100
+			}
+			modifier = {
+        FROM = {
+          tag = UBF
+        }
+				has_completed_focus = SUR_focus_38 
+				factor = 100
+			}
+			modifier = {
+        OR = {
+          FROM = { has_government = ROOT }
+          has_government = neutrality 
+        }
+				factor = 100
+			}
+			modifier = {
+        OR = {
+          has_country_flag = urb_settle_down
+          has_country_flag = ubc_settle_down
+          has_country_flag = ubd_settle_down
+          has_country_flag = ubf_settle_down
+        }
+				factor = 0
+			}
+		}
+	  FROM = {
+			country_event = urbanlian_civilwar.3
+		}
+		
+	}
+	option = { # Refuse
+		name = urbanlian_civilwar.2.b
+		ai_chance = { 
+      base = 1 
+			modifier = {
+        FROM = {
+          tag = UBF
+        }
+				NOT = { has_completed_focus = SUR_focus_38 }
+				factor = 100
+			}
+			modifier = {
+        OR = {
+          has_country_flag = urb_settle_down
+          has_country_flag = ubc_settle_down
+          has_country_flag = ubd_settle_down
+          has_country_flag = ubf_settle_down
+        }
+				factor = 100
+			}
+			modifier = {
+        OR = {
+          FROM = {
+            NOT = { has_government = ROOT }
+          }
+          NOT = { has_government = neutrality }
+        }
+				factor = 100
+			}
+		}
+	  FROM = {
+			country_event = urbanlian_civilwar.4
+		}
+	}
+}
+
+#Warlord wants to settle down, Suriname agrees
+country_event = {
+	id = urbanlian_civilwar.3
+	title = urbanlian_civilwar.3.t
+	desc = urbanlian_civilwar.3.d
+	picture = GFX_report_event_chinese_soldiers_fighting
+	
+	is_triggered_only = yes
+	option = { # Great
+		name = urbanlian_civilwar.3.a
+		ai_chance = { factor = 10 }
+		FROM = { change_tag_from = ROOT }
+		retire_country_leader = yes
+    every_unit_leader = {
+      set_nationality = FROM
+    }
+    #FROM = { annex_country = { target = ROOT transfer_troops = yes } }
+		transfer_units_fraction = {
+			target = FROM
+			size = 0.85
+		}
+    every_state = {
+      limit = {
+        is_owned_by = ROOT
+        CONTROLLER = {
+          NOT = { tag = ROOT }
+          tag = URB
+        }
+      }
+      URB = { transfer_state = PREV }
+    }
+    every_state = {
+      limit = {
+        is_owned_by = ROOT
+        CONTROLLER = {
+          NOT = { tag = ROOT }
+          tag = UBC
+        }
+      }
+      UBC = { transfer_state = PREV }
+    }
+    every_state = {
+      limit = {
+        is_owned_by = ROOT
+        CONTROLLER = {
+          NOT = { tag = ROOT }
+          tag = UBD
+        }
+      }
+      UBD = { transfer_state = PREV }
+    }
+    every_state = {
+      limit = {
+        is_owned_by = ROOT
+        CONTROLLER = {
+          NOT = { tag = ROOT }
+          tag = UBF
+        }
+      }
+      UBF = { transfer_state = PREV }
+    }
+    #every_state = {
+    #  limit = {
+    #    is_owned_by = ROOT
+    #    is_controlled_by = ROOT
+    #  }
+    #  URB = { transfer_state = PREV }
+    #}
+    #if = {
+    #  limit = { has_government = neutrality }
+    #  FROM = {
+    #    set_politics = {
+    #      ruling_party = neutrality
+    #      elections_allowed = no
+    #    }
+    #  }
+    #}  
+    if = {
+      limit = { has_government = democratic }
+      FROM = {
+        set_politics = {
+          ruling_party = democratic
+          elections_allowed = no
+        }
+        add_ideas = new_constitutionalism_works
+        complete_national_focus = SUR_focus_35
+        set_party_name = { ideology = democratic long_name = URB_new_constitutionalism_party_long name = URB_new_constitutionalism_party }
+        create_country_leader = {
+          name = "Lucas Chesven"
+          desc = "POLITICS_LUCAS_CHESVEN_DESC"
+          picture = "gfx/leaders/URB/portrait_urb_lucas_chesven.dds"
+          expire = "1953.3.1"
+          ideology = new_constitutionalism
+          traits = {
+            political_dancer		
+          }
+        }
+      }
+    }  
+    if = {
+      limit = { has_government = communism }
+      FROM = {
+        set_politics = {
+          ruling_party = communism
+          elections_allowed = no
+        }
+        add_ideas = call_of_commune
+        complete_national_focus = SUR_focus_32
+      set_party_name = { ideology = communism long_name = URB_commune_socialism_party_long name = URB_commune_socialism_party }
+        create_country_leader = {
+          name = "Calyor Teilchen"
+          desc = "POLITICS_CALYOR_TEILCHEN_DESC"
+          picture = "gfx/leaders/URB/portrait_urb_calyor_teilchen.dds"
+          expire = "1965.1.1"
+          ideology = communalism
+          traits = {
+            staunch_constitutionalist
+            camarilla_leader
+          }
+        }
+      }
+    }   
+    if = {
+      limit = { has_government = fascism }
+      FROM = {
+        set_politics = {
+          ruling_party = fascism
+          elections_allowed = no
+        }
+        add_ideas = chelenism_specialities
+        complete_national_focus = SUR_focus_38
+        create_country_leader = {
+          name = "Challen Reardon"
+          desc = "POLITICS_CHALLEN_REARDON_DESC"
+          picture = "gfx/leaders/URB/portrait_urb_challen_reardon.dds"
+          expire = "1965.1.1"
+          ideology = national_populism
+          traits = {
+            warrior_code
+            cornered_fox
+          }
+        }
+      }
+    }
+    if = {
+      limit = { has_government = neutrality }#Almost impossible
+      FROM = {
+        set_politics = {
+          ruling_party = neutrality
+          elections_allowed = no
+        }
+        complete_national_focus = SUR_focus_23
+        if = {#An Easter Egg
+          limit = {
+            has_global_flag = lee_chelen_disappeared 
+          }
+          create_country_leader = {
+            name = "Lee Chelen"
+            desc = "POLITICS_LEE_CHELEN_DESC"
+            picture = "gfx/leaders/URB/portrait_urb_lee_chelen.dds"
+            expire = "1965.1.1"
+            ideology = oligarchism
+            traits = {
+              conscientious_archon
+            }
+          }
+        }
+      }
+    }
+    if = {
+        limit = {
+          tag = URB
+        }
+        SUR = { set_country_flag = urb_settle_down }
+    }
+    if = {
+        limit = {
+          tag = UBC
+        }
+        SUR = { set_country_flag = ubc_settle_down }
+    }
+    if = {
+        limit = {
+          tag = UBD
+        }
+        SUR = { set_country_flag = ubd_settle_down }
+    }
+    if = {
+        limit = {
+          tag = UBF
+        }
+        SUR = { set_country_flag = ubf_settle_down }
+    } 
+		every_other_country = {
+			limit = {
+				is_literally_urbanlia = yes
+				has_war_with = ROOT
+				has_war_with = FROM
+			}
+			white_peace = FROM
+		}
+    every_country = {
+      limit = {
+        has_subject = SUR
+      }
+      set_autonomy = { target = SUR autonomy_state = autonomy_free }
+		}
+	}
+}
+
+#Warlord wants to settle down, Suriname refuses
+country_event = {
+	id = urbanlian_civilwar.4
+	title = urbanlian_civilwar.4.t
+	desc = urbanlian_civilwar.4.d
+	picture = GFX_report_event_chinese_soldiers_fighting
+	
+	is_triggered_only = yes
+	option = { # So sad
+		name = urbanlian_civilwar.4.a
+		ai_chance = { factor = 10 }
+	}
+}
+
+#Warlord demands integration, message for URB
+country_event = {
+	id = urbanlian_civilwar.5
+	title = urbanlian_civilwar.5.t
+	desc = urbanlian_civilwar.5.d
+	picture = GFX_report_event_chinese_soldiers_fighting
+	
+	is_triggered_only = yes
+	option = { # Agree
+		name = urbanlian_civilwar.5.a
+		ai_chance = {
+			factor = 80 
+			modifier = {
+				has_completed_focus = URB_civilwar_government_2 
+				add = 30
+			}
+			modifier = {
+        FROM = {
+          is_civilwar_winner = yes
+        }
+				#has_completed_focus = URB_civilwar_government_8 
+				factor = 100
+			}
+			modifier = {
+        FROM = { has_war = yes }
+				factor = 10
+			}
+			modifier = {
+        FROM = { has_war = no }
+				factor = 100
+			}
+		}
+	  FROM = {
+			country_event = urbanlian_civilwar.6
+		}
+    custom_effect_tooltip = URB_civ_recognition_degree_fall_tt
+		hidden_effect = {
+      URB_civ_reduce_recognition_degree = yes
+      if = {
+        limit = {
+          has_idea = anti_separatist_action
+        }
+        remove_ideas = anti_separatist_action
+      }
+      if = {
+        limit = {
+          has_idea = urb_defensive_posture
+        }
+        remove_ideas = urb_defensive_posture
+      }
+    }
+    add_timed_idea = { idea = urb_civ_coalition_government days = 180 }
+    inherit_technology = FROM 
+		if = {
+      limit = {
+        FROM = { has_government = communism }
+      }
+      set_politics = {
+        ruling_party = communism
+        elections_allowed = no
+      }
+      set_popularities = {
+        communism = 70
+        neutrality = 30
+      }
+      set_country_flag = government_integrated_ubc
+      set_party_name = { ideology = communism long_name = URB_commune_socialism_party_long name = URB_commune_socialism_party }
+      complete_national_focus = URB_civilwar_government_4
+      add_ideas = call_of_commune
+		}
+		if = {
+      limit = {
+        FROM = { tag = UBC }
+      }
+      create_country_leader = {
+        name = "William Foster"
+        desc = "POLITICS_WILLIAM_Z_FOSTER_DESC"
+        picture = "gfx/leaders/URB/portrait_urb_william_zebulon_foster.dds"
+        expire = "1965.1.1"
+        ideology = stalinism
+        traits = {
+          labor_organizer
+        }
+      }
+
+		}
+		if = {
+      limit = {
+        FROM = { has_government = democratic }
+      }
+      set_politics = {
+        ruling_party = democratic
+        elections_allowed = no
+      }
+      set_popularities = {
+        democratic = 70
+        neutrality = 30
+      }
+      set_country_flag = government_integrated_ubd
+			set_cosmetic_tag = URB_new_constitutionalism_government
+      set_party_name = { ideology = democratic long_name = URB_new_constitutionalism_party_long name = URB_new_constitutionalism_party }
+      complete_national_focus = URB_civilwar_government_5
+      add_ideas = new_constitutionalism_works
+		}
+		if = {
+      limit = {
+        FROM = { tag = UBD }
+      }
+      create_country_leader = {
+        name = "Clarence Ollson Senior"
+        desc = "POLITICS_CLARENCE_OLLSON_SENIOR_DESC"
+        picture = "gfx/leaders/URB/portrait_urb_clarence_ollson_senior.dds"
+        expire = "1953.3.1"
+        ideology = new_constitutionalism
+        traits = {
+          socialist_militant		
+        }
+      }
+		}
+		if = {
+      limit = {
+        FROM = { has_government = fascism }
+      }
+      set_politics = {
+        ruling_party = fascism
+        elections_allowed = no
+      }
+      set_popularities = {
+        fascism = 70
+        neutrality = 30
+      }
+      set_country_flag = government_integrated_ubf
+      complete_national_focus = URB_civilwar_government_7
+      add_ideas = chelenism_specialities
+		}
+		if = {
+      limit = {
+        FROM = { tag = UBF }
+      }
+      create_country_leader = {
+        name = "James Curley"
+        desc = "POLITICS_JAMES_MICHAEL_CURLEY_DESC"
+        picture = "gfx/leaders/URB/portrait_urb_james_michael_curley.dds"
+        expire = "1967.1.1"
+        ideology = national_populism
+        traits = {
+          connected_citizen
+        }
+      }
+		}
+		every_country = {
+			limit = { 
+        is_subject_of = FROM
+        is_literally_urbanlia = yes
+			}
+      annex_country = { target = PREV transfer_troops = no }
+		}
+
+	}
+	option = { # Reject
+		name = urbanlian_civilwar.5.b
+		ai_chance = { 
+      factor = 20 
+			modifier = {
+        OR = {
+          has_country_flag = government_integrated_ubc
+          has_country_flag = government_integrated_ubd
+          has_country_flag = government_integrated_ubf
+        }
+				add = 100
+			}
+			modifier = {
+        FROM = { has_war = yes }
+				factor = 100
+			}
+			modifier = {
+        FROM = { has_war = no }
+				factor = 0
+			}
+			modifier = {
+        FROM = {
+          is_civilwar_winner = yes
+        }
+				#has_completed_focus = URB_civilwar_government_8 
+				factor = 0
+			}
+		}
+	  FROM = {
+			country_event = urbanlian_civilwar.7
+		}
+	}
+}
+
+#Warlord demands integration, URB agrees, message for Warlord
+country_event = {
+	id = urbanlian_civilwar.6
+	title = urbanlian_civilwar.6.t
+	desc = urbanlian_civilwar.6.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Great
+		name = urbanlian_civilwar.6.a
+		ai_chance = { factor = 100 }
+		if = {#Player is ROOT
+      limit = {
+        ROOT = { is_ai = no }
+      }
+      FROM = { change_tag_from = ROOT }
+		}
+		every_country = {
+			limit = { has_war_with = ROOT }
+			FROM = { add_to_war = { targeted_alliance = ROOT enemy = PREV hostility_reason = asked_to_join } }
+		}
+    FROM = {  
+      annex_country = { target = ROOT transfer_troops = no }
+    }
+    every_unit_leader = {
+      set_nationality = FROM
+    }
+    every_state = {
+      limit = {
+        is_core_of = ROOT
+      }
+      remove_core_of = ROOT
+    }
+    every_other_country = {
+      limit = {
+        is_urbanlian_warlord = yes
+      }
+      country_event = urbanlian_civilwar.37
+    }
+		hidden_effect = {
+      URB_civ_rise_recognition_degree = yes 
+    }
+	}
+}
+
+#Warlord demands integration, URB refuses
+country_event = {
+	id = urbanlian_civilwar.7
+	title = urbanlian_civilwar.7.t
+	desc = urbanlian_civilwar.7.d
+	picture = GFX_report_event_chinese_soldiers_fighting
+	
+	is_triggered_only = yes
+	option = { # We will get them
+		name = urbanlian_civilwar.7.a
+		ai_chance = { factor = 100 }
+    create_wargoal = {
+      type = annex_everything
+      target = FROM
+    }
+    #declare_war_on = {
+    #  target = FROM
+    #  type = annex_everything
+    #}
+    FROM = { add_timed_idea = { idea = civilwar_caught_off_guard days = 30 } }
+    activate_mission_tooltip = defeat_urb
+	}
+}
+
+#UBC independents, message for URB
+country_event = {
+	id = urbanlian_civilwar.8
+	title = urbanlian_civilwar.8.t
+	desc = urbanlian_civilwar.8.d
+	picture = GFX_report_event_chinese_soldiers_fighting
+	
+	is_triggered_only = yes
+	option = { #Confirm
+		name = urbanlian_civilwar.8.a
+    set_global_flag = urb_communist_deseperated
+		ai_chance = { factor = 100 }
+    UBC = {
+      transfer_state = 818
+      transfer_state = 850
+    }
+    delete_unit = { state = 818 }
+    delete_unit = { state = 850 }
+    hidden_effect = {
+      UBC = { 
+        inherit_technology = ROOT 
+        load_focus_tree = { tree = URB_civilwar_warlord_focus keep_completed = no }
+      }
+      818 = {
+        remove_dynamic_modifier = { modifier = commune_socialist_stronghold }
+      }
+      858 = {
+        remove_dynamic_modifier = { modifier = commune_socialist_stronghold }
+      }
+    }
+	}
+	option = { #Tag to UBC
+		name = urbanlian_civilwar.8.b
+    set_global_flag = urb_communist_deseperated
+		ai_chance = { factor = 0 }
+    UBC = {
+      transfer_state = 818
+      transfer_state = 850
+    }
+		UBC = { change_tag_from = ROOT }
+    delete_unit = { state = 818 }
+    delete_unit = { state = 850 }
+    hidden_effect = {
+      UBC = { 
+        inherit_technology = ROOT 
+        load_focus_tree = { tree = URB_civilwar_warlord_focus keep_completed = no }
+      }
+      818 = {
+        remove_dynamic_modifier = { modifier = commune_socialist_stronghold }
+      }
+      858 = {
+        remove_dynamic_modifier = { modifier = commune_socialist_stronghold }
+      }
+    }
+	}
+}
+
+#UBD independents, message for URB
+country_event = {
+	id = urbanlian_civilwar.9
+	title = urbanlian_civilwar.9.t
+	desc = urbanlian_civilwar.9.d
+	picture = GFX_report_event_chinese_soldiers_fighting
+	
+	is_triggered_only = yes
+	option = { #Confirm
+		name = urbanlian_civilwar.9.a
+    set_global_flag = urb_democratic_deseperated
+		ai_chance = { factor = 100 }
+    UBD = {
+      transfer_state = 360
+    }
+    delete_unit = { state = 360 }
+    hidden_effect = {
+      UBD = { 
+        inherit_technology = ROOT 
+        load_focus_tree = { tree = URB_civilwar_warlord_focus keep_completed = no }
+      }
+      360 = {
+        remove_dynamic_modifier = { modifier = new_constitutionalist_stronghold }
+      }
+    }
+	}
+	option = { #Tag to UBD
+		name = urbanlian_civilwar.9.b
+    set_global_flag = urb_democratic_deseperated
+		ai_chance = { factor = 0 }
+    UBD = {
+      transfer_state = 360
+    }
+		UBD = { change_tag_from = ROOT }
+    delete_unit = { state = 360 }
+    hidden_effect = {
+      UBD = { 
+        inherit_technology = ROOT 
+        load_focus_tree = { tree = URB_civilwar_warlord_focus keep_completed = no }
+      }
+      360 = {
+        remove_dynamic_modifier = { modifier = new_constitutionalist_stronghold }
+      }
+    }
+	}
+}
+
+#Government joins civilwar
+news_event = {
+	id = urbanlian_civilwar.10
+	title = urbanlian_civilwar.10.t
+	desc = urbanlian_civilwar.10.d
+	picture = GFX_news_event_german_soldiers
+	
+	is_triggered_only = yes
+	option = { #Too bad
+		name = urbanlian_civilwar.10.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+#A warlord starts civilwar, message for URB
+country_event = {
+	id = urbanlian_civilwar.11
+	title = urbanlian_civilwar.11.t
+	desc = urbanlian_civilwar.11.d
+	picture = GFX_report_event_canadian_artillery
+	
+	is_triggered_only = yes
+	option = { #Too bad
+		name = urbanlian_civilwar.10.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+#A warlord declares war on us, message for another warlord
+country_event = {
+	id = urbanlian_civilwar.12
+	title = urbanlian_civilwar.12.t
+	desc = urbanlian_civilwar.12.d
+	picture = GFX_report_event_canadian_artillery
+	
+	is_triggered_only = yes
+	option = { #Too bad
+		name = urbanlian_civilwar.12.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+#URB seeks cooperation, message for Warlord
+country_event = {
+	id = urbanlian_civilwar.13
+	title = urbanlian_civilwar.13.t
+	desc = urbanlian_civilwar.13.d
+	picture = GFX_report_event_bose_meeting
+	
+	is_triggered_only = yes
+	option = { #Approve
+		name = urbanlian_civilwar.13.a
+		ai_chance = { factor = 100 }#An peaceful success is the best
+		set_country_flag = government_integrated
+	  FROM = {
+			country_event = urbanlian_civilwar.14
+		}
+		if = {
+      limit = {
+        has_government = communism 
+      }
+      custom_effect_tooltip = UBC_civ_recognition_degree_rise_tt
+      FROM = {
+        set_politics = {
+          ruling_party = communism
+          elections_allowed = no
+        }
+        set_popularities = {
+          communism = 55
+          fascism = 35
+          neutrality = 10
+        }
+        create_country_leader = {
+          name = "William Foster"
+          desc = "POLITICS_WILLIAM_Z_FOSTER_DESC"
+          picture = "gfx/leaders/URB/portrait_urb_william_zebulon_foster.dds"
+          expire = "1965.1.1"
+          ideology = stalinism
+          traits = {
+            labor_organizer
+          }
+        }
+
+      }
+		}
+		if = {
+      limit = {
+        has_government = democratic 
+      }
+      custom_effect_tooltip = UBD_civ_recognition_degree_rise_tt
+      FROM = {
+        set_politics = {
+          ruling_party = democratic
+          elections_allowed = no
+        }
+        set_popularities = {
+          democratic = 55
+          fascism = 35
+          neutrality = 10
+        }
+        create_country_leader = {
+          name = "Clarence Ollson Senior"
+          desc = "POLITICS_CLARENCE_OLLSON_SENIOR_DESC"
+          picture = "gfx/leaders/URB/portrait_urb_clarence_ollson_senior.dds"
+          expire = "1953.3.1"
+          ideology = new_constitutionalism
+          traits = {
+            socialist_militant		
+          }
+        }
+      }
+		}
+		if = {
+      limit = {
+        has_government = fascism 
+      }
+      custom_effect_tooltip = UBF_civ_recognition_degree_rise_tt
+      FROM = {
+        set_politics = {
+          ruling_party = fascism
+          elections_allowed = no
+        }
+        set_popularities = {
+          fascism = 70
+          neutrality = 30
+        }
+        create_country_leader = {
+          name = "James Curley"
+          desc = "POLITICS_JAMES_MICHAEL_CURLEY_DESC"
+          picture = "gfx/leaders/URB/portrait_urb_james_michael_curley.dds"
+          expire = "1967.1.1"
+          ideology = national_populism
+          traits = {
+            connected_citizen
+          }
+        }
+
+      }
+		}
+		urb_clear_all_degree_flags = yes
+		set_country_flag = URB_faction_degree_10
+	}
+	option = { #Refuse
+		name = urbanlian_civilwar.13.b
+		ai_chance = { factor = 0 }
+	  FROM = {
+			country_event = urbanlian_civilwar.15
+		}
+	}
+}
+
+#URB demands intergration, Warlord approves, message for URB
+country_event = {
+	id = urbanlian_civilwar.14
+	title = urbanlian_civilwar.14.t
+	desc = urbanlian_civilwar.14.d
+	picture = GFX_report_event_bose_meeting
+	
+	is_triggered_only = yes
+	option = { # Great
+		name = urbanlian_civilwar.14.a
+		ai_chance = { factor = 100 }
+		if = {#Player is FROM
+      limit = {
+        FROM = { is_ai = no }
+      }
+      ROOT = { change_tag_from = FROM }
+		}
+    annex_country = { target = FROM transfer_troops = yes }
+    FROM = {
+      every_unit_leader = {
+        set_nationality = ROOT
+      }
+    }
+    every_state = {
+      limit = {
+        is_core_of = FROM
+      }
+      remove_core_of = FROM
+    }
+	}
+}
+
+#URB demands intergration, Warlord rejects
+country_event = {
+	id = urbanlian_civilwar.15
+	title = urbanlian_civilwar.15.t
+	desc = urbanlian_civilwar.15.d
+	picture = GFX_report_event_chinese_soldiers_fighting
+	
+	is_triggered_only = yes
+	option = { # We will get them
+		name = urbanlian_civilwar.15.a
+		ai_chance = { factor = 100 }
+    declare_war_on = {
+      target = FROM
+      type = annex_everything
+    }
+	}
+}
+
+#State Control Changed, destroying buildings
+country_event = {
+	id = urbanlian_civilwar.16
+	title = urbanlian_civilwar.16.t
+	desc = urbanlian_civilwar.16.d
+	picture = GFX_report_event_ger_civil_war
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			random_state = {
+				limit = {
+					OR = {
+						has_state_flag = opponent_state_withdrawn
+            is_controlled_by = ROOT
+					}
+				}
+				clr_state_flag = opponent_state_withdrawn
+				save_event_target_as = opponent_state_withdrawn
+			}
+			event_target:opponent_state_withdrawn = {
+				if = {
+					limit = {
+						has_state_flag = opponent_state_withdrawn1
+            is_controlled_by = ROOT
+					}
+					damage_building = { type = industrial_complex damage = 0.5 }
+					damage_building = { type = arms_factory damage = 0.5 }
+					damage_building = { type = infrastructure damage = 0.5 }
+				}
+				if = {
+					limit = {
+						has_state_flag = opponent_state_withdrawn2
+            is_controlled_by = ROOT
+					}
+					damage_building = { type = industrial_complex damage = 0.8 }
+					damage_building = { type = arms_factory damage = 0.8 }
+					damage_building = { type = infrastructure damage = 0.8 }
+				}
+				if = {
+					limit = {
+						has_state_flag = opponent_state_withdrawn3
+            is_controlled_by = ROOT
+					}
+					damage_building = { type = industrial_complex damage = 1.2 }
+					damage_building = { type = arms_factory damage = 1.2 }
+					damage_building = { type = infrastructure damage = 1.2 }
+				}
+				if = {
+					limit = {
+						has_state_flag = opponent_state_withdrawn4
+            is_controlled_by = ROOT
+					}
+					damage_building = { type = industrial_complex damage = 1.8 }
+					damage_building = { type = arms_factory damage = 1.8 }
+					damage_building = { type = infrastructure damage = 1.8 }
+				}
+			}
+		}
+	}
+	
+	# Hey! That's a Russian tactic, you bastards!
+	option = {
+		name = wtt_germany.49.a
+		effect_tooltip = {
+			event_target:opponent_state_withdrawn = {
+				if = {
+					limit = {
+						has_state_flag = opponent_state_withdrawn1
+            is_controlled_by = ROOT
+					}
+					damage_building = { type = industrial_complex damage = 0.5 }
+					damage_building = { type = arms_factory damage = 0.5 }
+					damage_building = { type = infrastructure damage = 0.5 }
+				}
+				if = {
+					limit = {
+						has_state_flag = opponent_state_withdrawn2
+            is_controlled_by = ROOT
+					}
+					damage_building = { type = industrial_complex damage = 0.8 }
+					damage_building = { type = arms_factory damage = 0.8 }
+					damage_building = { type = infrastructure damage = 0.8 }
+				}
+				if = {
+					limit = {
+						has_state_flag = opponent_state_withdrawn3
+            is_controlled_by = ROOT
+					}
+					damage_building = { type = industrial_complex damage = 1.2 }
+					damage_building = { type = arms_factory damage = 1.2 }
+					damage_building = { type = infrastructure damage = 1.2 }
+				}
+				if = {
+					limit = {
+						has_state_flag = opponent_state_withdrawn4
+            is_controlled_by = ROOT
+					}
+					damage_building = { type = industrial_complex damage = 1.8 }
+					damage_building = { type = arms_factory damage = 1.8 }
+					damage_building = { type = infrastructure damage = 1.8 }
+				}
+			}
+		}
+		event_target:opponent_state_withdrawn = {
+			if = {
+				limit = {
+					has_state_flag = opponent_state_withdrawn1
+					is_controlled_by = ROOT
+				}
+				hidden_effect = { clr_state_flag = opponent_state_withdrawn1 }
+			}
+			if = {
+				limit = {
+					has_state_flag = opponent_state_withdrawn2
+					is_controlled_by = ROOT
+				}
+				hidden_effect = { clr_state_flag = opponent_state_withdrawn2 }
+			}
+			if = {
+				limit = {
+					has_state_flag = opponent_state_withdrawn3
+					is_controlled_by = ROOT
+				}
+				hidden_effect = { clr_state_flag = opponent_state_withdrawn3 }
+			}
+			if = {
+				limit = {
+					has_state_flag = opponent_state_withdrawn4
+					is_controlled_by = ROOT
+				}
+				hidden_effect = { clr_state_flag = opponent_state_withdrawn4 }
+			}
+		}
+	}
+}
+
+#Move capital if a warlord wins civil war
+country_event = {
+	id = urbanlian_civilwar.17
+	title = urbanlian_civilwar.17.t
+	desc = urbanlian_civilwar.17.d
+	picture = GFX_report_event_generic_parliament
+
+	fire_only_once = yes
+
+	trigger = {
+		is_urbanlian_warlord = yes
+		NOT = {
+			country_exists = URB
+		}
+		owns_state = 358 #New Amsterdam
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	#Move to New Amsterdam
+	option = {
+		name = urbanlian_civilwar.17.a
+		ai_chance = {
+			base = 90
+			modifier = {
+				factor = 0
+				NOT = { 358 = { is_controlled_by = ROOT } }
+			}
+		}
+		trigger = {
+			owns_state = 358
+		}
+		set_capital = 358
+	}
+
+	#Stay where you are
+	option = {
+		name = urbanlian_civilwar.17.b
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 1
+				NOT = { 358 = { is_controlled_by = ROOT } }
+			}			
+		}
+	}
+}
+
+#Urbanlia seeks guarantee, message for USA
+country_event = {
+	id = urbanlian_civilwar.18
+	title = urbanlian_civilwar.18.t
+	desc = urbanlian_civilwar.18.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Agree
+		name = urbanlian_civilwar.18.a
+		ai_chance = { 
+      factor = 70
+			modifier = {
+				factor = 100
+				FROM = {
+          OR = {
+            has_government = neutrality
+            has_government = democratic
+          }
+				}
+			}			 
+		}
+    give_guarantee = FROM
+    set_global_flag = usa_guarantee_urb_again
+	  FROM = {
+			country_event = urbanlian_civilwar.19
+      add_opinion_modifier = {
+        target = ROOT
+        modifier = urb_seeks_guarantee_accepted
+      }
+		}
+    news_event = { id = hoh_news.26 hours = 6 }
+	}
+	option = { # Refuse
+		name = urbanlian_civilwar.18.b
+		ai_chance = { 
+      factor = 30
+			modifier = {
+				factor = 0
+				FROM = {
+          OR = {
+            has_government = neutrality
+            has_government = democratic
+          }
+				}
+			}			 
+		}
+	  FROM = {
+			country_event = urbanlian_civilwar.20
+      add_opinion_modifier = {
+        target = ROOT
+        modifier = urb_seeks_guarantee_declined
+      }
+		}
+	}
+}
+
+#Urbanlia seeks guarantee, USA accepts, message for Urbanlia
+country_event = {
+	id = urbanlian_civilwar.19
+	title = urbanlian_civilwar.19.t
+	desc = urbanlian_civilwar.19.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Good
+		name = urbanlian_civilwar.19.a
+		ai_chance = { factor = 100 }
+		effect_tooltip = {
+      FROM = { give_guarantee = ROOT }
+      add_opinion_modifier = {
+        target = FROM
+        modifier = urb_seeks_guarantee_accepted
+      }
+    }
+	}
+}
+
+#Urbanlia seeks guarantee, USA refuses, message for Urbanlia
+country_event = {
+	id = urbanlian_civilwar.20
+	title = urbanlian_civilwar.20.t
+	desc = urbanlian_civilwar.20.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Fine
+		name = urbanlian_civilwar.20.a
+		ai_chance = { factor = 100 }
+		effect_tooltip = {
+      add_opinion_modifier = {
+        target = FROM
+        modifier = urb_seeks_guarantee_declined
+      }
+    }
+	}
+}
+
+#Urgent election, message for URB
+country_event = {
+	id = urbanlian_civilwar.21
+	title = urbanlian_civilwar.21.t
+	desc = urbanlian_civilwar.21.d
+	picture = GFX_report_event_election_vote
+	
+	is_triggered_only = yes
+	option = { #Choose Lee Chelen
+		name = urbanlian_civilwar.21.a
+		ai_chance = { 
+      factor = 10 
+			modifier = {
+				add = 100
+				has_game_rule = {
+					rule = URB_ai_behavior
+					option = PROCLAIM_UTOPIAN_REPUBLIC
+				}
+			}
+			modifier = {
+				add = -10
+				has_game_rule = {
+					rule = URB_ai_behavior
+					option = WAIT_AND_SEE_ATTITUDE
+				}
+			}
+			modifier = {
+				add = 100
+				has_game_rule = {
+					rule = URB_ai_behavior
+					option = CHELENISM
+				}
+			}
+		}
+		add_stability = -0.1
+    add_political_power = -50
+    set_global_flag = urb_choose_lee_chelen
+		add_country_leader_trait = anti_separatist_attitude
+    hidden_effect = { 
+      country_event = { id = urbanlian_civilwar.8 hours = 2 }
+      country_event = { id = urbanlian_civilwar.9 hours = 2 }
+      news_event = { id = urbanlian_civilwar.35 hours = 2 }
+    }
+  }
+	option = { #Choose Hall Levander
+		name = urbanlian_civilwar.21.b
+		ai_chance = { 
+      factor = 200 
+			modifier = {
+				add = 100
+				has_game_rule = {
+					rule = URB_ai_behavior
+					option = WAIT_AND_SEE_ATTITUDE
+				}
+			}
+			modifier = {
+				add = -200
+				has_game_rule = {
+					rule = URB_ai_behavior
+					option = PROCLAIM_UTOPIAN_REPUBLIC
+				}
+			}
+			modifier = {
+				add = 100
+				has_game_rule = {
+					rule = URB_ai_behavior
+					option = COMMUNALISM
+				}
+			}
+			modifier = {
+				add = 100
+				has_game_rule = {
+					rule = URB_ai_behavior
+					option = NEW_CONSTITUTIONALISM
+				}
+			}
+		}
+    add_war_support = -0.1
+    add_political_power = -50
+    set_global_flag = urb_choose_hall_levander
+    custom_effect_tooltip = URB_civ_recognition_degree_fall_tt
+    hidden_effect = { 
+      urb_clear_all_degree_flags = yes
+      set_country_flag = URB_faction_degree_8
+      retire_country_leader = yes 
+      STE = { country_event = { id = urbanlian_civilwar.32 hours = 2 } }
+      country_event = { id = urbanlian_civilwar.8 hours = 2 }
+      country_event = { id = urbanlian_civilwar.9 hours = 2 }
+      create_country_leader = {
+        name = "Hall Levander"
+        desc = "POLITICS_HALL_LEVANDER_DESC"
+        picture = "gfx/leaders/URB/portrait_urb_hall_levander.dds"
+        expire = "1965.3.1"
+        ideology = centrism
+        traits = {
+          appeaser
+        }
+      }
+    }
+    effect_tooltip = {
+      create_country_leader = {
+        name = "Hall Levander"
+        desc = "POLITICS_HALL_LEVANDER_DESC"
+        picture = "gfx/leaders/URB/portrait_urb_hall_levander.dds"
+        expire = "1965.3.1"
+        ideology = centrism
+        traits = {
+          appeaser
+        }
+      }
+    }
+	}
+}
+
+#Factories destroyed, message for the state controller
+country_event = {
+	id = urbanlian_civilwar.22
+	title = urbanlian_civilwar.22.t
+	desc = urbanlian_civilwar.22.d
+	picture = GFX_report_event_spain_civil_war_volunteers_02
+	
+	is_triggered_only = yes
+	option = { # Fine
+		trigger = {
+			FROM = {
+				TAG = UBC
+			}
+		}
+		name = urbanlian_civilwar.22.a
+		ai_chance = { factor = 100 }
+		effect_tooltip = {
+      821 = {
+        if = {
+          limit = {
+            NOT = { has_state_flag = pittsburgh_factories_destroyed1 }
+          }
+					damage_building = { type = industrial_complex damage = 0.5 }
+					damage_building = { type = arms_factory damage = 0.5 }
+					damage_building = { type = infrastructure damage = 0.5 }
+          hidden_effect = { 
+            set_state_flag = pittsburgh_factories_destroyed1 
+          }
+        }
+        if = {
+          limit = {
+            has_state_flag = pittsburgh_factories_destroyed1
+          }
+					damage_building = { type = industrial_complex damage = 0.8 }
+					damage_building = { type = arms_factory damage = 0.8 }
+					damage_building = { type = infrastructure damage = 0.8 }
+          hidden_effect = { 
+            clr_state_flag = pittsburgh_factories_destroyed1 
+            set_state_flag = pittsburgh_factories_destroyed2 
+          }
+        }
+        CONTROLLER = { country_event = urbanlian_civilwar.22 } 
+      }
+    }
+	}
+	option = { # Fine
+		trigger = {
+			FROM = {
+				TAG = UBD
+			}
+		}
+		name = urbanlian_civilwar.22.a
+		ai_chance = { factor = 100 }
+		effect_tooltip = {
+      357 = {
+        if = {
+          limit = {
+            NOT = { has_state_flag = aider_northenland_factories_destroyed1 }
+          }
+					damage_building = { type = industrial_complex damage = 0.5 }
+					damage_building = { type = arms_factory damage = 0.5 }
+					damage_building = { type = infrastructure damage = 0.5 }
+          hidden_effect = { 
+            set_state_flag = aider_northenland_factories_destroyed1
+          }
+        }
+        if = {
+          limit = {
+            has_state_flag = aider_northenland_factories_destroyed1
+          }
+					damage_building = { type = industrial_complex damage = 0.8 }
+					damage_building = { type = arms_factory damage = 0.8 }
+					damage_building = { type = infrastructure damage = 0.8 }
+          hidden_effect = { 
+            clr_state_flag = aider_northenland_factories_destroyed1
+            set_state_flag = aider_northenland_factories_destroyed2 
+          }
+        }
+      }
+		}
+	}
+}
+
+#Uprising launched, message for the state controller
+country_event = {
+	id = urbanlian_civilwar.23
+	title = urbanlian_civilwar.23.t
+	desc = urbanlian_civilwar.23.d
+	picture = GFX_report_event_spain_civil_war_volunteers_02
+	
+	is_triggered_only = yes
+	option = { # Fine
+		name = urbanlian_civilwar.23.a
+		trigger = {
+			FROM = {
+				TAG = UBC
+			}
+		}
+		ai_chance = { factor = 100 }
+		effect_tooltip = {
+      821 = { 
+        create_unit = { 
+          division = "name = \"4. Pittsburgh Army\" division_template = \"Urbanlian_Force_6\" start_experience_factor = 0.15 start_equipment_factor = 0.7" 
+          owner = FROM
+        }
+        create_unit = { 
+          division = "name = \"5. Pittsburgh Army\" division_template = \"Urbanlian_Force_6\" start_experience_factor = 0.15 start_equipment_factor = 0.7" 
+          owner = FROM
+        }
+				create_unit = { 
+					division = "name = \"6. Pittsburgh Army\" division_template = \"Urbanlian_Force_6\" start_experience_factor = 0.15 start_equipment_factor = 0.7" 
+					owner = FROM
+				}
+      }
+		}
+	}
+	option = { # Fine
+		name = urbanlian_civilwar.23.a
+		trigger = {
+			FROM = {
+				TAG = UBD
+			}
+		}
+		ai_chance = { factor = 100 }
+		effect_tooltip = {
+      357 = { 
+        create_unit = { 
+					division = "name = \"4. Aider Army\" division_template = \"Urbanlian_Force_5\" start_experience_factor = 0 start_equipment_factor = 0.3" 
+					owner = FROM
+				}
+				create_unit = { 
+					division = "name = \"5. Aider Army\" division_template = \"Urbanlian_Force_5\" start_experience_factor = 0 start_equipment_factor = 0.3" 
+					owner = FROM
+				}
+				create_unit = { 
+					division = "name = \"6. Aider Army\" division_template = \"Urbanlian_Force_5\" start_experience_factor = 0 start_equipment_factor = 0.3" 
+					owner = FROM
+				}
+      }
+		}
+	}
+}
+
+#An Urbanlian warlord seeks state recognition, message for Stellarland
+country_event = {
+	id = urbanlian_civilwar.24
+	title = urbanlian_civilwar.24.t
+	desc = urbanlian_civilwar.24.d
+	picture = GFX_rreport_event_vienna_award_negotiations
+	
+	is_triggered_only = yes
+	option = { # Agree
+		name = urbanlian_civilwar.24.a
+		ai_chance = { 
+      factor = 100
+			modifier = {
+				factor = 0
+				FROM = {
+          has_government = fascism
+				}
+			}			 
+		}
+    set_global_flag = ste_recognizes_an_urbanlian_government
+    if = {
+      limit = { FROM = { tag = UBL } }
+      set_country_flag = ucw_foreign_aid_ubl1
+    }
+    if = {
+      limit = { FROM = { tag = UBC } }
+      set_country_flag = ucw_foreign_aid_ubc1
+    }
+    if = {
+      limit = { FROM = { tag = UBD } }
+      set_country_flag = ucw_foreign_aid_ubd1
+    }
+    if = {
+      limit = { FROM = { tag = UBF } }
+      set_country_flag = ucw_foreign_aid_ubf1
+    }
+	  FROM = {
+			country_event = urbanlian_civilwar.25
+      add_opinion_modifier = {
+        target = ROOT
+        modifier = urb_seeks_ste_recognization_accepted
+      }
+		}
+	}
+	option = { # Refuse
+		name = urbanlian_civilwar.24.b
+		ai_chance = { 
+      factor = 0
+			modifier = {
+				factor = 100
+				FROM = {
+          has_government = fascism
+				}
+			}			 
+		}
+		add_opinion_modifier = {
+      target = FROM
+      modifier = urb_seeks_ste_recognization_declined
+    }
+	  FROM = {
+			country_event = urbanlian_civilwar.26
+      add_opinion_modifier = {
+        target = ROOT
+        modifier = urb_seeks_ste_recognization_declined
+      }
+		}
+	}
+}
+
+#An Urbanlian warlord seeks state recognition, Stellarland accepts, message for Urbanlia
+country_event = {
+	id = urbanlian_civilwar.25
+	title = urbanlian_civilwar.25.t
+	desc = urbanlian_civilwar.25.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Good
+		name = urbanlian_civilwar.19.a
+		ai_chance = { factor = 100 }
+		effect_tooltip = {
+      add_opinion_modifier = {
+        target = FROM
+        modifier = urb_seeks_ste_recognization_accepted
+      }
+    }
+	}
+}
+
+#An Urbanlian warlord seeks state recognition, Stellarland declines, message for Urbanlia
+country_event = {
+	id = urbanlian_civilwar.26
+	title = urbanlian_civilwar.26.t
+	desc = urbanlian_civilwar.26.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Fine
+		name = urbanlian_civilwar.26.a
+		ai_chance = { factor = 100 }
+		effect_tooltip = {
+      add_opinion_modifier = {
+        target = FROM
+        modifier = urb_seeks_ste_recognization_declined
+      }
+    }
+	}
+}
+
+#Urbanlia requires our support, message for subject
+country_event = {
+	id = urbanlian_civilwar.27
+	title = urbanlian_civilwar.27.t
+	desc = urbanlian_civilwar.27.d
+	picture = GFX_report_event_ast_army
+	
+	is_triggered_only = yes
+	option = { # Agree
+		name = urbanlian_civilwar.27.a
+		ai_chance = { factor = 100 }
+		if = {
+      limit = { 
+        NOT = { has_idea = subject_offer_support_to_urbanlia }
+      }
+      add_timed_idea = { idea = subject_offer_support_to_urbanlia days = 365 } 
+		}
+		FROM = { country_event = urbanlian_civilwar.28 }
+	}
+}
+
+#Urbanlia requires our support, subject agrees
+country_event = {
+	id = urbanlian_civilwar.28
+	title = urbanlian_civilwar.28.t
+	desc = urbanlian_civilwar.28.d
+	picture = GFX_report_event_ast_army
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = urbanlian_civilwar.28.a
+		ai_chance = { factor = 100 }
+    if = {
+      limit = { tag = URB }
+      every_owned_state = {
+        limit = {
+          is_capital = yes 
+        }
+        create_unit = { division = "name = \"Colonial Volunteer Army\" division_template = \"Urbanlian_Force_7\" start_experience_factor = 0.15 start_equipment_factor = 0.8" owner = ROOT }
+        create_unit = { division = "name = \"Colonial Volunteer Army\" division_template = \"Urbanlian_Force_7\" start_experience_factor = 0.15 start_equipment_factor = 0.8" owner = ROOT }
+      }
+    }
+    if = {
+      limit = { tag = UBC }
+      every_owned_state = {
+        limit = {
+          is_capital = yes 
+        }
+        create_unit = { division = "name = \"Colonial Volunteer Army\" division_template = \"Urbanlian_Force_6\" start_experience_factor = 0.15 start_equipment_factor = 0.8" owner = ROOT }
+        create_unit = { division = "name = \"Colonial Volunteer Army\" division_template = \"Urbanlian_Force_6\" start_experience_factor = 0.15 start_equipment_factor = 0.8" owner = ROOT }
+      }
+    }
+    if = {
+      limit = { tag = UBD }
+      every_owned_state = {
+        limit = {
+          is_capital = yes 
+        }
+        create_unit = { division = "name = \"Colonial Volunteer Army\" division_template = \"Urbanlian_Force_5\" start_experience_factor = 0.15 start_equipment_factor = 0.8" owner = ROOT }
+        create_unit = { division = "name = \"Colonial Volunteer Army\" division_template = \"Urbanlian_Force_5\" start_experience_factor = 0.15 start_equipment_factor = 0.8" owner = ROOT }
+      }
+    }
+    if = {
+      limit = { tag = UBF }
+      every_owned_state = {
+        limit = {
+          is_capital = yes 
+        }
+        create_unit = { division = "name = \"Colonial Volunteer Army\" division_template = \"Urbanlian_Force_8\" start_experience_factor = 0.15 start_equipment_factor = 0.8" owner = ROOT }
+        create_unit = { division = "name = \"Colonial Volunteer Army\" division_template = \"Urbanlian_Force_8\" start_experience_factor = 0.15 start_equipment_factor = 0.8" owner = ROOT }
+      }
+    }
+	}
+}
+
+#Fate of Lee Chelen
+country_event = {
+	id = urbanlian_civilwar.29
+	title = urbanlian_civilwar.29.t
+	desc = urbanlian_civilwar.29.d
+	picture = GFX_report_event_crowd_in_prague
+	
+	is_triggered_only = yes
+	option = { # Lee Chelen chooses his way
+		name = urbanlian_civilwar.29.a
+		ai_chance = { 
+      factor = 20 
+		}
+    hidden_effect = { 
+      random_list = {
+        50 = { news_event = { id = urb_lch_news.1 hours = 2 } }
+        25 = { news_event = { id = urb_lch_news.15 hours = 2 } }
+        25 = { 
+          news_event = { id = urb_lch_news.5 hours = 2 } 
+          STE = { country_event = { id = urbanlian_civilwar.34 hours = 4 } }
+        }
+      }
+    }
+	}
+	option = { # Arrange a curtain call for him
+		name = urbanlian_civilwar.29.b
+		ai_chance = { 
+      factor = 10 
+		}
+    hidden_effect = { 
+      random_list = {
+        20 = { news_event = { id = urb_lch_news.2 hours = 2 } }
+        20 = { news_event = { id = urb_lch_news.3 hours = 2 } }
+        20 = { news_event = { id = urb_lch_news.4 hours = 2 } }
+        20 = { 
+          news_event = { id = urb_lch_news.5 hours = 2 } 
+          STE = { country_event = { id = urbanlian_civilwar.34 hours = 4 } }
+        }
+        5 = { news_event = { id = urb_lch_news.6 hours = 2 } }
+        10 = { news_event = { id = urb_lch_news.7 hours = 2 } }
+        5 = { news_event = { id = urb_lch_news.8 hours = 2 } }
+      }
+    }
+	}
+	option = { # Give him to the public
+		name = urbanlian_civilwar.29.c
+		ai_chance = { 
+      factor = 10 
+		}
+		country_event = { id = urbanlian_civilwar.30 hours = 2 } 
+	}
+	option = { # Give him special political protection
+		name = urbanlian_civilwar.29.e
+		ai_chance = { 
+      factor = 30 
+		}
+    hidden_effect = { 
+      random_list = {
+        90 = { news_event = { id = urb_lch_news.15 hours = 2 } }
+        10 = { news_event = { id = urb_lch_news.1 hours = 2 } }
+      }
+    }
+	}
+}
+
+#Public Trial of Lee Chelen
+country_event = {
+	id = urbanlian_civilwar.30
+	title = urbanlian_civilwar.30.t
+	desc = urbanlian_civilwar.30.d
+	picture = GFX_report_event_generic_peaceful_annexation
+	
+	is_triggered_only = yes
+	option = { # Expel Lee Chelen from Urbanlia
+		name = urbanlian_civilwar.30.a
+		ai_chance = { 
+      factor = 10 
+		}
+    hidden_effect = { 
+      if = {
+        limit = {
+          has_global_flag = action_aristotle_starts
+        }
+        random_list = {
+          90 = { news_event = { id = urb_lch_news.6 hours = 2 } }
+          5 = { news_event = { id = urb_lch_news.7 hours = 2 } }
+          5 = { news_event = { id = urb_lch_news.8 hours = 2 } }
+        }
+        else = {
+          random_list = {
+            30 = { news_event = { id = urb_lch_news.6 hours = 2 } }
+            35 = { news_event = { id = urb_lch_news.7 hours = 2 } }
+            35 = { news_event = { id = urb_lch_news.8 hours = 2 } }
+          }
+        }
+      }
+    }
+	}
+	option = { # Hang him
+		name = urbanlian_civilwar.30.b
+		ai_chance = { 
+      factor = 10 
+		}
+    hidden_effect = { 
+      if = {
+        limit = {
+          has_global_flag = action_aristotle_starts
+        }
+        country_event = { id = urb_lch_news.10 hours = 2 }
+        news_event = { id = urb_lch_news.17 hours = 3 } 
+        STE = { country_event = { id = urbanlian_civilwar.34 hours = 5 } }
+        else = {
+          country_event = { id = urb_lch_news.9 hours = 2 } 
+          news_event = { id = urb_lch_news.16 hours = 3 } 
+          STE = { country_event = { id = urbanlian_civilwar.36 hours = 5 } }
+        }
+      }
+    }
+	}
+	option = { # Shoot him
+		name = urbanlian_civilwar.30.c
+		ai_chance = { 
+      factor = 10 
+		}
+    hidden_effect = { 
+      if = {
+        limit = {
+          has_global_flag = action_aristotle_starts
+        }
+        country_event = { id = urb_lch_news.12 hours = 2 } 
+        news_event = { id = urb_lch_news.19 hours = 3 } 
+        STE = { country_event = { id = urbanlian_civilwar.34 hours = 5 } }
+        else = {
+          country_event = { id = urb_lch_news.11 hours = 2 } 
+          news_event = { id = urb_lch_news.18 hours = 3 } 
+          STE = { country_event = { id = urbanlian_civilwar.36 hours = 5 } }
+        }
+      }
+    }
+	}
+	option = { # Burn him at the stake
+		name = urbanlian_civilwar.30.e
+		ai_chance = { 
+      factor = 10 
+		}
+    hidden_effect = { 
+      if = {
+        limit = {
+          has_global_flag = action_aristotle_starts
+        }
+        country_event = { id = urb_lch_news.14 hours = 2 } 
+        news_event = { id = urb_lch_news.21 hours = 3 } 
+        STE = { country_event = { id = urbanlian_civilwar.34 hours = 5 } }
+        else = {
+          country_event = { id = urb_lch_news.13 hours = 2 } 
+          news_event = { id = urb_lch_news.20 hours = 3 } 
+          STE = { country_event = { id = urbanlian_civilwar.36 hours = 5 } }
+        }
+      }
+    }
+	}
+}
+
+#Lee Chelen's place in the history
+country_event = {
+	id = urbanlian_civilwar.31
+	title = urbanlian_civilwar.31.t
+	desc = urbanlian_civilwar.31.d
+	picture = GFX_report_event_leechelen_office
+	
+	is_triggered_only = yes
+	option = { # Lee Chelen is an arch-villain
+		name = urbanlian_civilwar.31.a
+		ai_chance = { 
+      factor = 5 
+			modifier = {
+				factor = 100
+        has_government = communism
+			}			 
+		}
+		if = {
+      limit = {
+        has_government = communism
+      }
+      add_stability = 0.1
+      add_political_power = 200
+      add_popularity = {
+        ideology = communism
+        popularity = 0.1
+      }
+      else = {
+        add_stability = -0.05
+        add_war_support = -0.05
+        add_political_power = -100
+        add_popularity = {
+          ideology = communism
+          popularity = 0.1
+        }
+      }
+		}
+	}
+	option = { # An old-system guardian
+		name = urbanlian_civilwar.31.b
+		ai_chance = { 
+      factor = 5 
+			modifier = {
+				factor = 100
+        has_government = neutrality
+			}			 
+		}
+		if = {
+      limit = {
+        has_government = neutrality
+      }
+      add_stability = 0.1
+      add_political_power = 200
+      add_popularity = {
+        ideology = neutrality
+        popularity = 0.1
+      }
+      else = {
+        add_stability = -0.05
+        add_war_support = -0.05
+        add_political_power = -100
+        add_popularity = {
+          ideology = neutrality
+          popularity = 0.1
+        }
+      }
+		}
+	}
+	option = { # A hero born at the wrong time
+		name = urbanlian_civilwar.31.c
+		ai_chance = { 
+      factor = 5 
+			modifier = {
+				factor = 100
+        has_government = fascism
+			}			 
+		}
+		if = {
+      limit = {
+        has_government = fascism
+      }
+      add_stability = 0.1
+      add_political_power = 200
+      add_popularity = {
+        ideology = fascism
+        popularity = 0.1
+      }
+      else = {
+        add_stability = -0.05
+        add_war_support = -0.05
+        add_political_power = -100
+        add_popularity = {
+          ideology = fascism
+          popularity = 0.1
+        }
+      }
+		}
+	}
+	option = { # An incompetent leader
+		name = urbanlian_civilwar.31.e
+		ai_chance = { 
+      factor = 5 
+			modifier = {
+				factor = 100
+        has_government = democratic
+			}			 
+		}
+		if = {
+      limit = {
+        has_government = democratic
+      }
+      add_stability = 0.1
+      add_political_power = 200
+      add_popularity = {
+        ideology = democratic
+        popularity = 0.1
+      }
+      else = {
+        add_stability = -0.05
+        add_war_support = -0.05
+        add_political_power = -100
+        add_popularity = {
+          ideology = democratic
+          popularity = 0.1
+        }
+      }
+		}
+	}
+}
+
+#Quin Chow's suggestion
+country_event = {
+	id = urbanlian_civilwar.32
+	title = urbanlian_civilwar.32.t
+	desc = urbanlian_civilwar.32.d
+	picture = GFX_report_event_stellarland_quin_chow_portrait
+	
+	is_triggered_only = yes
+	option = { # Name it Action Aristotle
+		name = urbanlian_civilwar.32.a
+		ai_chance = { 
+      factor = 10 
+		}
+		country_event = { id = urbanlian_civilwar.33 hours = 1 }
+    hidden_effect = { 
+      set_global_flag = action_aristotle_starts
+      FROM = { country_event = { id = urbanlian_civilwar.29 hours = 5 } }
+    }
+	}
+	option = { # An particularly inappropriate suggestion
+		name = urbanlian_civilwar.32.b
+		ai_chance = { 
+      factor = 10 
+		}
+    hidden_effect = { 
+      FROM = { country_event = { id = urbanlian_civilwar.29 hours = 5 } }
+    }
+	}
+}
+
+#Action Aristotle Starts
+country_event = {
+	id = urbanlian_civilwar.33
+	title = urbanlian_civilwar.33.t
+	desc = urbanlian_civilwar.33.d
+	picture = GFX_report_event_transport_spaceship
+	
+	is_triggered_only = yes
+	option = { # Bless them
+		name = urbanlian_civilwar.33.a
+		ai_chance = { 
+      factor = 10 
+		}
+	}
+}
+
+#Action Aristotle Succeeds
+country_event = {
+	id = urbanlian_civilwar.34
+	title = urbanlian_civilwar.34.t
+	desc = urbanlian_civilwar.34.d
+	picture = GFX_report_event_transport_spaceship
+	
+	is_triggered_only = yes
+	option = { # Welcome
+		name = urbanlian_civilwar.34.a
+		ai_chance = { 
+      factor = 10 
+		}
+		if = {
+      limit = {
+        NOT = { has_global_flag = action_aristotle_succeeds }
+      }
+      set_global_flag = action_aristotle_succeeds
+		}
+		effect_tooltip = {
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = STE_lee_chelen
+		}
+	}
+}
+
+#Lee Chelen keeps ongoing
+news_event = {
+	id = urbanlian_civilwar.35
+	title = urbanlian_civilwar.35.t
+	desc = urbanlian_civilwar.35.d
+	picture = GFX_news_event_chelen_and_chesven
+	
+	is_triggered_only = yes
+	option = { # Good
+		name = urbanlian_civilwar.35.a
+		trigger = { TAG = URB }
+		ai_chance = { 
+      factor = 10 
+		}
+	}
+	option = { # Confirm
+		name = urbanlian_civilwar.35.b
+		ai_chance = { 
+      factor = 10 
+		}
+		trigger = {
+			NOT = {
+				TAG = URB
+			}
+		}
+	}
+}
+
+#Action Aristotle Fails
+country_event = {
+	id = urbanlian_civilwar.36
+	title = urbanlian_civilwar.36.t
+	desc = urbanlian_civilwar.36.d
+	picture = GFX_report_event_transport_spaceship
+	
+	is_triggered_only = yes
+	option = { # Pity
+		name = urbanlian_civilwar.36.a
+		ai_chance = { 
+      factor = 10 
+		}
+	}
+}
+
+#Warlord demands integration, URB agrees, message for other warlords
+country_event = {
+	id = urbanlian_civilwar.37
+	title = urbanlian_civilwar.37.t
+	desc = urbanlian_civilwar.37.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = urbanlian_civilwar.37.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+#Infantry splitted to a warlord, message for the government
+country_event = {
+	id = urbanlian_civilwar.38
+	title = urbanlian_civilwar.38.t
+	desc = urbanlian_civilwar.38.d
+	picture = GFX_report_event_chinese_soldiers_02
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = urbanlian_civilwar.38.a
+		ai_chance = { factor = 100 }
+		add_stability = -0.1
+		add_war_support = -0.05
+		transfer_units_fraction = {
+			target = FROM
+			size = 0.1
+		}
+	}
+}
+
+#Infantry splitted to government, message for warlord
+country_event = {
+	id = urbanlian_civilwar.39
+	title = urbanlian_civilwar.38.t
+	desc = urbanlian_civilwar.39.d
+	picture = GFX_report_event_chinese_soldiers_02
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = urbanlian_civilwar.38.a
+		ai_chance = { factor = 100 }
+		add_stability = -0.05
+		add_war_support = -0.05
+		transfer_units_fraction = {
+			target = FROM
+			size = 0.1
+		}
+		set_country_flag = ucw_warlord_army_splits_to_government
+		URB_civ_reduce_recognition_degree = yes
+	}
+}
+
+#Infantry splitted away
+country_event = {
+	id = urbanlian_civilwar.40
+	title = urbanlian_civilwar.38.t
+	desc = urbanlian_civilwar.40.d
+	picture = GFX_report_event_chinese_soldiers_02
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = urbanlian_civilwar.38.a
+		ai_chance = { factor = 100 }
+		add_stability = -0.05
+		add_war_support = -0.05
+		if = {
+      limit = {
+        tag = UBC
+        controls_state = 820
+      }
+      delete_unit = { 
+        state = 820 
+        disband = yes
+      }		
+      else_if = {
+        limit = {
+          tag = UBC
+          controls_state = 823
+        }
+        delete_unit = { 
+          state = 823 
+          disband = yes
+        }		
+      }	
+      else_if = {
+        limit = {
+          tag = UBC
+        }
+        delete_unit = { 
+          state = 818 
+          disband = yes
+        }		
+        delete_unit = { 
+          state = 858 
+          disband = yes
+        }			
+      }
+		}
+		if = {
+      limit = {
+        tag = UBD
+        controls_state = 819
+      }
+      delete_unit = { 
+        state = 819 
+        disband = yes
+      }		
+      else_if = {
+        limit = {
+          tag = UBD
+          controls_state = 823
+        }
+        delete_unit = { 
+          state = 823 
+          disband = yes
+        }			
+      }	
+      else_if = {
+        limit = {
+          tag = UBD
+        }    
+        delete_unit = { 
+          state = 360 
+          disband = yes
+        }	
+      }
+		}
+		if = {
+      limit = {
+        tag = UBF
+        controls_state = 819
+      }
+      delete_unit = { 
+        state = 819 
+        disband = yes
+      }	
+      else_if = {
+        limit = {
+          tag = UBF
+          controls_state = 820
+        }
+        delete_unit = { 
+          state = 820 
+          disband = yes
+        }	
+      }	
+      else_if = {
+        limit = {
+          tag = UBF
+          controls_state = 818
+        }
+        delete_unit = { 
+          state = 818 
+          disband = yes
+        }	
+        delete_unit = { 
+          state = 858 
+          disband = yes
+        }	
+      }	
+      else_if = {
+        limit = {
+          tag = UBF
+          controls_state = 360
+        }
+        delete_unit = { 
+          state = 360 
+          disband = yes
+        }		
+      }	
+      else = {
+        delete_unit = { 
+          state = 823 
+          disband = yes
+        }		
+      }
+		}
+		if = {
+      limit = {
+        tag = URB
+        controls_state = 819
+      }
+      delete_unit = { 
+        state = 819 
+        disband = yes
+      }	
+      else_if = {
+        limit = {
+          tag = URB
+          controls_state = 823
+        }
+        delete_unit = { 
+          state = 823 
+          disband = yes
+        }	
+      }	
+      else = {
+        delete_unit = { 
+          state = 360 
+          disband = yes
+        }	
+      }
+		}
+	}
+}
+
+#Army back to control
+country_event = {
+	id = urbanlian_civilwar.41
+	title = urbanlian_civilwar.41.t
+	desc = urbanlian_civilwar.41.d
+	picture = GFX_report_event_chinese_soldiers_02
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = urbanlian_civilwar.41.a
+		ai_chance = { factor = 100 }
+		add_stability = 0.05
+	}
+}
+
+# An Urbanlian Clique seeks economic support
+country_event = {
+	id = urbanlian_civilwar.42
+	title = urbanlian_civilwar.42.t
+	desc = urbanlian_civilwar.42.d
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+	
+	option = { #Agree
+		name = urbanlian_civilwar.42.a
+		ai_chance = {
+			base = 20
+			modifier = {
+				threat > 35
+				factor = 100
+			}
+			modifier = {
+        has_opinion = { target = FROM value > 49 }
+				factor = 100
+			}
+			modifier = {
+				OR = {
+          is_in_faction_with = FROM
+          has_subject = FROM
+				}
+				factor = 100
+			}
+		}
+    set_country_flag = urb_civ_offered_economic_aid
+		FROM = { 
+      country_event = urbanlian_civilwar.43 
+      if = {
+        limit = { 
+          NOT = { has_idea = urb_civil_war_economic_aid }
+        }
+        add_ideas = urb_civil_war_economic_aid
+      }
+		}
+	}
+	option = { #Refuse
+		name = urbanlian_civilwar.42.b
+		FROM = { country_event = urbanlian_civilwar.44 }
+	}
+}
+
+# An Urbanlian Clique seeks economic support, FROM agrees
+country_event = {
+	id = urbanlian_civilwar.43
+	title = urbanlian_civilwar.43.t
+	desc = urbanlian_civilwar.43.d
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+	
+	option = { #Confirm
+		name = urbanlian_civilwar.43.a
+		effect_tooltip = {
+      if = {
+        limit = { 
+          NOT = { has_idea = urb_civil_war_economic_aid }
+        }
+        add_ideas = urb_civil_war_economic_aid
+      }
+		}
+	}
+}
+
+# An Urbanlian Clique seeks support, FROM refuses
+country_event = {
+	id = urbanlian_civilwar.44
+	title = urbanlian_civilwar.44.t
+	desc = urbanlian_civilwar.44.d
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+	
+	option = { #Confirm
+		name = urbanlian_civilwar.44.a
+	}
+}
+
+# An Urbanlian Clique seeks armaments or volunteers
+country_event = {
+	id = urbanlian_civilwar.45
+	title = urbanlian_civilwar.45.t
+	desc = urbanlian_civilwar.45.d
+	picture = GFX_report_event_generic_army
+
+	is_triggered_only = yes
+	
+	option = { #Armaments
+		name = urbanlian_civilwar.45.a
+		ai_chance = {
+			base = 20
+			modifier = {
+        has_opinion = { target = FROM value > 49 }
+				factor = 100
+			}
+			modifier = {
+        has_government = democratic
+				factor = 100
+			}
+			modifier = {
+				OR = {
+          is_in_faction_with = FROM
+          has_subject = FROM
+				}
+				factor = 100
+			}
+		}
+    add_ai_strategy = {
+      type = support
+      id = FROM
+      value = 200
+    }
+		FROM = { country_event = urbanlian_civilwar.46 }
+		if = {
+      limit = { 
+        NOT = { has_idea = offer_support_to_urbanlia }
+      }
+      add_timed_idea = { idea = offer_support_to_urbanlia days = 365 } 
+		}
+		if = {
+      limit = { FROM = { tag = UBL } }
+      set_country_flag = ucw_foreign_aid_urb2
+		}
+		if = {
+      limit = { FROM = { tag = UBC } }
+      set_country_flag = ucw_foreign_aid_ubc2
+		}
+		if = {
+      limit = { FROM = { tag = UBD } }
+      set_country_flag = ucw_foreign_aid_ubd2
+		}
+		if = {
+      limit = { FROM = { OR = {
+        tag = UBF 
+        tag = LSN 
+      } } }
+      set_country_flag = ucw_foreign_aid_ubf2
+		}
+		send_equipment = {
+			target = FROM
+			type = infantry_equipment
+			amount = 200
+			old_prioritised = yes
+		}
+		send_equipment = {
+			target = FROM
+			type = artillery_equipment
+			amount = 100
+			old_prioritised = yes
+		}
+		send_equipment = {
+			target = FROM
+			type = support_equipment
+			amount = 50
+			old_prioritised = yes
+		}
+	}
+	option = { #Volunteers
+		name = urbanlian_civilwar.45.b
+		ai_chance = {
+			base = 10
+			modifier = {
+				threat > 50
+				factor = 100
+			}
+			modifier = {
+        has_opinion = { target = FROM value > 54 }
+				factor = 100
+			}
+			modifier = {
+				OR = {
+          is_in_faction_with = FROM
+          has_subject = FROM
+				}
+				factor = 100
+			}
+		}
+		if = {
+      limit = { 
+        NOT = { has_idea = urb_civil_war_volunteers }
+      }
+      add_timed_idea = { idea = urb_civil_war_volunteers days = 365 } 
+		}
+    add_ai_strategy = {
+      type = send_volunteers_desire
+      id = FROM
+      value = 200
+    }
+		if = {
+      limit = { FROM = { tag = UBL } }
+      set_country_flag = ucw_foreign_aid_urb3
+		}
+		if = {
+      limit = { FROM = { tag = UBC } }
+      set_country_flag = ucw_foreign_aid_ubc3
+		}
+		if = {
+      limit = { FROM = { tag = UBD } }
+      set_country_flag = ucw_foreign_aid_ubd3
+		}
+		if = {
+      limit = { FROM = { OR = {
+        tag = UBF 
+        tag = LSN 
+      } } }
+      set_country_flag = ucw_foreign_aid_ubf3
+		}
+		FROM = { 
+      country_event = urbanlian_civilwar.47 
+      if = {
+        limit = { 
+          NOT = { has_idea = urb_civil_war_seek_volunteers }
+        }
+        add_timed_idea = { idea = urb_civil_war_seek_volunteers days = 365 } 
+      }
+		}
+	}
+	option = { #Refuse
+		name = urbanlian_civilwar.42.b
+		ai_chance = {
+			base = 0
+			modifier = {
+        has_opinion = { target = FROM value < -19 }
+				factor = 100
+			}
+		}
+		FROM = { country_event = urbanlian_civilwar.44 }
+	}
+}
+
+# An Urbanlian Clique seeks armaments assistance, FROM agrees
+country_event = {
+	id = urbanlian_civilwar.46
+	title = urbanlian_civilwar.46.t
+	desc = urbanlian_civilwar.46.d
+	picture = GFX_report_event_generic_army
+
+	is_triggered_only = yes
+	
+	option = { #Confirm
+		name = urbanlian_civilwar.43.a
+		effect_tooltip = {
+      FROM = {
+        send_equipment = {
+          target = FROM
+          type = infantry_equipment
+          amount = 1000
+          old_prioritised = yes
+        }
+        send_equipment = {
+          target = FROM
+          type = artillery_equipment
+          amount = 500
+          old_prioritised = yes
+        }
+        send_equipment = {
+          target = FROM
+          type = support_equipment
+          amount = 500
+          old_prioritised = yes
+        }
+      }
+		}
+	}
+}
+
+# An Urbanlian Clique seeks volunteers, FROM agrees
+country_event = {
+	id = urbanlian_civilwar.47
+	title = urbanlian_civilwar.47.t
+	desc = urbanlian_civilwar.47.d
+	picture = GFX_report_event_generic_army
+
+	is_triggered_only = yes
+	
+	option = { #Confirm
+		name = urbanlian_civilwar.43.a
+		effect_tooltip = {
+      FROM = {
+        if = {
+          limit = { 
+            NOT = { has_idea = urb_civil_war_volunteers }
+          }
+          add_timed_idea = { idea = urb_civil_war_volunteers days = 365 } 
+        }
+      }
+      if = {
+        limit = { 
+          NOT = { has_idea = urb_civil_war_seek_volunteers }
+        }
+        add_timed_idea = { idea = urb_civil_war_seek_volunteers days = 365 } 
+      }
+		}
+	}
+}
+
+# The capital security area
+country_event = {
+	id = urbanlian_civilwar.48
+	title = urbanlian_civilwar.48.t
+	desc = urbanlian_civilwar.48.d
+	picture = GFX_report_event_generic_military_parade
+
+	is_triggered_only = yes
+	
+	option = { #Confirm
+		name = urbanlian_civilwar.48.a
+		NDL = {
+      add_state_core = 358
+      add_state_core = 824
+      transfer_state = 358
+      transfer_state = 824
+      load_oob = "URB_urbanlian_civil_war_government"
+		}
+	}
+}
+
+#Urbanlian Government Derailed
+country_event = {
+	id = urbanlian_civilwar.49
+	title = urbanlian_civilwar.49.t
+	desc = urbanlian_civilwar.49.d
+	picture = GFX_report_event_generic_military_parade
+
+	is_triggered_only = yes
+	
+	option = { #Confirm
+		name = urbanlian_civilwar.49.a
+		add_stability = -0.2
+		hidden_effect = {
+      country_event = { hours = 5 id = urbanlian_civilwar.21 }
+		}
+	}
+}
+
+
+
+
+# New Constitutionalist Event, election after civilwar
+country_event = {
+	id = urbanlia_sucw.1
+	title = urbanlia_sucw.1.t
+	desc = urbanlia_sucw.1.d
+	picture = GFX_report_event_election_vote
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = urbanlia_sucw.1.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+# New Constitutionalist Event, unexpected circumstances of the election
+country_event = {
+	id = urbanlia_sucw.2
+	title = urbanlia_sucw.2.t
+	desc = urbanlia_sucw.2.d
+	picture = GFX_report_event_gathering_protest
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = urbanlia_sucw.2.a
+		ai_chance = { factor = 100 }
+		set_country_flag = sucw_crisis_starts #For visualizing decision to end the crisis
+	}
+}
+
+# FROM faction splits, message for Urbanlia
+country_event = {
+	id = urbanlia_sucw.3
+	title = urbanlia_sucw.3.t
+	desc = urbanlia_sucw.3.d
+	picture = GFX_report_event_generic_army
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = urbanlia_sucw.3.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+# Urbanlia seeks self-government agreement, message for Warlord
+country_event = {
+	id = urbanlia_sucw.4
+	title = urbanlia_sucw.4.t
+	desc = urbanlia_sucw.4.d
+	picture = GFX_report_event_french_resistance_02
+	
+	is_triggered_only = yes
+	
+	option = { # Agree
+		name = urbanlia_sucw.4.a
+		ai_chance = { 
+      factor = 20
+			modifier = {
+        is_in_faction = yes
+				factor = 0
+			} 
+			modifier = {
+				tag = LSN
+				factor = 0
+				AND = {
+          MSA = { is_subject = no }
+          IQS = { is_subject = no }
+				}
+			} 
+			modifier = {
+				tag = MSA
+				country_exists = NEN
+				factor = 60
+			}
+			modifier = {
+				tag = IQS
+				country_exists = PEN
+				factor = 50
+			} 
+			modifier = {
+				tag = IQS
+				NOT = { country_exists = PEN }
+				factor = 0
+			}    
+		}
+		FROM = {
+			country_event = urbanlia_sucw.5
+			puppet = ROOT
+		}
+	}
+	option = { # Reject
+		name = urbanlia_sucw.4.b
+		ai_chance = { 
+      factor = 10
+			modifier = {
+        is_in_faction = yes
+				factor = 200
+			} 
+			modifier = {
+				tag = LSN
+				factor = 100
+				AND = {
+          MSA = { is_subject = no }
+          IQS = { is_subject = no }
+				}
+			} 
+			modifier = {
+				tag = MSA
+				factor = 20
+				country_exists = NEN
+			}  
+			modifier = {
+				tag = IQS
+				NOT = { country_exists = PEN }
+				factor = 100
+			}  
+		}
+		effect_tooltip = {
+      FROM = {
+        create_wargoal = {
+          type = annex_everything
+          target = ROOT
+        }
+      } 
+		}
+		FROM = {
+			country_event = urbanlia_sucw.6
+		}
+	}
+}
+
+# Urbanlia seeks self-government agreement, From agrees, message for Urbanlia
+country_event = {
+	id = urbanlia_sucw.5
+	title = urbanlia_sucw.5.t
+	desc = urbanlia_sucw.5.d
+	picture = GFX_report_event_generic_sign_treaty2
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = urbanlia_sucw.5.a
+		ai_chance = { factor = 100 }
+		effect_tooltip = {
+      puppet = FROM
+		}
+	}
+}
+
+# Urbanlia seeks self-government agreement, From rejects, message for Urbanlia
+country_event = {
+	id = urbanlia_sucw.6
+	title = urbanlia_sucw.6.t
+	desc = urbanlia_sucw.6.d
+	picture = GFX_report_event_generic_sign_treaty2
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = urbanlia_sucw.6.a
+		ai_chance = { factor = 100 }
+    declare_war_on = {
+      target = FROM
+      type = civil_war
+    }
+    if = {
+      limit = {
+        NOT = {
+          has_global_flag = urb_the_second_civil_war
+        }
+      }
+      news_event = { hours = 1 id = hoh_news.12 } 
+    }
+    #create_wargoal = {
+    #  type = civil_war #annex_everything
+    #  target = FROM
+    #}
+	}
+}
+
+# ROOT faction splits, message for Warlord
+country_event = {
+	id = urbanlia_sucw.7
+	title = urbanlia_sucw.7.t
+	desc = urbanlia_sucw.7.d
+	picture = GFX_report_event_generic_army
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = urbanlia_sucw.7.a
+		ai_chance = { factor = 100 }
+		add_stability = -0.05
+		FROM = {
+			country_event = { hours = 1 id = urbanlia_sucw.3 }
+		}
+	}
+}
+
+# Urbanlia demands integration of Pennsylvania, New England and Vermont
+country_event = {
+	id = urbanlia_sucw.8
+	title = urbanlia_sucw.8.t
+	desc = urbanlia_sucw.4.d
+	picture = GFX_report_event_french_resistance_02
+	
+	is_triggered_only = yes
+	
+	option = { # Agree
+		name = urbanlia_sucw.4.a
+		ai_chance = { 
+      factor = 20
+			modifier = {
+        is_in_faction = yes
+				factor = 0
+			} 
+			modifier = {
+				tag = NEN
+				factor = 30
+			}
+			modifier = {
+				tag = VER
+				factor = 70
+			}
+			modifier = {
+				tag = PEN
+				NOT = { has_government = democratic }
+				factor = 10
+			}    
+		}
+		if = {
+      limit = { tag = PEN }
+      transfer_state = 360
+      FROM = {
+        if = {
+          limit = { owns_state = 825 }
+          ROOT = { transfer_state = 825 }
+        }
+        if = {
+          limit = { owns_state = 826 }
+          ROOT = { transfer_state = 826 }
+        }
+      }
+		}
+		if = {
+      limit = { tag = NEN }
+      transfer_state = 827
+		}
+		if = {
+      limit = { tag = VER }
+      transfer_state = 828
+		}
+		FROM = {
+			country_event = urbanlia_sucw.5
+			puppet = ROOT
+		}
+	}
+	option = { # Reject
+		name = urbanlia_sucw.4.b
+		ai_chance = { 
+      factor = 10
+			modifier = {
+        is_in_faction = yes
+				factor = 200
+			} 
+			modifier = {
+				tag = PEN
+				NOT = { has_government = democratic }
+				factor = 25
+			}    
+		}
+		effect_tooltip = {
+      FROM = {
+        create_wargoal = {
+          type = annex_everything
+          target = ROOT
+        }
+      } 
+		}
+		FROM = {
+			country_event = urbanlia_sucw.6
+		}
+	}
+}
+
+# Loslenn independents
+news_event = {
+	id = urbanlia_sucw.9
+	title = urbanlia_sucw.9.t
+	desc = urbanlia_sucw.9.d
+	picture = GFX_news_event_generic_rally2
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = urbanlia_sucw.9.a
+		trigger = { TAG = UBL }
+    hidden_effect = {
+      LSN = {
+        add_state_core = 823
+        transfer_state = 823
+        load_oob = "LSN_1936"
+      }
+    }
+	}
+	option = {
+		name = urbanlia_sucw.9.b
+		trigger = { NOT = { TAG = UBL } }
+	}
+}
+
+# Irocoisia independents
+news_event = {
+	id = urbanlia_sucw.10
+	title = urbanlia_sucw.10.t
+	desc = urbanlia_sucw.10.d
+	picture = GFX_news_event_generic_rally2
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = urbanlia_sucw.9.a
+		trigger = { TAG = UBL }
+    hidden_effect = {
+      IQS = {
+        add_state_core = 819
+        add_state_core = 820
+        add_state_core = 821
+        add_state_core = 825
+        add_state_core = 826
+        transfer_state = 819
+        transfer_state = 820
+        transfer_state = 821
+        transfer_state = 825
+        transfer_state = 826
+      }
+      UBL = {
+        transfer_units_fraction = {
+          target = IQS
+          size = 0.04
+        }
+      }
+    }
+	}
+	option = {
+		name = urbanlia_sucw.9.b
+		trigger = { NOT = { TAG = UBL } }
+	}
+}
+
+# Massachusetts independents
+news_event = {
+	id = urbanlia_sucw.11
+	title = urbanlia_sucw.11.t
+	desc = urbanlia_sucw.11.d
+	picture = GFX_news_event_generic_rally2
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = urbanlia_sucw.9.a
+		trigger = { TAG = UBL }
+    hidden_effect = {
+      MSA = {
+        add_state_core = 818
+        add_state_core = 822
+        add_state_core = 850
+        transfer_state = 818
+        transfer_state = 822
+        transfer_state = 850
+      }
+      UBL = {
+        transfer_units_fraction = {
+          target = MSA
+          size = 0.01
+        }
+      }
+    }
+	}
+	option = {
+		name = urbanlia_sucw.9.b
+		trigger = { NOT = { TAG = UBL } }
+	}
+}
+
+# New England independents
+news_event = {
+	id = urbanlia_sucw.12
+	title = urbanlia_sucw.12.t
+	desc = urbanlia_sucw.12.d
+	picture = GFX_news_event_generic_rally2
+	
+	is_triggered_only = yes
+	option = { 
+		name = urbanlia_sucw.9.a
+		trigger = { TAG = UBL }
+    hidden_effect = {
+      NEN = {
+        add_state_core = 357
+        transfer_state = 357
+      }
+      UBL = {
+        #release = NEN
+        transfer_units_fraction = {
+          target = NEN
+          size = 0.02
+        }
+      }
+    }
+	}
+	option = {
+		name = urbanlia_sucw.9.b
+		trigger = { NOT = { TAG = UBL } }
+	}
+}
+
+# Pennsylvania independents
+news_event = {
+	id = urbanlia_sucw.13
+	title = urbanlia_sucw.13.t
+	desc = urbanlia_sucw.13.d
+	picture = GFX_news_event_generic_rally2
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = urbanlia_sucw.9.a
+		trigger = { TAG = IQS }
+    hidden_effect = {
+      PEN = {
+        add_state_core = 821
+        add_state_core = 825
+        add_state_core = 826
+        #transfer_state = 821
+        #transfer_state = 825
+        #transfer_state = 826
+      }
+      UBF = {
+        release = PEN
+        transfer_units_fraction = {
+          target = PEN
+          size = 0.02
+        }
+      }
+    }
+	}
+	option = {
+		name = urbanlia_sucw.9.b
+		trigger = { NOT = { TAG = IQS } }
+	}
+}
+
+# Vermont independents
+news_event = {
+	id = urbanlia_sucw.14
+	title = urbanlia_sucw.14.t
+	desc = urbanlia_sucw.14.d
+	picture = GFX_news_event_generic_rally2
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = urbanlia_sucw.9.a
+		trigger = { TAG = MSA }
+    hidden_effect = {
+      VER = {
+        add_state_core = 822
+        add_state_core = 828
+      }
+      UBC = {
+        release = VER
+        transfer_units_fraction = {
+          target = VER
+          size = 0.02
+        }
+      }
+    }
+	}
+	option = {
+		name = urbanlia_sucw.9.b
+		trigger = { NOT = { TAG = MSA } }
+	}
+}
+
+# New Jersey independents
+news_event = {
+	id = urbanlia_sucw.15
+	title = urbanlia_sucw.15.t
+	desc = urbanlia_sucw.15.d
+	picture = GFX_news_event_generic_rally2
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = urbanlia_sucw.9.a
+		trigger = { TAG = UBL }
+    hidden_effect = {
+      NJS = {
+        add_state_core = 359
+        transfer_state = 359
+      }
+    }
+	}
+	option = {
+		name = urbanlia_sucw.9.b
+		trigger = { NOT = { TAG = UBL } }
+	}
+}
+
+# New Netherlands independents
+news_event = {
+	id = urbanlia_sucw.16
+	title = urbanlia_sucw.16.t
+	desc = urbanlia_sucw.16.d
+	picture = GFX_news_event_generic_rally2
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = urbanlia_sucw.9.a
+		trigger = { TAG = UBL }
+    hidden_effect = {
+      NDL = {
+        add_state_core = 358
+        add_state_core = 824
+        transfer_state = 358
+        transfer_state = 824
+      }
+      UBL = {
+        transfer_units_fraction = {
+          target = NDL
+          size = 0.1
+        }
+      }
+    }
+	}
+	option = {
+		name = urbanlia_sucw.9.b
+		trigger = { NOT = { TAG = UBL } }
+	}
+}
+
+
+
+
+

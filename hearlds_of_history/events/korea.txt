@@ -1,0 +1,873 @@
+add_namespace = korea
+
+#The Korea issue, message for controller
+country_event = {
+	id = korea.1
+	title = korea.1.t
+	desc = korea.1.d
+	picture = GFX_report_event_generic_sign_treaty2
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	fire_only_once = yes
+
+	trigger = {
+    NOT = { original_tag = KOR }#Not Korea itself
+    NOT = { original_tag = PRK }
+    #OR = {
+      #AND = {
+      #  original_tag = SOV
+      #  has_government = communism
+      #}
+      #AND = {#When the Soviet is down
+      #  SOV = { NOT = { has_government = communism } }
+      #  NOT = { original_tag = SOV }
+      #  has_government = communism
+      #}
+    #}
+    any_state = {
+      is_fully_controlled_by = ROOT
+      NOT = { is_owned_by = ROOT }
+      OR = {
+        state = 525
+        state = 527
+      }
+    }
+    PRK = {#Make sure no korea with same ideology is on the peninsula
+      OR = {
+        exists = no
+        NOT = { has_government = ROOT }
+      }
+    }
+    KOR = {
+      OR = {
+        exists = no
+        NOT = { has_government = ROOT }
+      }
+    }
+    NOT = {#When two koreas are all exist, the event should not triggered
+      country_exists = PRK
+      country_exists = KOR
+    }
+    
+    NOT = {#Stellarland has a decision to deal with this
+      original_tag = STE
+    }
+	}
+	
+	option = { # Set a puppet state
+		name = korea.1.a
+		ai_chance = { factor = 20 }
+		trigger = {
+      OR = {
+        PRK = { exists = no }
+        KOR = { exists = no }
+      }
+		}
+    add_political_power = 50
+    if = {#When controls south korea, release KOR first
+      limit = {
+        controls_state = 525
+      }
+      if = {
+        limit = {
+          KOR = { exists = no }
+        }
+        release_puppet_on_controlled = KOR
+      }
+      else = {
+        PRK = {
+          add_state_core = 525
+          add_state_core = 527
+        }
+        release_puppet_on_controlled = PRK
+      }
+    }
+    if = {#When controls north korea, release PRK first
+      limit = {
+        controls_state = 527
+      }
+      if = {
+        limit = {
+          PRK = { exists = no }
+        }
+        PRK = {
+          add_state_core = 525
+          add_state_core = 527
+        }
+        release_puppet_on_controlled = PRK
+      }
+      else = {
+        release_puppet_on_controlled = KOR
+      }
+    }
+	}
+	option = { # Keep our occupation
+		name = korea.1.b
+		ai_chance = { 
+      factor = 10 
+			modifier = {
+				has_war_with = JAP
+				factor = 100
+			}
+			modifier = {
+				has_war = yes
+				factor = 50
+			}
+			modifier = {
+        OR = {
+          is_literally_china = yes
+          original_tag = MAN
+        } 
+				factor = 200
+			}
+		}
+    if = {#China can take back Korea
+      limit = {
+        OR = {
+          is_literally_china = yes
+          original_tag = MAN
+        } 
+      }
+      every_state = {
+        limit = {
+          is_controlled_by = ROOT
+          OR = {
+            state = 525
+            state = 527
+          }
+        }
+        ROOT = { set_state_owner = PREV }
+      }
+      add_stability = -0.01
+    }
+    else_if = {#Do nothing
+      limit = {
+        KOR = { is_subject = yes }
+        PRK = { is_subject = yes }
+      }
+    }
+    else = {
+      add_state_claim = 525
+      add_state_claim = 527
+      add_stability = -0.01
+		}
+	}
+}
+
+#The General Order No. 1 on Korea
+country_event = {
+	id = korea.2
+	title = germany.118.t
+	desc = germany.118.d
+	picture = GFX_report_event_generic_sign_treaty2
+
+	fire_only_once = yes
+
+	trigger = {
+		#A democratic faction leader whose faction holds at least one Japanese core state while SOV holds another can get this.
+		has_war_with = JAP
+		OR = {
+      any_state = {
+        is_core_of = JAP
+        controller = {
+          is_in_faction_with = ROOT
+        }
+      }
+      any_state = {
+        is_owned_by = JAP
+        controller = {
+          is_in_faction_with = ROOT
+        }
+      }
+      any_state = {#In case Japan releases Korea as a puppet
+        owner = {
+          is_in_faction_with = JAP
+        }
+        controller = {
+          is_in_faction_with = ROOT
+        }
+      }
+    }
+    JAP = {
+      owns_state = 525
+      owns_state = 527
+    }
+		has_government = democratic
+		NOT = {
+			tag = SOV
+		}
+		NOT = {
+			has_war_with = SOV
+		}
+		SOV = {
+			is_faction_leader = yes
+		}
+    has_war_with = JAP
+		SOV = {
+      has_war_with = JAP
+    }
+		NOT = {
+			has_global_flag = had_korea_conference
+		}
+		NOT = {#In case no other faction intervenes
+			any_state = {
+				is_core_of = KOR
+				controller = {
+					NOT = {
+						tag = JAP
+					}
+					is_in_faction = yes
+					NOT = {
+						OR = {
+							is_in_faction_with = ROOT
+							is_in_faction_with = SOV
+						}
+					}
+				}
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 15
+	}
+
+	immediate = {
+		set_global_flag = had_korea_conference
+		SOV = {
+			save_event_target_as = korea_conference_partner
+		}
+		ROOT = {
+			save_event_target_as = korea_conference_origin
+		}
+	}
+
+	option = {
+		name = korea.2.a
+		hidden_effect = {
+			event_target:korea_conference_partner = {
+				country_event = { days = 1 id = korea.3 }
+			}
+		}
+		effect_tooltip = {
+			PRK = {
+				add_state_core = 527
+			}
+			KOR = {
+				add_state_core = 525
+			}
+		}
+		event_target:korea_conference_partner = {
+			custom_effect_tooltip = needs_approval
+		}
+	}
+
+	option = {
+		name = korea.2.b
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+#The General Order No. 1 - Korea Situation Follow-up
+country_event = {
+	id = korea.3
+	title = korea.3.t
+	desc = korea.3.d
+	picture = GFX_report_event_generic_sign_treaty2
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = germany.119.a
+		PRK = {
+			add_state_core = 527
+		}
+		KOR = {
+			add_state_core = 525
+		}
+		hidden_effect = {
+			news_event = { days = 1 id = hoh_news.31 }
+		}
+	}
+
+	option = {
+		name = germany.119.b
+		ai_chance = {
+			factor = 0
+		}
+		hidden_effect = {
+			create_wargoal = {
+				type = liberate_wargoal
+				target = PRK
+			}
+		}
+		event_target:korea_conference_origin = {
+			country_event = {
+				id = korea.4
+			}
+			hidden_effect = {
+				create_wargoal = {
+					type = liberate_wargoal
+					target = KOR
+				}
+			}
+		}
+	}
+}
+
+#The Korean Conference Failed
+country_event = {
+	id = korea.4
+	title = korea.4.t
+	desc = korea.4.d
+	picture = GFX_report_event_generic_sign_treaty1
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = germany.120.a
+	}
+}
+
+#The Korea War, FROM seeks support, message for other states
+country_event = {
+	id = korea.5
+	title = korea.5.t
+	desc = korea.5.d
+	picture = GFX_report_event_chinese_soldiers_fighting
+	
+	is_triggered_only = yes
+	
+	#trigger = {
+    #OR = {
+      #AND = {
+      #  original_tag = SOV
+      #  has_government = communism
+      #}
+      #AND = {#When the Soviet is down
+      #  SOV = { NOT = { has_government = communism } }
+      #  NOT = { original_tag = SOV }
+      #  has_government = communism
+      #}
+    #}
+	#}
+	
+	option = { # Do nothing
+		name = korea.5.a
+		ai_chance = { 
+      base = 10 
+			modifier = {
+				has_war = yes
+				is_major = no
+				factor = 50
+			}
+			modifier = {
+				is_major = no
+				NOT = { is_neighbor_of = FROM }
+				factor = 200
+			}
+			modifier = {
+				is_neighbor_of = FROM 
+				has_government = FROM
+				factor = 0
+			}
+		}
+		FROM = {
+      country_event = {
+				id = korea.6
+			}
+		}
+	}
+	
+	option = { # Send equipments
+		name = korea.5.b
+		ai_chance = { 
+      factor = 1 
+			modifier = {
+				has_war = yes
+				factor = 10
+			}
+			modifier = {#The Soviets sent volunteer airforce but no groundforcce
+				original_tag = SOV
+				FROM = { original_tag = PRK }
+				factor = 200
+			}
+		}
+		if = {
+      limit = { tag = SOV }
+      send_equipment = {
+        target = FROM
+        type = fighter_equipment
+        amount = 50
+      }
+		}
+		else = {
+      send_equipment = {
+        target = FROM
+        type = infantry_equipment_1
+        amount = 150
+      }
+		}
+  	add_ai_strategy = {
+			type = support
+			id = "FROM"
+			value = 200
+		}
+		FROM = {
+      country_event = {
+				id = korea.7
+			}
+		}
+	}
+	
+	option = { # Send volunteers
+		name = korea.5.c
+		ai_chance = { 
+      factor = 1 
+			modifier = {
+				has_war = no
+				factor = 20
+			}
+			modifier = {
+				is_literally_china = yes
+				has_government = FROM
+				factor = 200
+			}
+			modifier = {
+				is_neighbor_of = FROM
+				has_government = FROM
+				factor = 200
+			}
+			modifier = {
+				is_neighbor_of = FROM
+				factor = 100
+			}
+			modifier = {#The Soviets only want China to bleed
+				original_tag = SOV
+				factor = 0
+			}
+			modifier = {
+				original_tag = USA
+				factor = 100
+			}
+			modifier = {
+				OR = {
+          is_major = yes
+          is_faction_leader = yes
+				}
+				factor = 100
+			}
+			modifier = {#Stellarland will help as long as PRK is friendly
+				is_kalperson_country = yes
+				FROM = {
+          OR = {
+            has_government = communism
+            has_government = ROOT
+          }
+          original_tag = PRK
+          NOT = { 
+            OR = {
+              is_in_faction_with = KOR
+              has_subject = KOR
+            } 
+          }
+				}
+				factor = 200
+			}
+		}
+  	add_ai_strategy = {
+			type = send_volunteers_desire
+			id = "FROM"
+			value = 200
+		}
+    if = {
+      limit = {
+        event_target:WTT_communist_china = {
+          tag = ROOT
+        }
+      }
+      add_ideas = resisting_us_aid_korea
+    }
+    else = {
+      add_ideas = korean_war_volunteers
+    }
+		FROM = {
+      country_event = {
+				id = korea.8
+			}
+		}
+		hidden_effect = {
+      if = {
+        limit = {
+          event_target:WTT_communist_china = {
+            tag = ROOT
+          }
+        }
+        complete_national_focus = PRC_peoples_volunteer_army
+      }
+		}
+	}
+}
+
+#The Korean War, FROM rejects to support
+country_event = {
+	id = korea.6
+	title = korea.6.t
+	desc = korea.6.d
+	picture = GFX_report_event_generic_sign_treaty1
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = korea.6.a
+	}
+}
+
+#The Korean War, FROM sends equipments
+country_event = {
+	id = korea.7
+	title = korea.7.t
+	desc = korea.7.d
+	picture = GFX_report_event_generic_sign_treaty1
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = korea.7.a
+		effect_tooltip = {
+      if = {
+        limit = { FROM = { tag = SOV } }
+        FROM = {
+          send_equipment = {
+            target = ROOT
+            type = fighter_equipment
+            amount = 50
+          }
+        }
+      }
+      else = {
+        FROM = {
+          send_equipment = {
+            target = ROOT
+            type = infantry_equipment_1
+            amount = 150
+          }
+        }
+      }
+		}
+	}
+}
+
+#The Korean War, FROM sends volunteers
+country_event = {
+	id = korea.8
+	title = korea.8.t
+	desc = korea.8.d
+	picture = GFX_report_event_generic_sign_treaty1
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = korea.7.a
+		effect_tooltip = {
+      if = {
+        limit = {
+          event_target:WTT_communist_china = {
+            tag = FROM
+          }
+        }
+        FROM = { add_ideas = resisting_us_aid_korea }
+      }
+      else = {
+        FROM = { add_ideas = korean_war_volunteers }
+      }
+		}
+    if = {
+      limit = {
+        event_target:WTT_communist_china = {
+          tag = FROM
+        }
+      }
+      add_opinion_modifier = {
+        target = FROM
+        modifier = prc_aid_in_korean_war
+      }
+    }
+	}
+}
+
+#The Korean War, Kim claims authority, message for KOR
+country_event = {
+	id = korea.9
+	title = korea.9.t
+	desc = korea.9.d
+	picture = GFX_report_event_journalists_speech
+
+	fire_only_once = yes
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	trigger = {
+    original_tag = KOR
+    PRK = { 
+      OR = {
+        exists = no
+        NOT = { has_government = communism }
+      }
+    }
+    OR = {
+      has_government = democratic
+      has_government = neutrality
+    }
+    OR = {
+      any_neighbor_country = {
+        has_government = communism
+      }
+      communism > 0.02
+    }
+    NOT = { has_global_flag = korean_civil_war_ignited }
+	}
+
+	option = {#Surrender
+		name = korea.9.a
+		ai_chance = { 
+      factor = 1 
+			modifier = {
+				has_war = yes
+				factor = 100
+			}
+			modifier = {
+				has_stability < 0.3
+				factor = 25
+			}
+			modifier = {
+				communism > 0.45
+				factor = 100
+			}
+			modifier = {
+				is_subject = yes
+				factor = 0
+			}
+			modifier = {
+				NOT = { owns_state = 527 }
+				factor = 0
+			}
+		}
+    add_stability = -0.05
+    create_country_leader = {
+      name = "Kim Il-sung"
+      desc = ""
+      picture = "gfx/leaders/KOR/portrait_kor_kim_il_sung.tga"
+      expire = "1965.1.1"
+      ideology = stalinism
+      traits = {
+        #
+      }
+    }
+    set_politics = {
+      ruling_party = communism
+      last_election = "1936.1.1"
+      election_frequency = 36
+      elections_allowed = no
+    }
+    add_popularity = {
+      ideology = communism
+      popularity = 0.5
+    }
+    set_global_flag = korean_civil_war_ignited
+	}
+	option = {#Choose Kim Gu
+		name = korea.9.b
+		ai_chance = { 
+      factor = 1 
+			modifier = {
+				has_stability < 0.5
+				factor = 50
+			}
+			modifier = {
+				has_war = yes
+				factor = 100
+			}
+			modifier = {
+				communism > 0.25
+				factor = 100
+			}
+			modifier = {
+				is_subject = yes
+				factor = 0
+			}
+		}
+		trigger = {
+      PRK = { exists = no }
+      owns_state = 527
+		}
+    add_stability = -0.05
+    if = {
+      limit = {
+        communism > 0.2
+      }
+      random_list = {
+        80 = { country_event = korea.10 }
+        20 = { country_event = korea.11 }
+      }
+    }
+    else = {
+      random_list = {
+        50 = { country_event = korea.10 }
+        50 = { country_event = korea.11 }
+      }
+    }
+    hidden_effect = {
+      set_cosmetic_tag = PRK
+    }
+	}
+	option = {#War!
+		name = korea.9.c
+		ai_chance = { 
+      factor = 5 
+			modifier = {
+				has_stability < 0.3
+				factor = 0
+			}
+			modifier = {
+				communism < 0.35
+				factor = 100
+			}
+			modifier = {
+				is_subject = yes
+				factor = 100
+			}
+		}
+		trigger = {
+      PRK = { exists = no }
+      owns_state = 527
+		}
+    add_war_support = 0.05
+    add_popularity = {
+      ideology = communism
+      popularity = -0.2
+    }
+    PRK = {
+      add_war_support = 0.05
+      transfer_state = 527
+      set_politics = {
+        ruling_party = communism
+        last_election = "1936.1.1"
+        election_frequency = 36
+        elections_allowed = no
+      }
+      add_popularity = {
+        ideology = communism
+        popularity = 0.5
+      }
+    }
+	}
+	option = {#Ignore them
+		name = korea.9.e
+		ai_chance = { 
+      factor = 1 
+			modifier = {
+				has_stability < 0.3
+				factor = 0
+			}
+			modifier = {
+				communism < 0.35
+				factor = 20
+			}
+			modifier = {
+        NOT = { owns_state = 527 }
+				factor = 100
+			}
+		}
+		trigger = {
+      PRK = { exists = no }
+      NOT = { owns_state = 527 }
+		}
+    add_stability = -0.05
+    add_popularity = {
+      ideology = communism
+      popularity = 0.1
+    }
+	}
+}
+
+#KOR suggests Kim Gu, PRK agrees, message for KOR
+country_event = {
+	id = korea.10
+	title = korea.10.t
+	desc = korea.10.d
+	picture = GFX_report_event_canada_patriation
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = korea.10.a
+    create_country_leader = {
+      name = "Kim Gu"
+      desc = ""
+      picture = "gfx/leaders/KOR/portrait_kor_kim_gu.tga"
+      expire = "1965.1.1"
+      ideology = conservatism
+      traits = {
+        #
+      }
+    }
+    add_popularity = {
+      ideology = communism
+      popularity = 0.35
+    }
+	}
+}
+
+#KOR suggests Kim Gu, PRK rejects, message for KOR
+country_event = {
+	id = korea.11
+	title = korea.11.t
+	desc = korea.11.d
+	picture = GFX_report_event_soldiers_marching
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = korea.9.c
+    add_war_support = 0.05
+    add_popularity = {
+      ideology = communism
+      popularity = -0.2
+    }
+    PRK = {
+      add_war_support = 0.05
+      transfer_state = 527
+      set_politics = {
+        ruling_party = communism
+        last_election = "1936.1.1"
+        election_frequency = 36
+        elections_allowed = no
+      }
+      add_popularity = {
+        ideology = communism
+        popularity = 0.5
+      }
+    }
+	}
+}

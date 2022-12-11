@@ -1,0 +1,127 @@
+add_namespace = hoh_on_startup
+
+# Opening Credits Welcome to the mod
+country_event = {
+	id = hoh_on_startup.1
+	title = hoh_on_startup.1.t
+	desc = hoh_on_startup.1.d
+	picture = GFX_report_event_german_advisors_remain
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = {# Begin
+		name = hoh_on_startup.1.a
+		ai_chance = { factor = 100 }
+		hidden_effect = {
+      country_event = hoh_on_startup.2
+		}
+	}
+	#option = {# Check developing diary
+	#	name = hoh_on_startup.1.b
+	#	ai_chance = { factor = 0 }
+	#	hidden_effect = {
+  #    country_event = hoh_on_startup.2
+	#	}
+	#}
+}
+
+# Upgrade and New Versions
+country_event = {
+	id = hoh_on_startup.2
+	title = hoh_on_startup.2.t
+	desc = hoh_on_startup.2.d
+	picture = GFX_report_event_german_advisors_remain
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = {
+		name = hoh_on_startup.2.a
+		ai_chance = { factor = 100 }
+		#hidden_effect = {
+    #  country_event = hoh_on_startup.3
+		#}
+	}
+}
+
+# Upgrade and New Versions
+country_event = {
+	id = hoh_on_startup.3
+	title = hoh_on_startup.3.t
+	desc = hoh_on_startup.3.d
+	picture = GFX_report_event_german_advisors_remain
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = {
+		name = hoh_on_startup.3.a
+		ai_chance = { factor = 100 }
+		hidden_effect = {
+      country_event = hoh_on_startup.4
+		}
+	}
+}
+
+# Upgrade and New Versions
+country_event = {
+	id = hoh_on_startup.4
+	title = hoh_on_startup.4.t
+	desc = hoh_on_startup.4.d
+	picture = GFX_report_event_german_advisors_remain
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = {
+		name = hoh_on_startup.3.a
+		ai_chance = { factor = 100 }
+		hidden_effect = {
+      country_event = hoh_on_startup.5
+		}
+	}
+}
+
+# Upgrade and New Versions
+country_event = {
+	id = hoh_on_startup.5
+	title = hoh_on_startup.5.t
+	desc = hoh_on_startup.5.d
+	picture = GFX_report_event_german_advisors_remain
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = {
+		name = hoh_on_startup.3.a
+		ai_chance = { factor = 100 }
+		hidden_effect = {
+      country_event = hoh_on_startup.6
+		}
+	}
+}
+
+# Upgrade and New Versions
+country_event = {
+	id = hoh_on_startup.6
+	title = hoh_on_startup.6.t
+	desc = hoh_on_startup.6.d
+	picture = GFX_report_event_german_advisors_remain
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = {#End of the diary
+		name = hoh_on_startup.3.b
+		ai_chance = { factor = 100 }
+	}
+}
+
+

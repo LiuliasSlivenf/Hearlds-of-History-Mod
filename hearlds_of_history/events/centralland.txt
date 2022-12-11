@@ -1,0 +1,1047 @@
+add_namespace = centralland
+
+# Project Centralland, message for Stellarland
+country_event = {
+	id = centralland.1
+	title = centralland.1.t
+	desc = centralland.1.d
+	picture = GFX_report_event_chinese_officer_sign
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = centralland.1.a
+		ai_chance = {
+			factor = 30
+		}
+		hidden_effect = {
+      if = {
+        limit = { NOT = { has_global_flag = ste_project_centralland_established } }
+        news_event = { hours = 24 id = hoh_news.22 }
+      }
+    }
+	}
+}
+
+# Centralland demands integration of warlords
+country_event = {
+	id = centralland.2
+	title = centralland.2.t
+	desc = centralland.2.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = wtt_china.10.2.a
+		ai_chance = {
+			base = 10
+			modifier = {
+				tag = MEN
+				factor = 100
+			}
+			modifier = {
+				is_subject_of = STE
+				add = 70
+			}
+			modifier = {
+				is_faction_leader = yes
+				factor = 0
+			}
+			modifier = {
+				tag = CHN
+				is_subject = no
+				factor = 0
+			}
+			modifier = {
+				tag = OHG
+				CEN = { NOT = { has_country_flag = cen_seek_cooperation_with_najua_remnants } }
+				factor = 25
+			}
+			modifier = {
+				tag = OHG
+				CEN = { has_country_flag = cen_seek_cooperation_with_najua_remnants }
+				factor = 100
+			}
+		}
+		set_country_flag = cen_integration_accepted
+		custom_effect_tooltip = GAME_OVER_TT
+		FROM = { country_event = centralland.3 }
+	}
+	option = { # Reject
+		name = centralland.2.b
+		ai_chance = {
+			base = 10
+			modifier = {
+				is_subject_of = STE
+				factor = 0
+			}
+			modifier = {
+				is_faction_leader = yes
+				factor = 100
+			}
+			modifier = {
+				tag = CHN
+				is_subject = no
+				factor = 100
+			}
+			modifier = {
+				tag = OHG
+				CEN = { has_country_flag = cen_seek_cooperation_with_najua_remnants }
+				factor = 0
+			}
+		}
+		set_country_flag = cen_integration_rejected
+		FROM = { country_event = centralland.4 }
+	}
+		
+}
+
+# Answer from FROM - Yes
+country_event = {
+	id = centralland.3
+	title = centralland.3.t
+	desc = centralland.3.d
+	picture = GFX_report_event_chinese_japanese_handshake
+
+	is_triggered_only = yes
+	
+	option = {
+		name = wtt_china.2.a
+		ai_chance = {
+			factor = 10
+		}
+    if = {
+      limit = {
+        FROM = { is_subject = yes }
+      }
+      FROM = { 
+        OVERLORD = { 
+          country_event = centralland.5 
+        }
+      }
+    }
+    add_political_power = 100
+    #every_state = {
+    #  limit = {
+    #    is_core_of = FROM
+    #  }
+    #  remove_core_of = FROM
+    #  add_core_of = ROOT
+    #}
+    #annex_country = { target = FROM transfer_troops = yes }
+    if = {
+      limit = { FROM = {
+        NOT = { original_tag = MAN }
+        NOT = { original_tag = MEN }
+      } }
+      puppet = FROM
+    }
+    else = {
+      annex_country = { target = FROM transfer_troops = yes }
+    }
+	}
+}
+
+# Answer from FROM - No
+country_event = {
+	id = centralland.4
+	title = centralland.4.t
+	desc = centralland.4.d
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+	
+	option = {
+		name = wtt_china.12.a
+		ai_chance = {
+			factor = 10
+		}
+    add_war_support = 0.05
+    if = {
+      limit = {
+        is_subject = no
+      }
+      create_wargoal = {
+        type = annex_everything
+        target = FROM
+      }
+      else = {
+        declare_war_on = {
+          target = FROM
+          type = annex_everything
+        }
+      }
+    }
+	}
+}
+
+# MEN got annexed by CEN, message for former overlord
+country_event = {
+	id = centralland.5
+	title = centralland.5.t
+	desc = centralland.5.d
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+	
+	option = { #Confirm
+		name = centralland.5.a
+		trigger = { original_tag = STE }
+		ai_chance = {
+			factor = 10
+		}
+	}
+	option = { #Confirm
+		name = centralland.5.b
+		trigger = { NOT = { original_tag = STE } }
+		ai_chance = {
+			factor = 50
+			modifier = {
+				has_war = yes
+				factor = 80
+			}
+			modifier = {
+				CEN = { is_subject_of = STE }
+				factor = 70
+			}
+		}
+	}
+	option = { #Condemn
+		name = centralland.5.c
+		trigger = { NOT = { original_tag = STE } }
+		ai_chance = {
+			base = 10
+			modifier = {
+				has_war = yes
+				factor = 20
+			}
+			modifier = {
+				CEN = { is_subject_of = STE }
+				factor = 30
+			}
+		}
+    CEN = { country_event = centralland.6 }
+	}
+	option = { #Declare war
+		name = centralland.5.e
+		trigger = { NOT = { original_tag = STE } }
+		ai_chance = {
+			base = 10
+			modifier = {
+				CEN = { is_associated_with_stellarland = yes }
+				factor = 0
+			}
+			modifier = {
+				threat > 0.79
+				factor = 50
+			}
+			modifier = {
+				has_war = yes
+				factor = 0
+			}
+		}
+		create_wargoal = {
+			type = puppet_wargoal_focus
+			target = CEN
+		}
+	}
+}
+
+# FROM got annexed, FROM Overlord condemns, message for former overlord
+country_event = {
+	id = centralland.6
+	title = centralland.6.t
+	desc = centralland.6.d
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+	
+	option = { #Confirm
+		name = centralland.6.a
+	}
+}
+
+# Centralland seeks integration, message for Communist China
+country_event = {
+	id = centralland.7
+	title = centralland.7.t
+	desc = centralland.7.d
+	picture = GFX_report_event_canada_patriation
+
+	is_triggered_only = yes
+	
+	option = { #Accept
+		name = centralland.7.a
+		ai_chance = {
+			base = 30
+			modifier = {
+				tag = CHN
+				factor = 0
+			}
+			modifier = {
+				FROM = { has_country_flag = cen_seek_cooperation_with_najua_remnants }
+				factor = 70
+			}
+			modifier = {
+				has_war_with = CHN
+				factor = 50
+			}
+		}
+		FROM = { country_event = centralland.8 }
+		effect_tooltip = {
+      if = {
+        limit = { PRC = { is_ai = no } }
+        CEN = { change_tag_from = PRC }
+      }
+		}
+	}
+	option = { #Reject
+		name = centralland.2.b
+		trigger = { NOT = { is_subject_of = FROM } }
+		ai_chance = {
+			factor = 70
+			modifier = {
+				tag = CHN
+				factor = 100
+			}
+			modifier = {
+				FROM = { has_country_flag = cen_seek_cooperation_with_najua_remnants }
+				factor = 10
+			}
+			modifier = {
+				has_war_with = CHN
+				factor = 10
+			}
+		}
+		FROM = { country_event = centralland.4 }
+	}
+}
+
+# CEN seeks integration, PRC accepts, message for CEN
+country_event = {
+	id = centralland.8
+	title = centralland.8.t
+	desc = centralland.8.d
+	picture = GFX_report_event_canada_patriation
+
+	is_triggered_only = yes
+	
+	option = { #Confirm
+		name = centralland.8.a
+    add_political_power = 100
+    every_state = {
+      limit = { is_core_of = PRC }
+      remove_core_of = PRC
+    }
+    if = {
+      limit = { has_government = PRC }
+      every_state = {
+        limit = { is_core_of = PRC }
+        add_core_of = ROOT
+      }
+    }
+    PRC = {
+      every_unit_leader = {
+				set_nationality = ROOT
+			}
+		}
+		if = {
+      limit = { PRC = { is_ai = no } }
+      CEN = { change_tag_from = PRC }
+		}
+		set_country_flag = cen_integrates_prc
+    annex_country = { target = PRC transfer_troops = yes }
+    create_country_leader = {
+      name = "Mao Zedong"
+      desc = "POLITICS_MAO_ZEDONG_DESC"
+      picture = "GFX_portrait_prc_mao_zedong"
+      expire = "1965.1.1"
+      ideology = maoism_ideology
+      traits = {
+        cornered_fox
+        master_of_guerrilla_warfare
+      }
+    }
+    set_party_name = { ideology = communism long_name = PRC_communism_party_long name = PRC_communism_party }
+	}
+}
+
+# CEN seeks civil war volunteers
+country_event = {
+	id = centralland.9
+	title = centralland.9.t
+	desc = centralland.9.d
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+	
+	option = { #Agree
+		name = centralland.9.a
+		ai_chance = {
+			base = 20
+			modifier = {
+				threat > 35
+				factor = 100
+			}
+			modifier = {
+        has_opinion = { target = FROM value > 74 }
+				factor = 100
+			}
+			modifier = {
+				OR = {
+          is_in_faction_with = FROM
+          has_subject = FROM
+				}
+				factor = 100
+			}
+		}
+    add_ideas = cen_civil_war_volunteers
+		FROM = { country_event = centralland.10 }
+	}
+	option = { #Refuse
+		name = centralland.9.b
+		FROM = { country_event = centralland.11 }
+	}
+}
+
+# CEN seeks civil war volunteers, FROM agrees, message for CEN
+country_event = {
+	id = centralland.10
+	title = centralland.10.t
+	desc = centralland.10.d
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+	
+	option = { #Confirm
+		name = centralland.10.a
+		if = {
+      limit = { NOT = { has_idea = cen_civil_war_seek_volunteers } }
+      add_ideas = cen_civil_war_seek_volunteers
+		}
+	}
+}
+
+# CEN seeks civil war volunteers, FROM refuses, message for CEN
+country_event = {
+	id = centralland.11
+	title = centralland.11.t
+	desc = centralland.11.d
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+	
+	option = { #Confirm
+		name = centralland.11.a
+	}
+}
+
+# Project Centralland, tag to Centralland, message for Stellarland
+country_event = {
+	id = centralland.12
+	title = centralland.1.t
+	desc = centralland.12.d
+	picture = GFX_report_event_hitler_handshake
+	
+	trigger = {
+    original_tag = STE
+    country_exists = CEN
+    has_global_flag = cen_formed
+  }
+	
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = { # Reject
+		name = centralland.12.a
+		ai_chance = {
+			factor = 30
+		}
+	}
+	option = { # Tag to Centralland
+		name = centralland.12.b
+		ai_chance = {
+			factor = 0
+		}
+    CEN = { change_tag_from = ROOT }
+	}
+}
+
+# Future direction, message for CEN
+country_event = {
+	id = centralland.13
+	title = centralland.13.t
+	desc = centralland.13.d
+	picture = GFX_report_event_china_government_meeting
+	
+	is_triggered_only = yes
+
+	option = { # We need total independence!
+		name = centralland.13.a
+		trigger = {
+      has_idea = cen_our_own_fight
+      NOT = { has_global_flag = cen_civil_war_seeks_intervention }
+		}
+		ai_chance = {
+			base = 30
+			modifier = {
+        OVERLORD = {
+          has_government = ROOT
+        }
+        factor = 0.5
+			}
+			modifier = {
+        has_country_leader = { name = "Mao Zedong" }
+        factor = 100
+			}
+		}
+		custom_effect_tooltip = centralland_13_tt_1
+		set_global_flag = cen_future_direction_total_independence
+	}
+	option = { # Keep the situation
+		name = centralland.13.b
+		ai_chance = {
+			base = 10
+			modifier = {
+        OVERLORD = {
+          is_ai = no
+        }
+        factor = 2
+			}
+			modifier = {
+        has_country_leader = { name = "Mao Zedong" }
+        factor = 0
+			}
+		}
+		set_global_flag = cen_future_direction_keep_situation
+		if = {
+      limit = {
+        has_global_flag = cen_civil_war_seeks_intervention
+      }
+      custom_effect_tooltip = centralland_13_tt_2
+		}
+	}
+}
+
+# Issue of independence of Centranese state, message for Stellarland
+country_event = {
+	id = centralland.14
+	title = centralland.14.t
+	desc = centralland.14.d
+	picture = GFX_report_event_china_government_meeting
+	
+	is_triggered_only = yes
+
+	option = { # Keep them!
+		name = centralland.14.a
+		ai_chance = {
+			base = 5
+			modifier = {
+        FROM = {
+          is_ai = no
+        }
+        factor = 0
+			}
+			modifier = {
+        FROM = { has_country_leader = { name = "Mao Zedong" } }
+        factor = 0
+			}
+		}
+		if = {
+      limit = {
+        NOT = { has_global_flag = cen_civil_war_seeks_intervention }
+      }
+      add_stability = -0.05
+		}
+		FROM = { country_event = centralland.16 }
+		set_global_flag = towards_centranese_independence_keep_subject
+	}
+	option = { # In faction
+		name = centralland.14.b
+		trigger = {
+      NOT = { has_global_flag = cen_civil_war_seeks_intervention }
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+        FROM = {
+          is_ai = no
+        }
+        factor = 100
+			}
+			modifier = {
+        FROM = { has_country_leader = { name = "Mao Zedong" } }
+        factor = 20
+			}
+		}
+		trigger = {
+      is_faction_leader = yes
+		}
+		set_autonomy = { target = FROM autonomy_state = autonomy_free }
+		add_to_faction = FROM
+		add_political_power = 100
+		FROM = { country_event = centralland.17 }
+		set_global_flag = towards_centranese_independence_in_faction
+	}
+	option = { # Total freedom
+		name = centralland.14.c
+		trigger = {
+      NOT = { has_global_flag = cen_civil_war_seeks_intervention }
+		}
+		ai_chance = {
+			base = 15
+			modifier = {
+        FROM = {
+          is_ai = no
+        }
+        factor = 10
+			}
+			modifier = {
+        is_faction_leader = no
+        factor = 20
+			}
+			modifier = {
+        FROM = { has_country_leader = { name = "Mao Zedong" } }
+        factor = 100
+			}
+		}
+		add_political_power = 50
+		set_autonomy = { target = FROM autonomy_state = autonomy_free }
+		FROM = {
+      leave_faction = yes
+      diplomatic_relation = { country = ROOT relation = non_aggression_pact }
+		}
+		FROM = { country_event = centralland.18 }
+		set_global_flag = towards_centranese_independence_non_aggression
+	}
+}
+
+# Centralland wants to keep the relationship
+country_event = {
+	id = centralland.15
+	title = centralland.15.t
+	desc = centralland.15.d
+	picture = GFX_report_event_hitler_handshake
+	
+	is_triggered_only = yes
+
+	option = { # Confirm
+		name = centralland.15.a
+		FROM = {
+      add_autonomy_score = {
+        value = -500
+        localization = "centralland.14.t"
+      }
+		}
+	}
+}
+
+# Answer from Stellarland: rejected
+country_event = {
+	id = centralland.16
+	title = centralland.16.t
+	desc = centralland.16.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+
+	option = { # Confirm
+		name = centralland.16.a
+		ai_chance = {
+			base = 30
+			modifier = {
+        OVERLORD = {
+          is_ai = no
+        }
+        factor = 10
+			}
+			modifier = {
+        has_country_leader = { name = "Mao Zedong" }
+        factor = 0
+			}
+		}
+	}
+	option = { # Add autonomy
+		name = centralland.16.b
+		trigger = {
+      NOT = { has_global_flag = cen_civil_war_seeks_intervention }
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+        OVERLORD = {
+          is_ai = no
+        }
+        factor = 2
+			}
+			modifier = {
+        has_country_leader = { name = "Mao Zedong" }
+        factor = 100
+			}
+		}
+    add_autonomy_score = {
+      value = 500
+      localization = "centralland.13.a"
+    }
+	}
+}
+
+# Answer from Stellarland: in faction
+country_event = {
+	id = centralland.17
+	title = centralland.17.t
+	desc = centralland.17.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+
+	option = { # Confirm
+		name = centralland.17.a
+		effect_tooltip = {
+      FROM = {
+        set_autonomy = { target = ROOT autonomy_state = autonomy_free }
+        add_to_faction = ROOT
+      }
+		}
+		add_ideas = cen_treaty_of_independence_in_faction
+	}
+}
+
+# Answer from Stellarland: total freedom
+country_event = {
+	id = centralland.18
+	title = centralland.18.t
+	desc = centralland.18.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+
+	option = { # Confirm
+		name = centralland.18.a
+		effect_tooltip = {
+      FROM = {
+        set_autonomy = { target = FROM autonomy_state = autonomy_free }
+      }
+      leave_faction = yes
+      diplomatic_relation = { country = FROM relation = non_aggression_pact }
+		}
+		add_ideas = cen_treaty_of_independence_non_aggression
+	}
+}
+
+# Root declares war on Stellarland with the agreement, message for Root
+country_event = {
+	id = centralland.19
+	title = centralland.19.t
+	desc = centralland.19.d
+	picture = GFX_report_event_hitler_handshake
+	
+	is_triggered_only = yes
+
+	option = { # Confirm
+		name = centralland.19.a
+		ROOT = { white_peace = STE }
+		STE = {
+      #puppet = ROOT
+			set_autonomy = { target = ROOT autonomy_state = autonomy_dominion }
+		}
+	}
+}
+
+# Root leave faction of Stellarland with the agreement, message for Root
+country_event = {
+	id = centralland.20
+	title = centralland.20.t
+	desc = centralland.20.d
+	picture = GFX_report_event_hitler_handshake
+	
+	is_triggered_only = yes
+
+	option = { # Confirm
+		name = centralland.19.a
+		STE = {
+      add_to_faction = ROOT
+		}
+	}
+}
+
+# Gain partisan army at war (Manchukuo focus)
+country_event = {
+	id = centralland.21
+	title = centralland.21.t
+	desc = centralland.21.d
+	picture = GFX_report_event_chinese_soldiers_rally
+	
+	is_triggered_only = yes
+
+	option = { # Confirm
+		name = centralland.21.a
+    army_experience = 75
+		ohg_create_partisan_army = yes
+	}
+}
+
+# Centralland requires support against Manchukuo, message for Stellarland
+country_event = {
+	id = centralland.22
+	title = centralland.22.t
+	desc = centralland.22.d
+	picture = GFX_report_event_china_government_meeting
+	
+	is_triggered_only = yes
+
+	option = { # Agree
+		name = centralland.22.a
+		ai_chance = {
+			base = 20
+			modifier = {
+        has_war_with = JAP
+        factor = 20
+			}
+		}
+		custom_effect_tooltip = centralland_22_a_tt
+		set_country_flag = cen_ste_will_support
+		FROM = { country_event = centralland.23 }
+	}
+	option = { # Reject
+		name = centralland.22.b
+		ai_chance = {
+			base = 1
+			modifier = {
+        is_historical_focus_on = no
+        factor = 20
+			}
+		}
+		FROM = { country_event = centralland.24 }
+	}
+}
+
+# Centralland requires support against Manchukuo, Stellarland agrees, message for Centralland
+country_event = {
+	id = centralland.23
+	title = centralland.10.t
+	desc = centralland.23.d
+	picture = GFX_report_event_chinese_officer_sign
+	
+	is_triggered_only = yes
+
+	option = { # Confirm
+		name = centralland.10.a
+	}
+}
+
+# Centralland requires support against Manchukuo, Stellarland rejects, message for Centralland
+country_event = {
+	id = centralland.24
+	title = centralland.11.t
+	desc = centralland.24.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+
+	option = { # Confirm
+		name = centralland.11.a
+	}
+}
+
+# Fengtian requires support against Manchukuo, message for China
+country_event = {
+	id = centralland.25
+	title = centralland.22.t
+	desc = centralland.25.d
+	picture = GFX_report_event_china_government_meeting
+	
+	is_triggered_only = yes
+
+	option = { # Agree
+		name = centralland.25.a
+		ai_chance = {
+			base = 20
+			modifier = {
+        has_war_with = JAP
+        factor = 20
+			}
+		}
+		if = {
+      limit = {
+        has_focus_tree = china_communist_focus
+      }
+      complete_national_focus = PRC_government_of_national_defense
+		}
+		else = {
+      complete_national_focus = CHI_united_front
+		}
+		FROM = { country_event = centralland.26 }
+	}
+	option = { # Reject
+		name = centralland.25.b
+		ai_chance = {
+			base = 1
+		}
+		FROM = { country_event = centralland.27 }
+	}
+}
+
+# Fengtian requires support against Japan, FROM agrees, message for Fengtian
+country_event = {
+	id = centralland.26
+	title = centralland.10.t
+	desc = centralland.26.d
+	picture = GFX_report_event_chinese_officer_sign
+	
+	is_triggered_only = yes
+
+	option = { # Confirm
+		name = centralland.10.a
+		FROM = { add_to_faction = ROOT }
+	}
+}
+
+# Fengtian requires support against Japan, FROM rejects, message for Fengtian
+country_event = {
+	id = centralland.27
+	title = centralland.11.t
+	desc = centralland.27.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+
+	option = { # Confirm
+		name = centralland.11.a
+	}
+}
+
+# Manchukuo calls Japan, message for Outer Hinggan
+country_event = {
+	id = centralland.28
+	title = centralland.28.t
+	desc = centralland.28.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+
+	option = { # Seek help
+		name = centralland.28.a
+		ai_chance = {
+			base = 100
+		}
+		if = {
+      limit = {
+        CHN = { is_faction_leader = yes }
+      }
+      CHN = { country_event = centralland.29 }
+		}
+		else = {
+			PRC = { country_event = centralland.29 }
+		}
+	}
+	option = { # Fight Alone
+		name = centralland.28.a
+		ai_chance = {
+			base = 1
+		}
+	}
+}
+
+# Outer Hinggan requires support against Japan, message for China
+country_event = {
+	id = centralland.29
+	title = centralland.29.t
+	desc = centralland.29.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+
+	option = { # Agree
+		name = centralland.25.a
+		ai_chance = {
+			base = 20
+			modifier = {
+        has_war_with = JAP
+        factor = 20
+			}
+		}
+		if = {
+      limit = {
+        has_focus_tree = china_communist_focus
+      }
+      complete_national_focus = PRC_government_of_national_defense
+		}
+		else = {
+      complete_national_focus = CHI_united_front
+		}
+		FROM = { country_event = centralland.26 }
+	}
+	option = { # Reject
+		name = centralland.25.b
+		ai_chance = {
+			base = 1
+		}
+		FROM = { country_event = centralland.27 }
+	}
+}
+
+# Centralland requires intervention in China
+country_event = {
+	id = centralland.30
+	title = centralland.30.t
+	desc = centralland.30.d
+	picture = GFX_report_event_chinese_soldiers_01
+	
+	is_triggered_only = yes
+
+	option = { # Agree
+		name = centralland.30.a
+    custom_effect_tooltip = centralland_30_a_tt
+		FROM = { country_event = centralland.31 }
+	}
+	
+	option = { # Reject
+		name = centralland.22.b
+		FROM = { country_event = centralland.27 }
+	}
+}
+
+# Centralland requires intervention in China, FROM accepts
+country_event = {
+	id = centralland.31
+	title = centralland.10.t
+	desc = centralland.31.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+
+	option = { # Confirm
+		name = centralland.31.a
+		set_global_flag = cen_civil_war_seeks_intervention
+		random_other_country = {
+      limit = {
+        is_literally_china = yes
+        has_war_with = ROOT
+        OR = {
+          tag = event_target:WTT_current_china_leader
+          is_in_faction_with = event_target:WTT_current_china_leader
+        }
+      }
+      save_global_event_target_as = cen_target_opposite_government
+		}
+		if = {
+      limit = {
+        is_in_faction_with = FROM
+      }
+      ROOT = {
+        add_to_war = { targeted_alliance = FROM enemy = event_target:cen_target_opposite_government hostility_reason = asked_to_join }
+      }
+		}
+		else = {
+      FROM = {
+        declare_war_on = {
+          target = event_target:cen_target_opposite_government
+          type = puppet_wargoal_focus
+        }
+      }
+		}
+		clear_variable = global.cen_target_opposite_government
+	}
+}

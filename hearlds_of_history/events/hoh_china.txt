@@ -1,0 +1,2495 @@
+add_namespace = hoh_china
+
+# Stellarland wants to return Mongolia, message for China
+country_event = {
+	id = hoh_china.1
+	title = hoh_china.1.t
+	desc = hoh_china.1.d
+	picture = GFX_report_event_soviet_japanese_pact
+	
+	is_triggered_only = yes
+	
+	option = { # Agree
+		name = hoh_china.1.a
+		add_stability = 2
+    add_political_power = 100
+		ai_chance = { 
+      factor = 40 
+			modifier = {
+				factor = 100
+        has_offensive_war = yes
+			}
+			modifier = {
+				factor = 0
+        is_chinese_warlord = yes
+			}
+			modifier = {
+				factor = 5
+        has_defensive_war = yes
+			}
+    }
+		every_state = {
+      limit = {
+        is_core_of = MON
+        CONTROLLER = {
+          OR = {
+            original_tag = FROM
+            is_subject_of = FROM
+          }
+        }
+      }
+      ROOT = { transfer_state = PREV }
+      add_core_of = ROOT 
+		}
+		FROM = {
+			country_event = hoh_china.2
+      add_opinion_modifier = { target = ROOT modifier = URB_work_with_stars }
+    }
+	}
+	
+	option = { # Reject
+		name = hoh_china.1.b
+		ai_chance = { 
+      factor = 10 
+			modifier = {
+				factor = 0
+        has_offensive_war = yes
+			}
+			modifier = {
+				factor = 100
+        is_chinese_warlord = yes
+			}
+			modifier = {
+				factor = 30
+        has_defensive_war = yes
+			}
+    }
+    if = {
+      limit = {
+        OR = {
+          original_tag = PRC
+          original_tag = CHI
+        }
+      }
+      add_stability = -1
+      add_political_power = -100
+    }
+		FROM = {
+			country_event = hoh_china.3
+    }
+	}
+}
+
+# Stellarland wants to return territory, FROM agrees, message for Stellarland
+country_event = {
+	id = hoh_china.2
+	title = hoh_china.2.t
+	desc = hoh_china.2.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = hoh_china.2.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+# Stellarland wants to return Mongolia, FROM rejects, message for Stellarland
+country_event = {
+	id = hoh_china.3
+	title = hoh_china.3.t
+	desc = hoh_china.3.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = hoh_china.3.a
+		ai_chance = {
+			factor = 100
+		}
+		every_state = {
+      limit = {
+        is_core_of = MON
+        CONTROLLER = {
+          OR = {
+            original_tag = ROOT
+            is_subject_of = ROOT
+          }
+        }
+      }
+      MON = { transfer_state = PREV }
+		}
+		puppet = MON
+		add_to_faction = MON
+	}
+		
+}
+
+# Stellarland wants to return Tannu uriankhai, message for China
+country_event = {
+	id = hoh_china.4
+	title = hoh_china.4.t
+	desc = hoh_china.4.d
+	picture = GFX_report_event_soviet_japanese_pact
+	
+	is_triggered_only = yes
+	
+	option = { # Agree
+		name = hoh_china.1.a
+		add_stability = 2
+    add_political_power = 100
+		ai_chance = { 
+      factor = 40 
+			modifier = {
+				factor = 100
+        has_offensive_war = yes
+			}
+			modifier = {
+				factor = 100
+        330 = { is_owned_and_controlled_by = ROOT }
+			}
+			modifier = {
+				factor = 0
+        is_chinese_warlord = yes
+			}
+			modifier = {
+				factor = 5
+        has_defensive_war = yes
+			}
+    }
+    transfer_state = 329
+    add_state_core = 329 
+		FROM = {
+			country_event = hoh_china.2
+      add_opinion_modifier = { target = ROOT modifier = URB_work_with_stars }
+    }
+	}
+	
+	option = { # Reject
+		name = hoh_china.1.b
+		ai_chance = { 
+      factor = 10 
+			modifier = {
+				factor = 0
+        has_offensive_war = yes
+			}
+			modifier = {
+				factor = 100
+        is_chinese_warlord = yes
+			}
+			modifier = {
+				factor = 30
+        has_defensive_war = yes
+			}
+    }
+    if = {
+      limit = {
+        OR = {
+          original_tag = PRC
+          original_tag = CHI
+        }
+      }
+      add_stability = -1
+      add_political_power = -100
+    }
+		FROM = {
+			country_event = hoh_china.5
+    }
+	}
+}
+
+# Stellarland wants to return Tannu uriankhai, FROM rejects, message for Stellarland
+country_event = {
+	id = hoh_china.5
+	title = hoh_china.3.t
+	desc = hoh_china.3.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = hoh_china.3.a
+		ai_chance = {
+			factor = 100
+		}
+		every_state = {
+      limit = {
+        is_core_of = TAN
+        CONTROLLER = {
+          OR = {
+            original_tag = ROOT
+            is_subject_of = ROOT
+          }
+        }
+      }
+      TAN = { transfer_state = PREV }
+		}
+		puppet = TAN
+		add_to_faction = TAN
+	}
+		
+}
+
+# China claims Mongolia, message for state controller
+country_event = {
+	id = hoh_china.6
+	title = hoh_china.6.t
+	desc = hoh_china.6.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.6.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		every_state = {
+      limit = {
+        is_core_of = MON
+        CONTROLLER = {
+          OR = {
+            original_tag = ROOT
+            is_subject_of = ROOT
+          }
+        }
+      }
+      FROM = { transfer_state = PREV }
+		}
+		FROM = {
+			country_event = hoh_china.8
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 100
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		FROM = {
+			country_event = hoh_china.9
+      create_wargoal = {
+        type = take_state_focus
+        target = ROOT
+				expire = 0
+				generator = { 330 }
+      }
+    }
+	}
+		
+}
+
+# China claims Tannu uriankhai, FROM rejects, message for State controller
+country_event = {
+	id = hoh_china.7
+	title = hoh_china.7.t
+	desc = hoh_china.7.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		every_state = {
+      limit = {
+        is_core_of = TAN
+        CONTROLLER = {
+          OR = {
+            original_tag = ROOT
+            is_subject_of = ROOT
+          }
+        }
+      }
+      FROM = { transfer_state = PREV }
+		}
+		FROM = {
+			country_event = hoh_china.8
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 100
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		FROM = {
+			country_event = hoh_china.9
+      create_wargoal = {
+        type = take_state_focus
+        target = ROOT
+				expire = 0
+				generator = { 329 }
+      }
+    }
+	}
+}
+
+# China claims territory, FROM accepts, message for China
+country_event = {
+	id = hoh_china.8
+	title = hoh_china.8.t
+	desc = hoh_china.8.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = hoh_china.8.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+# China claims territory, FROM rejects, message for China
+country_event = {
+	id = hoh_china.9
+	title = hoh_china.9.t
+	desc = hoh_china.9.d
+	picture = GFX_report_event_canada_patriation
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = hoh_china.9.a
+		ai_chance = {
+			factor = 100
+		}
+		add_war_support = 0.05
+	}
+}
+
+#Initial border incident against India in Aksai Chin, message for India
+country_event = {
+	id = hoh_china.10
+	title = hoh_china.10.t
+	desc = hoh_china.10.d
+	picture = GFX_report_event_japan_army_mountainside
+
+	is_triggered_only = yes
+
+	option = { #Seek compromise
+		name = hoh_china.7.a
+		ai_chance = { 
+      factor = 5 
+			modifier = {
+				factor = 0
+        has_offensive_war = yes
+			}
+			modifier = {
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+			modifier = {
+				factor = 0
+        FROM = { is_chinese_warlord = yes }
+			}
+			modifier = {
+				factor = 10
+        FROM = { 
+          OR = {
+            divisions_in_state = {
+              state = 619 
+              size > 3 
+            }
+            divisions_in_state = {
+              state = 757 
+              size > 3 
+            }
+          }
+        }
+			}
+			modifier = {
+				factor = 20
+        has_defensive_war = yes
+			}
+			modifier = {
+				factor = 100
+        is_subject = yes
+			}
+    }
+		cancel_border_war = {
+			defender = 853
+			attacker = 619
+		}
+		cancel_border_war = {
+			defender = 854
+			attacker = 757
+		}
+		if = {
+      limit = { NOT = { has_country_flag = chn_ind_border_conflict_canceled } }
+      set_country_flag = chn_ind_border_conflict_canceled
+      FROM = { country_event = hoh_china.13 } 
+		}
+	}
+	
+	option = { #Continue border war
+		name = japan_border_conflict.1.a
+		ai_chance = { 
+      factor = 20 
+			modifier = {
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+	}
+}
+
+#China wins in Aksai Chin
+country_event = {
+	id = hoh_china.11
+	title = hoh_china.11.t
+	desc = hoh_china.11.d
+	picture = GFX_report_event_japanese_transport_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = japan_border_conflict.2.a
+		trigger = {
+			NOT = { original_tag = RAJ }
+		}
+		if = {
+      limit = { 853 = { NOT = { is_core_of = ROOT } } }
+      add_state_core = 853
+		}
+		if = {
+      limit = {
+        619 = { OR = {
+            is_owned_by = ROOT
+            OWNER = { is_subject_of = ROOT }
+        } }
+      }
+      619 = {
+        OWNER = { transfer_state = 853 }
+      }
+		}
+		else_if = {
+      limit = {
+        287 = { OR = {
+            is_owned_by = ROOT
+            OWNER = { is_subject_of = ROOT }
+        } }
+      }
+      287 = {
+        OWNER = { transfer_state = 853 }
+      }
+		}
+		else = { transfer_state = 853 }
+		army_experience = 25
+	}
+	option = {
+		name = japan_border_conflict.3.a
+		trigger = {
+			original_tag = RAJ
+		}
+		add_political_power = -20
+	}
+}
+
+#India wins in Aksai Chin
+country_event = {
+	id = hoh_china.12
+	title = hoh_china.12.t
+	desc = hoh_china.12.d
+	picture = GFX_report_event_japanese_soldiers_03
+
+	is_triggered_only = yes
+
+	option = {
+		name = japan_border_conflict.2.b
+		trigger = {
+			NOT = { original_tag = RAJ }
+		}
+		add_political_power = -20
+	}
+	option = {
+		name = japan_border_conflict.3.b
+		trigger = {
+			original_tag = RAJ
+		}
+		army_experience = 25
+	}
+}
+
+# India compromises in Border Conflict, message for China
+country_event = {
+	id = hoh_china.13
+	title = hoh_china.13.t
+	desc = hoh_china.13.d
+	picture = GFX_report_event_generic_sign_treaty3
+	
+	is_triggered_only = yes
+	option = {
+		name = japan_border_conflict.3.b
+		trigger = {
+			NOT = { original_tag = RAJ }
+		}
+		if = {
+      limit = { 853 = { NOT = { is_core_of = ROOT } } }
+      add_state_core = 853
+		}
+		if = {
+      limit = { 854 = { NOT = { is_core_of = ROOT } } }
+      add_state_core = 854
+		}
+		if = {
+      limit = {
+        619 = { OR = {
+            is_owned_by = ROOT
+            OWNER = { is_subject_of = ROOT }
+        } }
+      }
+      619 = {
+        OWNER = { transfer_state = 853 }
+      }
+		}
+		else_if = {
+      limit = {
+        287 = { OR = {
+            is_owned_by = ROOT
+            OWNER = { is_subject_of = ROOT }
+        } }
+      }
+      287 = {
+        OWNER = { transfer_state = 853 }
+      }
+		}
+		else = { transfer_state = 853 }
+		if = {
+      limit = {
+        757 = { OR = {
+            is_owned_by = ROOT
+            OWNER = { is_subject_of = ROOT }
+        } }
+      }
+      757 = {
+        OWNER = { transfer_state = 854 }
+      }
+		}
+		else_if = {
+      limit = {
+        601 = { OR = {
+            is_owned_by = ROOT
+            OWNER = { is_subject_of = ROOT }
+        } }
+      }
+      601 = {
+        OWNER = { transfer_state = 854 }
+      }
+		}
+		else = { transfer_state = 854 }
+		add_political_power = 20
+	}
+	option = {
+		name = japan_border_conflict.3.a
+		trigger = {
+			original_tag = RAJ
+		}
+		add_political_power = -20
+	}
+}
+
+# Centralland starts civil war, message for Nationalist China
+country_event = {
+	id = hoh_china.14
+	title = hoh_china.14.t
+	desc = hoh_china.14.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+	option = {
+		ai_chance = { factor = 100 }
+		name = hoh_china.14.a
+		create_faction = chinese_united_front
+		#load_oob = "CHI_united_front"
+		set_global_flag = CHI_unite
+
+	}
+}
+
+# China claims Hongkong, message for state controller
+country_event = {
+	id = hoh_china.15
+	title = hoh_china.15.t
+	desc = hoh_china.15.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				NOT = { controls_state = 326 }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+    FROM = { 
+			transfer_state = 326 
+			country_event = hoh_china.8
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 100
+				FROM = { has_war_with = JAP }
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.25
+			}
+			modifier = {
+				factor = 0
+				NOT = { controls_state = 326 }
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		FROM = {
+			country_event = hoh_china.9
+      create_wargoal = {
+        type = take_state_focus
+        target = ROOT
+				expire = 0
+				generator = { 326 }
+      }
+    }
+	}
+}
+
+# China claims Macau, message for state controller
+country_event = {
+	id = hoh_china.16
+	title = hoh_china.16.t
+	desc = hoh_china.16.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+			}
+			modifier = {
+				factor = 100
+				NOT = { controls_state = 729 }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+    FROM = { 
+			transfer_state = 729 
+			country_event = hoh_china.8
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 100
+				FROM = { has_war_with = JAP }
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.25
+			}
+			modifier = {
+				factor = 0
+				NOT = { controls_state = 729 }
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		FROM = {
+			country_event = hoh_china.9
+      create_wargoal = {
+        type = take_state_focus
+        target = ROOT
+				expire = 0
+				generator = { 729 }
+      }
+    }
+	}
+}
+
+# China claims Guangzhouwan, message for state controller
+country_event = {
+	id = hoh_china.17
+	title = hoh_china.17.t
+	desc = hoh_china.17.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+			}
+			modifier = {
+				factor = 100
+				NOT = { controls_state = 728 }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+    FROM = { 
+			transfer_state = 728 
+			country_event = hoh_china.8
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.25
+			}
+			modifier = {
+				factor = 0
+				NOT = { controls_state = 728 }
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		FROM = {
+			country_event = hoh_china.9
+      create_wargoal = {
+        type = take_state_focus
+        target = ROOT
+				expire = 0
+				generator = { 728 }
+      }
+    }
+	}
+}
+
+# China claims Outer Manchuria, message for state controller
+country_event = {
+	id = hoh_china.18
+	title = hoh_china.18.t
+	desc = hoh_china.18.d
+	picture = GFX_report_event_outer_manchuria_map
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				NOT = { original_tag = SOV }
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+				OVERLORD = { is_major = no }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		if = {
+      limit = {
+        original_tag = OHG
+      }
+      FROM = { 
+        puppet = ROOT
+        set_autonomy = {
+          target = ROOT
+          autonomous_state = autonomy_integrated_puppet
+        } 
+        country_event = { id = wtt_china.2 }
+      }
+		}
+		else_if = {
+      limit = {
+        OR = {
+          is_literally_china = yes
+          original_tag = MAN
+          original_tag = MEN
+        }
+      }
+      FROM = {
+        puppet = ROOT
+        country_event = { id = wtt_china.2 }
+      }
+		}
+		else = {
+      every_state = {
+        limit = {
+          OR = {
+            state = 408
+            state = 409
+            state = 537
+            state = 560
+            state = 561
+            state = 655
+            state = 657
+            state = 810
+            state = 814
+            state = 843
+            state = 844
+            state = 845
+            state = 847
+          }
+          is_owned_by = ROOT
+        }
+        FROM = { transfer_state = PREV }
+      }
+      FROM = { 
+        country_event = hoh_china.8
+      }
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				NOT = { original_tag = SOV }
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.25
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		if = {
+      limit = {
+        OR = {
+          is_literally_china = yes
+          original_tag = MAN
+          original_tag = MEN
+        }
+      }
+      FROM = {
+        country_event = { id = wtt_china.3 }
+      }
+		}
+		else = {
+      FROM = {
+        country_event = hoh_china.9
+        create_wargoal = {
+          type = take_state_focus
+          target = ROOT
+          expire = 0
+          generator = { 408 409 560 561 657 843 844 845 847 }
+        }
+      }
+    }
+	}
+}
+
+# China claims Outer Northwest Territories, message for state controller
+country_event = {
+	id = hoh_china.19
+	title = hoh_china.19.t
+	desc = hoh_china.19.d
+	picture = GFX_report_event_outer_manchuria_map
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				NOT = { original_tag = SOV }
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+				OVERLORD = { is_major = no }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		if = {
+      limit = {
+        is_literally_china = yes
+      }
+      FROM = { 
+        puppet = ROOT
+        country_event = { id = wtt_china.2 }
+      }
+		}
+		else = {
+      every_state = {
+        limit = {
+          OR = {
+            state = 586
+            state = 589
+            state = 654
+            state = 732
+            state = 860
+            state = 861
+          }
+          is_owned_by = ROOT
+        }
+        FROM = { transfer_state = PREV }
+      }
+      FROM = { 
+        country_event = hoh_china.8
+      }
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				NOT = { original_tag = SOV }
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.25
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		if = {
+      limit = {
+        OR = {
+          is_literally_china = yes
+          original_tag = MAN
+          original_tag = MEN
+        }
+      }
+      FROM = {
+        country_event = { id = wtt_china.3 }
+      }
+		}
+		else = {
+      FROM = {
+        country_event = hoh_china.9
+        create_wargoal = {
+          type = take_state_focus
+          target = ROOT
+          expire = 0
+          generator = { 408 }
+        }
+      }
+    }
+	}
+}
+
+# China claims Qingdao, message for state controller
+country_event = {
+	id = hoh_china.20
+	title = hoh_china.20.t
+	desc = hoh_china.20.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+			}
+			modifier = {
+				factor = 100
+				NOT = { controls_state = 743 }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+    FROM = { 
+			transfer_state = 743 
+			country_event = hoh_china.8
+		}
+    743 = { 
+      set_state_name = STATE_743 
+      set_province_name = {
+        id = 10000
+        name = VICTORY_POINTS_10000
+      }
+    }
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.25
+			}
+			modifier = {
+				factor = 0
+				NOT = { controls_state = 743 }
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		FROM = {
+			country_event = hoh_china.9
+      create_wargoal = {
+        type = take_state_focus
+        target = ROOT
+				expire = 0
+				generator = { 743 }
+      }
+    }
+	}
+}
+
+#Initial border incident against India in South Tibet, message for India
+country_event = {
+	id = hoh_china.21
+	title = hoh_china.21.t
+	desc = hoh_china.21.d
+	picture = GFX_report_event_japan_army_mountainside
+
+	is_triggered_only = yes
+
+	option = { #Seek compromise
+		name = hoh_china.7.a
+		ai_chance = { 
+      factor = 5 
+			modifier = {
+				factor = 0
+        has_offensive_war = yes
+			}
+			modifier = {
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+			modifier = {
+				factor = 0
+        FROM = { is_chinese_warlord = yes }
+			}
+			modifier = {
+				factor = 10
+        FROM = { 
+          OR = {
+            divisions_in_state = {
+              state = 619 
+              size > 3 
+            }
+            divisions_in_state = {
+              state = 757 
+              size > 3 
+            }
+          }
+        }
+			}
+			modifier = {
+				factor = 20
+        has_defensive_war = yes
+			}
+			modifier = {
+				factor = 100
+        is_subject = yes
+			}
+    }
+		cancel_border_war = {
+			defender = 853
+			attacker = 619
+		}
+		cancel_border_war = {
+			defender = 854
+			attacker = 757
+		}
+		if = {
+      limit = { NOT = { has_country_flag = chn_ind_border_conflict_canceled } }
+      set_country_flag = chn_ind_border_conflict_canceled
+      FROM = { country_event = hoh_china.13 } 
+		}
+	}
+	
+	option = { #Continue border war
+		name = japan_border_conflict.1.a
+		ai_chance = { 
+      factor = 20 
+			modifier = {
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+	}
+}
+
+#China wins in South Tibet
+country_event = {
+	id = hoh_china.22
+	title = hoh_china.22.t
+	desc = hoh_china.11.d
+	picture = GFX_report_event_japanese_transport_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = japan_border_conflict.2.a
+		trigger = {
+			NOT = { original_tag = RAJ }
+		}
+		if = {
+      limit = { 854 = { NOT = { is_core_of = ROOT } } }
+      add_state_core = 854
+		}
+		if = {
+      limit = {
+        757 = { OR = {
+            is_owned_by = ROOT
+            OWNER = { is_subject_of = ROOT }
+        } }
+      }
+      757 = {
+        OWNER = { transfer_state = 854 }
+      }
+		}
+		else_if = {
+      limit = {
+        601 = { OR = {
+            is_owned_by = ROOT
+            OWNER = { is_subject_of = ROOT }
+        } }
+      }
+      601 = {
+        OWNER = { transfer_state = 854 }
+      }
+		}
+		else = { transfer_state = 854 }
+		army_experience = 25
+	}
+	option = {
+		name = japan_border_conflict.3.a
+		trigger = {
+			original_tag = RAJ
+		}
+		add_political_power = -20
+	}
+}
+
+#India wins in South Tibet
+country_event = {
+	id = hoh_china.23
+	title = hoh_china.23.t
+	desc = hoh_china.12.d
+	picture = GFX_report_event_japanese_soldiers_03
+
+	is_triggered_only = yes
+
+	option = {
+		name = japan_border_conflict.2.b
+		trigger = {
+			NOT = { original_tag = RAJ }
+		}
+		add_political_power = -20
+	}
+	option = {
+		name = japan_border_conflict.3.b
+		trigger = {
+			original_tag = RAJ
+		}
+		army_experience = 25
+	}
+}
+
+# China claims Ladakh and Sikkim, message for state controller
+country_event = {
+	id = hoh_china.24
+	title = hoh_china.24.t
+	desc = hoh_china.24.d
+	picture = GFX_report_event_chinese_officer_sign
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+			}
+			modifier = {
+				factor = 100
+				NOT = { controls_state = 862 }
+				NOT = { controls_state = 864 }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		if = {
+      limit = {
+        owns_state = 862
+      }
+      862 = { remove_core_of = ROOT }
+      FROM = { 
+        transfer_state = 862 
+      }
+		}
+		if = {
+      limit = {
+        owns_state = 864
+      }
+      864 = { remove_core_of = ROOT }
+      FROM = { 
+        transfer_state = 864 
+      }
+		}
+    FROM = { 
+			country_event = hoh_china.8
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.25
+			}
+			modifier = {
+				factor = 0
+				NOT = { controls_state = 862 }
+				NOT = { controls_state = 864 }
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		if = {
+			limit = {
+        owns_state = 862
+        owns_state = 864
+			}
+			FROM = {
+        create_wargoal = {
+          type = take_state_focus
+          target = ROOT
+          generator = { 862 864 }
+        }
+      }
+    }
+    else_if = {
+      limit = {
+        owns_state = 862
+      }
+			FROM = {
+        create_wargoal = {
+          type = take_state_focus
+          target = ROOT
+          generator = { 862 }
+        }
+      }
+    }
+    else_if = {
+      limit = {
+        owns_state = 864
+      }
+			FROM = {
+        create_wargoal = {
+          type = take_state_focus
+          target = ROOT
+          generator = { 864 }
+        }
+      }
+    }
+		FROM = { country_event = hoh_china.9 }
+	}
+}
+
+# China claims North and East Burma, message for state controller
+country_event = {
+	id = hoh_china.25
+	title = hoh_china.25.t
+	desc = hoh_china.25.d
+	picture = GFX_report_event_chinese_officer_sign
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+			}
+			modifier = {
+				factor = 100
+				NOT = { controls_state = 865 }
+				NOT = { controls_state = 866 }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		if = {
+      limit = {
+        owns_state = 865
+      }
+      FROM = { 
+        transfer_state = 865 
+      }
+		}
+		if = {
+      limit = {
+        owns_state = 866
+      }
+      FROM = { 
+        transfer_state = 866 
+      }
+		}
+    FROM = { 
+			country_event = hoh_china.8
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.25
+			}
+			modifier = {
+				factor = 0
+				NOT = { controls_state = 865 }
+				NOT = { controls_state = 866 }
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		if = {
+			limit = {
+        owns_state = 865
+        owns_state = 866
+			}
+			FROM = {
+        create_wargoal = {
+          type = take_state_focus
+          target = ROOT
+          generator = { 865 866 }
+        }
+      }
+    }
+    else_if = {
+      limit = {
+        owns_state = 865
+      }
+			FROM = {
+        create_wargoal = {
+          type = take_state_focus
+          target = ROOT
+          generator = { 865 }
+        }
+      }
+    }
+    else_if = {
+      limit = {
+        owns_state = 866
+      }
+			FROM = {
+        create_wargoal = {
+          type = take_state_focus
+          target = ROOT
+          generator = { 866 }
+        }
+      }
+    }
+		FROM = { country_event = hoh_china.9 }
+	}
+}
+
+# China claims Malay Archipelago, message for state controller
+country_event = {
+	id = hoh_china.26
+	title = hoh_china.26.t
+	desc = hoh_china.26.d
+	picture = GFX_report_event_chinese_officer_sign
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.26.a
+		ai_chance = {
+			base = 20
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthy place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 100
+				is_subject = yes
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 0.25
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		every_owned_state = {
+      limit = {
+        OR = {
+          state = 327
+          state = 333
+          state = 334
+          state = 335
+          state = 336
+          state = 623
+          state = 624
+          state = 625
+          state = 626
+          state = 627
+          state = 628
+          state = 667
+          state = 668
+          state = 669
+          state = 672
+          state = 673
+          state = 721
+          state = 738
+        }
+      }
+      FROM = { transfer_state = PREV }
+		}
+		if = {
+      limit = { has_subject = MAL }
+      FROM = { puppet = MAL }
+		}
+		if = {
+      limit = { has_subject = INS }
+      FROM = { puppet = INS }
+		}
+		if = {
+      limit = { has_subject = PHI }
+      FROM = { puppet = PHI }
+		}
+    FROM = { 
+			country_event = hoh_china.8
+		}
+	}
+	option = { # Reject
+		name = hoh_china.26.b
+		ai_chance = {
+			base = 80
+			modifier = {
+				factor = 0.25
+				has_stability < 0.25
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		if = {
+      limit = {
+        OR = {
+          has_subject = MAL
+          has_subject = INS
+          has_subject = PHI
+        }
+      }
+      if = {
+        limit = { has_subject = MAL }
+        FROM = { 
+          create_wargoal = {
+            type = puppet_wargoal_focus
+            target = MAL
+          } 
+        }
+      }
+      if = {
+        limit = { has_subject = INS }
+        FROM = { 
+          create_wargoal = {
+            type = puppet_wargoal_focus
+            target = INS
+          } 
+        }
+      }
+      if = {
+        limit = { has_subject = PHI }
+        FROM = { 
+          create_wargoal = {
+            type = puppet_wargoal_focus
+            target = PHI
+          } 
+        }
+      }
+		}
+		else = {
+      every_owned_state = {
+        limit = {
+          OR = {
+            state = 327
+            state = 333
+            state = 334
+            state = 335
+            state = 336
+            state = 623
+            state = 624
+            state = 625
+            state = 626
+            state = 627
+            state = 628
+            state = 667
+            state = 668
+            state = 669
+            state = 672
+            state = 673
+            state = 721
+            state = 738
+          }
+        }
+        FROM = { add_state_claim = PREV }
+      }
+      FROM = {
+        create_wargoal = {
+          type = puppet_wargoal_focus
+          target = ROOT
+        } 
+      }
+		}
+		FROM = { country_event = hoh_china.9 }
+	}
+}
+
+# ROOT is informed that China dismantles the united front
+country_event = {
+	id = hoh_china.27
+	title = hoh_china.27.t
+	desc = hoh_china.27.d
+	picture = GFX_report_event_chinese_officer_sign
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = hoh_china.27.a
+		trigger = {
+      NOT = { 
+        tag = event_target:WTT_communist_china 
+        has_focus_tree = china_communist_focus
+      }
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = { # Establish our faction
+		name = hoh_china.27.b
+		trigger = {
+      tag = event_target:WTT_communist_china
+      has_focus_tree = china_communist_focus
+		}
+		ai_chance = {
+			base = 10
+		}
+		if = {
+      limit = { has_completed_focus = PRC_agrarian_socialism }
+      complete_national_focus = PRC_socialism_with_chinese_characteristics
+		}
+		else = {
+      complete_national_focus = PRC_government_of_national_defense
+		}
+	}
+}
+
+# China claims Dalian, message for state controller
+country_event = {
+	id = hoh_china.28
+	title = hoh_china.28.t
+	desc = hoh_china.28.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+			}
+			modifier = {
+				factor = 100
+				NOT = { controls_state = 745 }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+    FROM = { 
+			transfer_state = 745 
+			country_event = hoh_china.8
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.25
+			}
+			modifier = {
+				factor = 0
+				NOT = { controls_state = 745 }
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		FROM = {
+			country_event = hoh_china.9
+      create_wargoal = {
+        type = take_state_focus
+        target = ROOT
+				expire = 0
+				generator = { 745 }
+      }
+    }
+	}
+}
+
+# China claims Taiwan, message for state controller
+country_event = {
+	id = hoh_china.29
+	title = hoh_china.29.t
+	desc = hoh_china.29.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+			}
+			modifier = {
+				factor = 100
+				NOT = { controls_state = 524 }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+    FROM = { 
+			transfer_state = 524 
+			country_event = hoh_china.8
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.25
+			}
+			modifier = {
+				factor = 0
+				NOT = { controls_state = 524 }
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		FROM = {
+			country_event = hoh_china.9
+      create_wargoal = {
+        type = take_state_focus
+        target = ROOT
+				expire = 0
+				generator = { 524 }
+      }
+    }
+	}
+}
+
+# China claims East Hebei, message for state controller
+country_event = {
+	id = hoh_china.30
+	title = hoh_china.30.t
+	desc = hoh_china.30.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+			}
+			modifier = {
+				factor = 100
+				NOT = { controls_state = 609 }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+    FROM = { 
+			transfer_state = 609 
+			country_event = hoh_china.8
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.25
+			}
+			modifier = {
+				factor = 0
+				NOT = { controls_state = 609 }
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		FROM = {
+			country_event = hoh_china.9
+      create_wargoal = {
+        type = take_state_focus
+        target = ROOT
+				expire = 0
+				generator = { 609 }
+      }
+    }
+	}
+}
+
+# China claims Ryukyu, message for state controller
+country_event = {
+	id = hoh_china.31
+	title = hoh_china.31.t
+	desc = hoh_china.31.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+			}
+			modifier = {
+				factor = 100
+				NOT = { controls_state = 526 }
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+    FROM = { 
+			transfer_state = 526 
+			country_event = hoh_china.32
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.25
+			}
+			modifier = {
+				factor = 0
+				NOT = { controls_state = 526 }
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		FROM = {
+			country_event = hoh_china.9
+      create_wargoal = {
+        type = take_state_focus
+        target = ROOT
+				expire = 0
+				generator = { 526 }
+      }
+    }
+	}
+}
+
+# China claims Ryukyu, FROM accepts
+country_event = {
+	id = hoh_china.32
+	title = hoh_china.32.t
+	desc = hoh_china.32.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+	option = { # Keep Occupation
+		name = hoh_china.32.a
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				is_major = yes
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+			}
+			modifier = {
+				factor = 100
+				NOT = { controls_state = 526 }
+			}
+		}
+		add_political_power = 250
+		add_war_support = 0.05
+	}
+	option = { # Set a puppet state
+		name = hoh_china.32.b
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 10
+				has_government = democratic
+			}
+			modifier = {
+				factor = 0
+				is_subject = yes
+			}
+			modifier = {
+				factor = 10
+				NOT = { controls_state = 526 }
+			}
+		}
+		add_political_power = 200
+		add_stability = 0.05
+    RYU = { 
+			add_state_core = 526 
+			transfer_state = 526 
+		}
+		puppet = RYU
+	}
+	option = { # Commit to independence
+		name = hoh_china.32.c
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 10
+				has_government = democratic
+			}
+		}
+		add_political_power = 100
+		RYU = {
+      add_state_core = 526
+      transfer_state = 526
+		}
+    give_guarantee = RYU
+	}
+}
+
+# China claims Polynesia, message for state controller
+country_event = {
+	id = hoh_china.33
+	title = hoh_china.33.t
+	desc = hoh_china.33.d
+	picture = GFX_report_event_chinese_officers
+	
+	is_triggered_only = yes
+	option = { # Accept
+		name = hoh_china.7.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 100
+				has_war_support < 0.25
+			}
+			modifier = {
+				factor = 200
+				is_subject = yes
+			}
+			modifier = { #They can't deal with this until the Sino-Japanese war is over
+				factor = 5
+				FROM = { has_war_with = JAP }
+			}
+			modifier = { #They are too strong
+				factor = 100
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		every_owned_state = {
+      limit = {
+        OR = {
+          state = 284
+				  state = 524 
+				  state = 629
+				  state = 630
+				  state = 631
+				  state = 632
+				  state = 633
+				  state = 634
+				  state = 635
+				  state = 636
+				  state = 638
+				  state = 639
+				  state = 641
+				  state = 642
+				  state = 643
+				  state = 645 
+				  state = 646
+				  state = 647
+				  state = 648
+				  state = 684
+				  state = 723
+				  state = 725
+				  state = 726
+				  state = 727
+				  state = 734
+        }
+      }
+      FROM = { transfer_state = PREV } 
+		}
+    FROM = { 
+			country_event = hoh_china.8
+		}
+	}
+	option = { # Reject
+		name = hoh_china.6.b
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				any_other_country = { #Worthless place to concern when at war
+          is_major = yes
+          has_war_with = ROOT
+        }
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.25
+			}
+			modifier = { #They are too strong
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+			}
+		}
+		FROM = {
+			country_event = hoh_china.9
+      create_wargoal = {
+        type = take_state_focus
+        target = ROOT
+				expire = 0
+				generator = { 284 629 684 638 641 646 723 726 }
+      }
+    }
+	}
+}
+
+
+
+
+

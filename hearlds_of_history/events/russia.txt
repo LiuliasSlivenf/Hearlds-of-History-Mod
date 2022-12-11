@@ -1,0 +1,958 @@
+add_namespace = russia
+
+#Select the second capital, initial event
+country_event = {
+	id = russia.20
+	title = russia.20.t
+	desc = russia.20.d
+	picture = GFX_report_event_generic_peaceful_annexation
+	
+	is_triggered_only = yes
+	
+	option = { # Northwestern and Central
+		name = russia.21.t
+		trigger = {
+      OR = {
+        owns_state = 195
+        owns_state = 209
+        owns_state = 263
+        owns_state = 214
+        owns_state = 351
+        owns_state = 400
+        owns_state = 219
+        owns_state = 242
+        owns_state = 252
+      }
+		}
+		ai_chance = { 
+      base = 1 
+      modifier = {
+        factor = 10
+        any_home_area_neighbor_country = {
+          capital_scope = {
+						is_on_continent = europe
+					}
+					OR = {
+            is_subject_of = ROOT
+            has_subject = ROOT
+					}
+        }
+      }
+      modifier = {
+        OR = {
+          original_tag = NOV
+          original_tag = PSK
+          original_tag = SMO
+          original_tag = BLR
+          original_tag = LIT
+          original_tag = LAT
+          original_tag = EST
+          original_tag = KAR
+          original_tag = WHS
+          original_tag = KAR
+          original_tag = MRM
+          original_tag = KOM
+          original_tag = VLG
+          original_tag = KRV
+          original_tag = MOS
+          original_tag = SMO
+          original_tag = RYA
+          original_tag = TVE
+          original_tag = OKA
+          original_tag = TAM
+          original_tag = IDU
+          original_tag = BLR
+        }
+        factor = 5
+      }  
+		}
+		country_event = russia.21
+		hidden_effect = {
+      
+		}
+	}
+	
+	option = { # Southern and Volga
+		name = russia.22.t
+		trigger = {
+      OR = {
+        owns_state = 217
+        owns_state = 218
+        owns_state = 234
+        owns_state = 239
+        owns_state = 251
+        owns_state = 652
+      }
+		}
+		ai_chance = { 
+      base = 5 
+      modifier = {
+        factor = 2
+        any_home_area_neighbor_country = {
+          capital_scope = {
+						is_on_continent = europe
+					}
+					OR = {
+            is_subject_of = ROOT
+            has_subject = ROOT
+					}
+        }
+      }
+      modifier = {
+        is_historical_focus_on = yes
+        factor = 10
+      } 
+      modifier = {
+        OR = {
+          original_tag = CAU
+          original_tag = VOG
+          original_tag = DON
+          original_tag = KUB
+          original_tag = VRO
+          original_tag = CRI
+          original_tag = ASK
+          original_tag = DBS
+          original_tag = MRU
+          original_tag = NRU
+          original_tag = UKR
+          original_tag = GEO
+          original_tag = AZR
+          original_tag = ARM
+          original_tag = SMA
+          original_tag = ORB
+          original_tag = SRT
+          original_tag = TAM
+          original_tag = PEM
+          original_tag = IDU
+          original_tag = KAZ
+          original_tag = UZB
+        }
+        factor = 5
+      }  
+		}
+		country_event = russia.22
+		hidden_effect = {
+      
+		}
+	}
+	
+	option = { # Ural, Siberian and Far Eastern
+		name = russia.23.t
+		trigger = {
+      OR = {
+        owns_state = 570
+        owns_state = 571
+        owns_state = 653
+        owns_state = 563
+        owns_state = 564
+        owns_state = 566
+        owns_state = 408
+        owns_state = 409
+        owns_state = 843
+      }
+		}
+		ai_chance = { 
+      base = 5 
+      modifier = {
+        factor = 2
+        any_home_area_neighbor_country = {
+          capital_scope = {
+						is_on_continent = asia
+					}
+					OR = {
+            is_subject_of = ROOT
+            has_subject = ROOT
+					}
+        }
+      }
+      modifier = {
+        is_historical_focus_on = yes
+        factor = 3
+      } 
+      modifier = {
+        OR = {
+          original_tag = SVD
+          original_tag = OMS
+          original_tag = NSB
+          original_tag = KNY
+          original_tag = SIB
+          original_tag = KAZ
+          original_tag = KYR
+          original_tag = UZB
+          original_tag = TAJ
+          original_tag = TMS
+          original_tag = IRK
+          original_tag = BYA
+          original_tag = CHT
+          original_tag = KNY
+          original_tag = TAN
+          original_tag = AMU
+          original_tag = BZH
+          original_tag = KHR
+          original_tag = PRM
+          original_tag = TRM
+        }
+        factor = 10
+      }  
+		}
+		country_event = russia.23
+		hidden_effect = {
+      
+		}
+	}
+	
+	option = { # Back to the capital
+		name = russia.20.a
+		trigger = {
+      NOT = {
+        owns_state = 195
+        owns_state = 209
+        owns_state = 263
+        owns_state = 214
+        owns_state = 351
+        owns_state = 400
+        owns_state = 219
+        owns_state = 242
+        owns_state = 252
+        owns_state = 217
+        owns_state = 218
+        owns_state = 234
+        owns_state = 239
+        owns_state = 251
+        owns_state = 652
+        owns_state = 570
+        owns_state = 571
+        owns_state = 653
+        owns_state = 563
+        owns_state = 564
+        owns_state = 566
+        owns_state = 408
+        owns_state = 409
+        owns_state = 843
+      }
+		}
+		ai_chance = { 
+      base = 1 
+		}
+		hidden_effect = {
+      random_owned_state = {
+        limit = { is_capital = yes }
+        set_state_flag = rus_second_capital_state
+      }
+      random_owned_state = {
+        limit = { 
+          any_neighbor_state = {
+            is_capital = yes
+            is_owned_by = ROOT
+          }
+        }
+        set_state_flag = rus_second_capital_state
+      }
+      random_owned_state = {
+        limit = { 
+          any_neighbor_state = {
+            is_capital = yes
+            is_owned_by = ROOT
+          }
+        }
+        set_state_flag = rus_second_capital_state
+      }
+		}
+	}
+	
+}
+
+#Select the second capital, Northwestern and Central
+country_event = {
+	id = russia.21
+	title = russia.21.t
+	desc = russia.20.d
+	picture = GFX_report_event_generic_peaceful_annexation
+	
+	is_triggered_only = yes
+	
+	option = { # Leningrad, Novgorod and Pskov
+		name = russia.21.a
+		trigger = {
+      195 = { is_capital = no }
+      209 = { is_capital = no }
+      263 = { is_capital = no }
+		}
+		ai_chance = { 
+      base = 5 
+      modifier = {
+        factor = 5
+        owns_state = 146
+        owns_state = 872
+      }
+      modifier = {
+        factor = 10
+        owns_state = 146
+        owns_state = 872
+        has_government = fascism
+      }
+      modifier = {
+        factor = 10
+        owns_state = 12
+        owns_state = 191
+      }
+      modifier = {
+        factor = 10
+        OR = {
+          has_subject = LAT
+          has_subject = EST
+        }
+      }
+      modifier = {
+        factor = 10
+        has_subject = FIN
+      }
+      modifier = {
+        factor = 10
+        any_home_area_neighbor_country = {
+          capital_scope = {
+						is_on_continent = europe
+					}
+					OR = {
+            is_subject_of = ROOT
+            has_subject = ROOT
+					}
+        }
+      }
+      modifier = {
+        OR = {
+          original_tag = NOV
+          original_tag = PSK
+          original_tag = BLR
+          original_tag = LIT
+          original_tag = LAT
+          original_tag = EST
+          original_tag = KAR
+        }
+        factor = 5
+      }  
+		}
+		hidden_effect = {
+      195 = { set_state_flag = rus_second_capital_state }
+      209 = { set_state_flag = rus_second_capital_state }
+      263 = { set_state_flag = rus_second_capital_state }
+		}
+	}
+	
+	option = { # Arkhangelsk, Kirov and Vologda
+		name = russia.21.b
+		trigger = {
+      214 = { is_capital = no }
+      351 = { is_capital = no }
+      400 = { is_capital = no }
+		}
+		ai_chance = { 
+      factor = 10
+      modifier = {
+        has_defensive_war = yes
+        factor = 10
+      }  
+      modifier = {
+        NOT = { owns_state = 195 }
+        factor = 5
+      }   
+      modifier = {
+        NOT = { owns_state = 213 }
+        factor = 0
+      }  
+      modifier = {
+        OR = {
+          original_tag = WHS
+          original_tag = KAR
+          original_tag = MRM
+          original_tag = KOM
+          original_tag = VLG
+          original_tag = KRV
+        }
+        factor = 5
+      }  
+		}
+		hidden_effect = {
+      214 = { set_state_flag = rus_second_capital_state }
+      351 = { set_state_flag = rus_second_capital_state }
+      400 = { set_state_flag = rus_second_capital_state }
+		}
+	}
+	
+	option = { # Moscow, Smolensk and Gorky
+		name = russia.21.c
+		trigger = {
+      219 = { is_capital = no }
+      242 = { is_capital = no }
+      252 = { is_capital = no }
+		}
+		ai_chance = { 
+      factor = 10
+      modifier = {
+        has_defensive_war = yes
+        factor = 0
+      }  
+      modifier = {
+        NOT = { owns_state = 242 }
+        factor = 0
+      }  
+      modifier = {
+        OR = {
+          original_tag = MOS
+          original_tag = SMO
+          original_tag = RYA
+          original_tag = TVE
+          original_tag = OKA
+          original_tag = TAM
+          original_tag = IDU
+          original_tag = BLR
+        }
+        factor = 5
+      }  
+		}
+		hidden_effect = {
+      219 = { set_state_flag = rus_second_capital_state }
+      242 = { set_state_flag = rus_second_capital_state }
+      252 = { set_state_flag = rus_second_capital_state }
+		}
+	}
+}
+
+#Select the second capital, Southern and Volga
+country_event = {
+	id = russia.22
+	title = russia.22.t
+	desc = russia.20.d
+	picture = GFX_report_event_generic_peaceful_annexation
+	
+	is_triggered_only = yes
+	
+	option = { # Stalingrad, Rostov and Krasnodar
+		name = russia.22.a
+		trigger = {
+      217 = { is_capital = no }
+      218 = { is_capital = no }
+      234 = { is_capital = no }
+		}
+		ai_chance = { 
+      base = 1 
+      modifier = {
+        factor = 5
+        owns_state = 137
+        owns_state = 227
+        owns_state = 228
+      }
+      modifier = {
+        factor = 5
+        owns_state = 406
+        owns_state = 407
+      }
+      modifier = {
+        has_defensive_war = yes
+        factor = 0
+      }  
+      modifier = {
+        NOT = { owns_state = 242 }
+        factor = 0
+      } 
+      modifier = {
+        factor = 10
+        OR = {
+          has_subject = DBS
+          has_subject = UKR
+          has_subject = MRU
+          has_subject = NRU
+        }
+      }
+      modifier = {
+        factor = 10
+        has_subject = KAZ
+      }
+      modifier = {
+        OR = {
+          original_tag = CAU
+          original_tag = VOG
+          original_tag = DON
+          original_tag = KUB
+          original_tag = VRO
+          original_tag = CRI
+          original_tag = ASK
+          original_tag = DBS
+          original_tag = MRU
+          original_tag = NRU
+          original_tag = UKR
+          original_tag = GEO
+          original_tag = AZR
+          original_tag = ARM
+        }
+        factor = 5
+      }  
+		}
+		hidden_effect = {
+      217 = { set_state_flag = rus_second_capital_state }
+      218 = { set_state_flag = rus_second_capital_state }
+      234 = { set_state_flag = rus_second_capital_state }
+		}
+	}
+	
+	option = { # Kuybyshev, Orenburg and Saratov
+		name = russia.22.b
+		trigger = {
+      239 = { is_capital = no }
+      251 = { is_capital = no }
+      652 = { is_capital = no }
+		}
+		ai_chance = { 
+      factor = 10
+      modifier = {
+        is_historical_focus_on = yes
+        factor = 10
+      } 
+      modifier = {
+        has_defensive_war = yes
+        factor = 10
+      }  
+      modifier = {
+        factor = 0.1
+        NOT = { has_subject = KAZ }
+      }
+      modifier = {
+        NOT = { owns_state = 219 }
+        factor = 0
+      }  
+      modifier = {
+        has_subject = KAZ
+        factor = 2
+      }  
+      modifier = {
+        OR = {
+          original_tag = VOG
+          original_tag = SMA
+          original_tag = ORB
+          original_tag = SRT
+          original_tag = TAM
+          original_tag = PEM
+          original_tag = IDU
+          original_tag = KAZ
+          original_tag = UZB
+        }
+        factor = 5
+      } 
+		}
+		hidden_effect = {
+      239 = { set_state_flag = rus_second_capital_state }
+      251 = { set_state_flag = rus_second_capital_state }
+      652 = { set_state_flag = rus_second_capital_state }
+		}
+	}
+	
+}
+
+#Select the second capital, Ural, Siberian and Far Eastern
+country_event = {
+	id = russia.23
+	title = russia.23.t
+	desc = russia.20.d
+	picture = GFX_report_event_generic_peaceful_annexation
+	
+	is_triggered_only = yes
+	
+	option = { # Sverdlovsk, Omsk and Novosibirsk
+		name = russia.23.a
+		trigger = {
+      570 = { is_capital = no }
+      571 = { is_capital = no }
+      653 = { is_capital = no }
+		}
+		ai_chance = { 
+      base = 10 
+      modifier = {
+        is_historical_focus_on = yes
+        factor = 5
+      } 
+      modifier = {
+        factor = 5
+        owns_state = 583
+        owns_state = 590
+        owns_state = 588
+        owns_state = 860
+      }
+      modifier = {
+        has_defensive_war = yes
+        factor = 5
+      }
+      modifier = {
+        factor = 10
+        has_subject = KAZ
+      }  
+      modifier = {
+        OR = {
+          original_tag = SVD
+          original_tag = OMS
+          original_tag = NSB
+          original_tag = KNY
+          original_tag = SIB
+          original_tag = KAZ
+          original_tag = KYR
+          original_tag = UZB
+          original_tag = TAJ
+          original_tag = TMS
+        }
+        factor = 5
+      }  
+		}
+		hidden_effect = {
+      570 = { set_state_flag = rus_second_capital_state }
+      571 = { set_state_flag = rus_second_capital_state }
+      653 = { set_state_flag = rus_second_capital_state }
+		}
+	}
+	
+	option = { # Irkutsk, Ulan-Ude and Chita
+		name = russia.23.b
+		trigger = {
+      563 = { is_capital = no }
+      564 = { is_capital = no }
+      566 = { is_capital = no }
+		}
+		ai_chance = { 
+      factor = 2
+      modifier = {
+        has_defensive_war = yes
+        factor = 0.5
+      }  
+      modifier = {
+        factor = 10
+        has_subject = MON
+      }
+      modifier = {
+        OR = {
+          owns_state = 329
+          owns_state = 330
+          owns_state = 761
+        }
+        factor = 5
+      }  
+      modifier = {
+        any_other_country = {
+          owns_state = 761
+          OR = {
+            has_government = ROOT
+            has_government = neutrality
+          }
+        }
+        factor = 5
+      }  
+      modifier = {
+        OR = {
+          original_tag = IRK
+          original_tag = BYA
+          original_tag = CHT
+          original_tag = KNY
+          original_tag = SIB
+          original_tag = TAN
+        }
+        factor = 5
+      }  
+      modifier = {
+        factor = 5
+        any_home_area_neighbor_country = {
+          capital_scope = {
+						is_on_continent = asia
+					}
+					OR = {
+            is_subject_of = ROOT
+            has_subject = ROOT
+					}
+        }
+      }
+		}
+		hidden_effect = {
+      563 = { set_state_flag = rus_second_capital_state }
+      564 = { set_state_flag = rus_second_capital_state }
+      566 = { set_state_flag = rus_second_capital_state }
+		}
+	}
+	
+	option = { # Blagoveshchensk, Khabarovsk and Vladivostok
+		name = russia.22.c
+		trigger = {
+      408 = { is_capital = no }
+      409 = { is_capital = no }
+      843 = { is_capital = no }
+		}
+		ai_chance = { 
+      factor = 2
+      modifier = {
+        has_defensive_war = yes
+        factor = 0.5
+      }  
+      modifier = {
+        factor = 10
+        OR = {
+          has_subject = MAN
+          has_subject = JAP
+        }
+      }
+      modifier = {
+        OR = {
+          owns_state = 714
+          owns_state = 717
+          owns_state = 761
+        }
+        factor = 10
+      }  
+      modifier = {
+        any_other_country = {
+          owns_state = 761
+          ROOT = { has_opinion = { target = PREV value > 20 } }
+        }
+        factor = 10
+      }  
+      modifier = {
+        OR = {
+          original_tag = AMU
+          original_tag = BZH
+          original_tag = KHR
+          original_tag = PRM
+          original_tag = TRM
+        }
+        factor = 5
+      }  
+      modifier = {
+        factor = 5
+        any_home_area_neighbor_country = {
+          capital_scope = {
+						is_on_continent = asia
+					}
+					OR = {
+            is_subject_of = ROOT
+            has_subject = ROOT
+					}
+        }
+      }
+		}
+		hidden_effect = {
+      408 = { set_state_flag = rus_second_capital_state }
+      409 = { set_state_flag = rus_second_capital_state }
+      843 = { set_state_flag = rus_second_capital_state }
+		}
+	}
+}
+
+# Valery Sablin's back
+country_event = {
+	id = russia.1917
+	title = russia.1917.t
+	desc = russia.1917.d
+	picture = GFX_report_event_sablin
+	
+	is_triggered_only = yes
+	
+	option = { # Confirm
+		name = russia.1917.a
+		ai_chance = { factor = 100 }
+		hidden_effect = {
+      if = {
+        limit = {
+          SOV = { owns_state = 408 }
+        }
+        TRM = { transfer_state = 408 }
+      }
+      if = {
+        limit = {
+          SOV = { owns_state = 409 }
+        }
+        TRM = { transfer_state = 409 }
+      }
+      if = {
+        limit = {
+          SOV = { owns_state = 560 }
+        }
+        TRM = { 
+          transfer_state = 560 
+          add_state_core = 560
+        }
+      }
+      if = {
+        limit = {
+          SOV = { owns_state = 561 }
+        }
+        TRM = { 
+          transfer_state = 561 
+          add_state_core = 561
+        }
+      }
+      if = {
+        limit = {
+          SOV = { owns_state = 563 }
+        }
+        TRM = { 
+          transfer_state = 563 
+          add_state_core = 563
+        }
+      }
+      if = {
+        limit = {
+          SOV = { owns_state = 564 }
+        }
+        TRM = { 
+          transfer_state = 564 
+          add_state_core = 564
+        }
+      }
+      if = {
+        limit = {
+          SOV = { owns_state = 657 }
+        }
+        TRM = { 
+          transfer_state = 657 
+          add_state_core = 657
+        }
+      }
+      if = {
+        limit = {
+          SOV = { owns_state = 842 }
+        }
+        TRM = { 
+          transfer_state = 842 
+          add_state_core = 842
+        }
+      }
+      if = {
+        limit = {
+          SOV = { owns_state = 844 }
+        }
+        TRM = { 
+          transfer_state = 844 
+          add_state_core = 844
+        }
+      }
+      if = {
+        limit = {
+          SOV = { owns_state = 846 }
+        }
+        TRM = { 
+          transfer_state = 846 
+          add_state_core = 846
+        }
+      }
+      if = {
+        limit = {
+          SOV = { owns_state = 810 }
+        }
+        TRM = { 
+          transfer_state = 810 
+          add_state_core = 810
+        }
+      }
+      if = {
+        limit = {
+          SOV = { owns_state = 845 }
+        }
+        TRM = { 
+          transfer_state = 845 
+          add_state_core = 845
+        }
+      }
+      if = {
+        limit = {
+          SOV = { owns_state = 843 }
+        }
+        TRM = { 
+          transfer_state = 843 
+          add_state_core = 843
+        }
+      }
+      every_state = {
+        limit = { is_core_of = SOV }
+        add_core_of = TRM
+      }
+      TRM = {
+        set_equipment_fraction = 0.8
+        set_stability = 0.9
+        set_war_support = 0.8
+        set_politics = {
+          ruling_party = communism
+          last_election = "1936.1.1"
+          election_frequency = 48
+          elections_allowed = no
+        }
+        set_popularities = {
+          democratic = 10
+          communism = 90
+        }
+        create_country_leader = {
+          name = "Valery Sablin"
+          desc = "POLITICS_VALERY_SABLIN_DESC"
+          picture = "gfx/leaders/SOV/portrait_sov_valery_sablin.dds"
+          expire = "1976.8.3"
+          ideology = leninism
+          traits = {
+          
+          }
+        }
+        set_cosmetic_tag = SOV_russia
+      }
+      SOV = {
+        set_equipment_fraction = 0.45
+        set_stability = 0.45
+        set_war_support = 0.4
+        transfer_units_fraction = {
+					target = TRM
+					size = 0.5
+				}
+      }
+      TRM = {
+        declare_war_on = {
+          target = SOV
+          type = civil_war
+        }
+      }
+		}
+		
+		#hidden_effect = { #Will be automatically annexed
+      #SOV = {
+      # start_civil_war = {
+      #    ruling_party = communism
+      #    ideology = neutrality
+      #    size = 0.2
+      #  }
+      #  set_equipment_fraction = 0.8
+      #  set_stability = 0.9
+      #  set_war_support = 0.8
+      #  set_politics = {
+      #    ruling_party = communism
+      #    last_election = "1936.1.1"
+      #    election_frequency = 48
+      #    elections_allowed = no
+      #  }
+      #  set_popularities = {
+      #    democratic = 10
+      #    communism = 90
+      #  }
+      #  create_country_leader = {
+      #    name = "Valery Sablin"
+      #    desc = "POLITICS_VALERY_SABLIN_DESC"
+      #    picture = "portrait_sov_valery_sablin.dds"
+      #    expire = "1976.8.3"
+      #    ideology = leninism
+      #    traits = {
+      #  
+      #    }
+      #  }
+      #  set_cosmetic_tag = SOV_russia
+      #  random_other_country = {
+      #    limit = {
+      #      original_tag = SOV
+      #      has_government = neutrality
+      #    }
+      #    set_equipment_fraction = 0.45
+      #    set_stability = 0.45
+      #    set_war_support = 0.4
+      #  }
+      #  
+      #}
+    #}
+	}
+}

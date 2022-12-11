@@ -1,0 +1,127 @@
+
+add_namespace = hoh_game_over
+
+# The Last Judgement Day
+country_event = {
+	id = hoh_game_over.1
+	title = hoh_game_over.1.t
+	desc = hoh_game_over.1.d
+	picture = GFX_report_event_input_orders
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = {
+		name = hoh_game_over.1.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+# The World Doom, 36 hours remain
+news_event = {
+	id = hoh_game_over.2
+	title = hoh_game_over.2.t
+	desc = hoh_game_over.2.d
+	picture = GFX_news_event_nuclear_fall
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	immediate = {
+    set_global_flag = world_doom
+	}
+	
+	option = {
+		name = hoh_game_over.2.a
+		trigger = { TAG = STE }
+		hidden_effect = {
+      play_beauty_of_annihilation_effect = yes
+      sound_effect = "ste_world_annihilation"
+		}
+	}
+	option = {
+		name = hoh_game_over.2.b
+		trigger = {
+			NOT = { TAG = STE }
+		}
+		hidden_effect = {
+      play_beauty_of_annihilation_effect = yes
+      sound_effect = "ste_world_annihilation"
+		}
+	}
+}
+
+# The World Doom, Struggle of the Civilization
+country_event = {
+	id = hoh_game_over.3
+	title = hoh_game_over.3.t
+	desc = hoh_game_over.3.d
+	picture = GFX_report_event_nuclear_explosion
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = {
+		name = hoh_game_over.3.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+# The World Doom, An Endless Cycle
+news_event = {
+	id = hoh_game_over.4
+	title = hoh_game_over.4.t
+	desc = hoh_game_over.4.d
+	picture = GFX_news_event_dead_city
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = {
+		name = hoh_game_over.4.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+# Leave Sol III
+country_event = {
+	id = hoh_game_over.5
+	title = hoh_game_over.5.t
+	desc = hoh_game_over.5.d
+	picture = GFX_report_event_nuclear_explosion
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = {
+		name = hoh_game_over.5.a
+		ai_chance = { factor = 100 }
+		custom_effect_tooltip = hoh_game_over_5_tt
+		hidden_effect = {
+      set_politics = {
+        ruling_party = neutrality
+        last_election = "1936.1.1"
+        elections_allowed = no
+      }
+      set_popularities = {
+        neutrality = 100
+      }
+      set_party_name = { ideology = neutrality long_name = STE_caretaker_government_committee name = STE_caretaker_government_committee }
+      create_country_leader = {
+        name = "Caretaker Government Committee"
+        picture = "gfx/leaders/STE/portrait_ste_caretaker_government_committee.dds"
+        expire = "1965.1.1"
+        ideology = futural_socialism
+        traits = {
+        
+        }
+      }
+      ANR = { change_tag_from = ROOT }
+		}
+	}
+}

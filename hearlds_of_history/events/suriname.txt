@@ -1,0 +1,1271 @@
+add_namespace = suriname
+
+# Suriname choose to stand against Urbanlia
+country_event = {
+	id = suriname.1
+	title = suriname.1.t
+	desc = suriname.1.d
+	picture = GFX_report_event_chinese_soldiers_fighting
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = suriname.1.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+# Suriname declared its independence
+country_event = {
+	id = suriname.2
+	title = suriname.2.t
+	desc = suriname.2.desc
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+	option = { #recognize
+		name = suriname.2.a
+		ai_chance = {
+			factor = 50
+			modifier = {
+				is_in_faction = no
+				has_war = yes
+				factor = 100
+			}
+		}
+		add_stability = -0.01
+		FROM = {
+			country_event = suriname.3
+		}
+		hidden_effect = {
+			news_event = { hours = 1 id = hoh_news.19 }
+		}
+	}
+	option = { #supress them!
+		name = suriname.2.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				is_in_faction = yes
+				factor = 100
+			}
+			modifier = {
+				has_war = no
+				factor = 100
+			}
+		}
+		add_war_support = 0.05
+		FROM = {
+			country_event = suriname.4
+		}
+		hidden_effect = {
+			news_event = { hours = 1 id = hoh_news.20 }
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = FROM
+		}
+  }
+}
+
+# Urbanlia recognizes our independence
+country_event = {
+	id = suriname.3
+	title = suriname.3.t
+	desc = suriname.3.d
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+	option = { # A great progress
+		name = suriname.3.a
+		ai_chance = { base = 100 }
+    add_political_power = 20 
+		effect_tooltip = {
+      add_political_power = 20 
+		}
+	}
+}
+
+# Urbanlia supress upon our independence
+country_event = {
+	id = suriname.4
+	title = suriname.4.t
+	desc = suriname.4.d
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+	option = { # We will fight for it
+		name = suriname.4.a
+		ai_chance = { factor = 100 }
+    add_political_power = 20 
+		effect_tooltip = {
+      add_political_power = 20 
+      FROM = {
+        create_wargoal = {
+          type = annex_everything
+          target = ROOT
+        }
+      }
+		}
+  }
+}
+
+# Suriname seeks guarantee
+country_event = {
+	id = suriname.5
+	title = suriname.5.t
+	desc = suriname.5.d
+	picture = GFX_report_event_generic_sign_treaty2
+	
+	is_triggered_only = yes
+	option = { # Agree
+		name = suriname.5.a
+		ai_chance = { 
+      factor = 50 
+			modifier = {
+        OR = {
+          is_justifying_wargoal_against = FROM
+          FROM = { is_justifying_wargoal_against = ROOT }
+          has_wargoal_against = FROM
+          FROM = { has_wargoal_against = ROOT }
+          has_war_with = FROM
+        }
+				factor = 0
+			}
+			modifier = {
+				has_opinion = { target = FROM value > 74 }
+				factor = 100
+			}
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 100
+			}
+			modifier = {
+				FROM = { is_in_faction_with = ROOT }
+				factor = 100
+			}
+			modifier = {
+				FROM = { 
+          NOT = { is_in_faction_with = ROOT } 
+          is_in_faction = yes
+        }
+				factor = 100
+			}
+			modifier = {
+        any_country = {
+          NOT = { 
+              OR = {
+                tag = ROOT 
+                is_guaranteed_by = ROOT
+              }
+          }
+          OR = {
+            is_justifying_wargoal_against = FROM
+            has_wargoal_against = FROM
+            has_war_with = FROM
+          }
+        }
+				factor = 100
+			}
+		}
+    diplomatic_relation = {
+      country = FROM
+      relation = guarantee
+      active = yes
+    }
+		FROM = {
+			country_event = suriname.6
+      set_country_flag = monroe_doctrine
+		}
+  }
+	option = { # We don't trust them
+		name = suriname.5.b
+		ai_chance = { 
+      factor = 10 
+			modifier = {
+        OR = {
+          is_justifying_wargoal_against = FROM
+          FROM = { is_justifying_wargoal_against = ROOT }
+          has_wargoal_against = FROM
+          FROM = { has_wargoal_against = ROOT }
+          has_war_with = FROM
+        }
+				factor = 100
+			}
+			modifier = {
+				has_opinion = { target = FROM value > 74 }
+				factor = 0
+			}
+			modifier = {
+        FROM = {
+          has_added_tension_amount > 0.35
+        }
+				factor = 100
+			}
+		}
+		FROM = {
+			country_event = suriname.7
+		}
+  }
+}
+
+# Suriname seeks guarantee, FROM agrees
+country_event = {
+	id = suriname.6
+	title = suriname.6.t
+	desc = suriname.6.d
+	picture = GFX_report_event_generic_sign_treaty3
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = suriname.6.a
+		ai_chance = { factor = 100 }
+		effect_tooltip = {
+      FROM = {
+        diplomatic_relation = {
+          country = ROOT
+          relation = guarantee
+          active = yes
+        }
+      }
+		}
+  }
+}
+
+# Suriname seeks guarantee, FROM rejects
+country_event = {
+	id = suriname.7
+	title = suriname.7.t
+	desc = suriname.7.d
+	picture = GFX_report_event_generic_sign_treaty3
+	
+	is_triggered_only = yes
+	option = { # Confirm
+		name = suriname.7.a
+		ai_chance = { factor = 100 }
+		effect_tooltip = {
+      add_political_power = 20 
+		}
+  }
+}
+
+# Suriname asks Britain to sell British Guyana 
+country_event = {
+	id = suriname.8
+	title = suriname.8.t
+	desc = suriname.8.d
+	picture = GFX_report_event_guyana_map
+	
+	is_triggered_only = yes
+	option = {
+		name = suriname.8.a
+		687 = {
+			#set_state_name = "Guyana"
+			set_state_name = STATE_687_sr
+		}
+		add_political_power = 25
+		if = { #if player is Guyana
+      limit = {
+        GYA = {
+          is_ai = no
+        }
+        FROM = { change_tag_from = GYA }
+      }
+		}
+		FROM = {
+			transfer_state = 687
+			country_event = suriname.9
+			if = {#if UK releases Guyana
+        limit = {
+          country_exists = GYA
+        }
+        annex_country = { target = GYA transfer_troops = yes }
+			}
+		}
+		687 = {
+      remove_core_of = GYA
+		}
+		effect_tooltip = {
+      FROM = {
+        add_opinion_modifier = {
+          target = ROOT
+          modifier = transfer_guyanais_colony
+        }
+      }
+		}
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 100
+				has_government = FROM
+			}
+			modifier = {
+				FROM = {
+          ENG_will_support = yes
+				}
+				factor = 150
+			}
+			modifier = {
+				factor = 100
+				NOT = { controls_state = 687 } 
+			}
+			modifier = {
+				factor = 100
+				has_capitulated = yes
+			}
+			modifier = {
+				factor = 100
+				687 = {
+          CONTROLLER = {
+            is_subject_of = ROOT
+          }
+				}
+			}
+			modifier = {
+				factor = 100
+				threat > 0.4
+			}
+			modifier = {
+				factor = 100
+				is_in_faction_with = FROM
+			}
+		}
+	}
+	option = {
+		name = suriname.8.b
+		FROM = {
+			country_event = suriname.10
+		}
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0
+				has_war = yes
+				NOT = { has_war_with = FROM }
+			}
+			modifier = {
+				factor = 0
+				threat > 0.4
+			}
+			modifier = {
+				factor = 0
+				has_capitulated = yes
+			}
+			modifier = {
+				factor = 100
+				has_war_with = FROM 
+			}
+			modifier = {
+				factor = 0
+				NOT = { controls_state = 687 } 
+			}
+			modifier = {
+				factor = 30
+				687 = {
+          CONTROLLER = {
+            is_subject_of = ROOT
+          }
+				}
+			}
+			modifier = {
+				factor = 0
+				has_government = FROM
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = FROM
+			}
+		}
+		effect_tooltip = {
+      FROM = {
+        add_war_support = 0.05
+        add_state_claim = 687
+        create_wargoal = {
+          type = take_claimed_state
+          target = ROOT
+          generator = { 687 }
+        }
+      }
+		}
+	}
+}
+
+# Suriname is informed that British Guyana was granted to them
+country_event = {
+	id = suriname.9
+	title = suriname.9.t
+	desc = suriname.9.d
+	
+	picture = GFX_report_event_guyana_map
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.9.a
+		add_political_power = 100
+    add_opinion_modifier = {
+      target = FROM
+      modifier = transfer_guyanais_colony
+    }
+	}
+}
+
+# Suriname is informed Britain refused to turn over British Guyana
+country_event = {
+	id = suriname.10
+	title = suriname.10.t
+	desc = suriname.10.d
+	
+	picture = GFX_report_event_british_inspect_troops
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.10.a
+    add_war_support = 0.05
+		add_state_claim = 687
+    create_wargoal = {
+      type = take_claimed_state
+      target = FROM
+      generator = { 687 }
+    }
+	}
+}
+
+# Suriname asks France to sell French Guyana 
+country_event = {
+	id = suriname.11
+	title = suriname.11.t
+	desc = suriname.11.d
+	picture = GFX_report_event_guyana_map
+	
+	is_triggered_only = yes
+	option = {
+		name = suriname.8.a
+		310 = {
+			#set_state_name = "Cayenne"
+			set_state_name = STATE_310_sr
+		}
+		add_political_power = 25
+		if = { #if player is Cayenne
+      limit = {
+        CAY = {
+          is_ai = no
+        }
+        FROM = { change_tag_from = CAY }
+      }
+		}
+		FROM = {
+			transfer_state = 310
+			country_event = suriname.12
+			if = {#if France releases Cayenne
+        limit = {
+          country_exists = CAY
+        }
+        annex_country = { target = CAY transfer_troops = yes }
+			}
+		}
+		310 = {
+      remove_core_of = CAY
+		}
+		effect_tooltip = {
+      FROM = {
+        add_opinion_modifier = {
+          target = ROOT
+          modifier = transfer_guyanais_colony
+        }
+      }
+		}
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 100
+				has_government = FROM
+			}
+			modifier = {
+				FROM = {
+          FRA_will_support = yes
+				}
+				factor = 150
+			}
+			modifier = {
+				factor = 100
+				NOT = { controls_state = 310 } 
+			}
+			modifier = {
+				factor = 100
+				has_capitulated = yes
+			}
+			modifier = {
+				factor = 100
+				310 = {
+          CONTROLLER = {
+            is_subject_of = ROOT
+          }
+				}
+			}
+			modifier = {
+				factor = 100
+				threat > 0.4
+			}
+			modifier = {
+				factor = 100
+				is_in_faction_with = FROM
+			}
+		}
+	}
+	option = {
+		name = suriname.8.b
+		FROM = {
+			country_event = suriname.13
+		}
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0
+				has_war = yes
+				NOT = { has_war_with = FROM }
+			}
+			modifier = {
+				factor = 0
+				threat > 0.4
+			}
+			modifier = {
+				factor = 0
+				NOT = { controls_state = 310 } 
+			}
+			modifier = {
+				factor = 0
+				has_capitulated = yes
+			}
+			modifier = {
+				factor = 30
+				310 = {
+          CONTROLLER = {
+            is_subject_of = ROOT
+          }
+				}
+			}
+			modifier = {
+				factor = 100
+				has_war_with = FROM 
+			}
+			modifier = {
+				factor = 0
+				has_government = FROM
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = FROM
+			}
+		}
+		effect_tooltip = {
+      FROM = {
+        add_war_support = 0.05
+        add_state_claim = 310
+        create_wargoal = {
+          type = take_claimed_state
+          target = ROOT
+          generator = { 310 }
+        }
+      }
+		}
+	}
+}
+
+# Suriname is informed that French Guyana was granted to them
+country_event = {
+	id = suriname.12
+	title = suriname.12.t
+	desc = suriname.12.d
+	
+	picture = GFX_report_event_guyana_map
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.9.a
+		add_political_power = 100
+    add_opinion_modifier = {
+      target = FROM
+      modifier = transfer_guyanais_colony
+    }
+	}
+}
+
+# Suriname is informed France refused to turn over French Guyana
+country_event = {
+	id = suriname.13
+	title = suriname.13.t
+	desc = suriname.13.d
+	
+	picture = GFX_report_event_british_inspect_troops
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.10.a
+    add_war_support = 0.05
+		add_state_claim = 687
+    create_wargoal = {
+      type = take_claimed_state
+      target = FROM
+      generator = { 310 }
+    }
+	}
+}
+
+# Suriname seeks non-aggression pact, message for Venezuela
+country_event = {
+	id = suriname.14
+	title = suriname.14.t
+	desc = suriname.14.d
+	
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+
+	option = {#Agree
+		name = suriname.14.a
+		FROM = {
+			country_event = suriname.15
+		}
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 200
+				has_war = yes
+				NOT = { has_war_with = FROM }
+			}
+			modifier = {
+				factor = 0
+				has_war_with = FROM
+			}
+			modifier = {
+				factor = 0
+				FROM = { has_added_tension_amount > 0.4 }
+			}
+			modifier = {
+				factor = 200
+        OR = {
+          is_subject_of = FROM
+          has_subject = FROM
+        }
+			}
+			modifier = {
+				factor = 200
+				has_government = FROM
+			}
+			modifier = {
+				factor = 200
+				is_in_faction_with = FROM
+			}
+		}   
+    diplomatic_relation = {
+      country = FROM
+      relation = non_aggression_pact
+      active = yes
+    }
+	}
+	
+	option = {#Decline
+		name = suriname.14.b
+		FROM = {
+			country_event = suriname.16
+		}
+		ai_chance = {
+			factor = 0
+			modifier = {
+				factor = 0
+				has_war = yes
+				NOT = { has_war_with = FROM }
+			}
+			modifier = {
+				factor = 100
+				has_war_with = FROM
+			}
+			modifier = {
+				factor = 100
+				FROM = { has_added_tension_amount > 0.4 }
+			}
+			modifier = {
+				factor = 0
+        OR = {
+          is_subject_of = FROM
+          has_subject = FROM
+        }
+			}
+			modifier = {
+				factor = 0
+				has_government = FROM
+			}
+			modifier = {
+				factor = 0
+				is_in_faction_with = FROM
+			}
+		}
+		effect_tooltip = {
+      FROM = {
+        add_opinion_modifier = {
+          target = ROOT
+          modifier = refuse_to_sign_non_aggression_pact
+        }
+      }
+		}
+	}
+}
+
+# Venezuela agrees on non-aggression pact, message for Suriname
+country_event = {
+	id = suriname.15
+	title = suriname.15.t
+	desc = suriname.15.d
+	
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.15.a
+		ai_chance = {
+			factor = 10
+		}
+		effect_tooltip = {
+      FROM = {
+        diplomatic_relation = {
+          country = ROOT
+          relation = non_aggression_pact
+          active = yes
+        }
+      }
+		}
+	}
+}
+
+# Venezuela refuses to sign non-aggression pact, message for Suriname
+country_event = {
+	id = suriname.16
+	title = suriname.16.t
+	desc = suriname.16.d
+	
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 10
+		}
+		name = suriname.16.a
+		add_opinion_modifier = {
+			target = FROM
+			modifier = refuse_to_sign_non_aggression_pact
+	  }
+	}
+}
+
+# Suriname seeks investment, message for FROM
+country_event = {
+	id = suriname.17
+	title = suriname.17.t
+	desc = suriname.17.d
+	
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.17.a
+	}
+}
+
+# Suriname seeks investment, FROM agrees, message for Suriname
+country_event = {
+	id = suriname.18
+	title = suriname.18.t
+	desc = suriname.18.d
+	
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.18.a
+	}
+}
+
+# Suriname seeks investment, FROM rejects, message for Suriname
+country_event = {
+	id = suriname.19
+	title = suriname.19.t
+	desc = suriname.19.d
+	
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.19.a
+	}
+}
+
+# Netherlands seeks investment, message for Suriname
+country_event = {
+	id = suriname.20
+	title = suriname.20.t
+	desc = suriname.20.d
+	
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.20.a
+	}
+}
+
+# Suriname wants to lease Cundinamarca, message for Columbia 
+country_event = {
+	id = suriname.21
+	title = suriname.21.t
+	desc = suriname.21.d
+	
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.21.a
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 200
+				is_subject_of = FROM
+			}
+		}
+		add_stability = -0.1
+		add_political_power = -100
+		FROM = {
+      transfer_state = 306
+      add_state_core = 306
+			country_event = suriname.22
+    }
+	}
+	
+	option = {
+		name = suriname.21.b
+		trigger = {
+      NOT = { is_subject_of = FROM }
+		}
+		ai_chance = {
+			factor = 100
+		}
+		add_war_support = 0.1
+		FROM = {
+			country_event = suriname.23
+		}
+	}
+}
+
+# Columbia agrees to lease Cundinamarca, message for Suriname
+country_event = {
+	id = suriname.22
+	title = suriname.22.t
+	desc = suriname.22.d
+	
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.22.a
+		effect_tooltip = {
+      transfer_state = 306
+      add_state_core = 306
+		}
+    306 = {
+      add_building_construction = {
+        type = infrastructure
+        level = 1
+        instant_build = yes
+      }
+      add_building_construction = {
+					type = bunker
+					level = 1
+					province = 10747
+					instant_build = yes
+      }
+      add_building_construction = {
+      	type = bunker
+      	level = 1
+      	province = 7991
+      	instant_build = yes
+      }
+      add_building_construction = {
+        type = air_base
+        level = 1
+        instant_build = yes
+      }
+      add_building_construction = {
+      	type = naval_base
+      	province = 7991
+      	level = 2
+      	instant_build = yes
+      }
+    }
+    
+	}
+}
+
+# Columbia rejects to lease Cundinamarca, message for Suriname
+country_event = {
+	id = suriname.23
+	title = suriname.23.t
+	desc = suriname.23.d
+	
+	picture = GFX_report_event_chinese_soldiers_fighting
+	
+	is_triggered_only = yes
+
+	option = {#Hold them there
+		name = suriname.23.a
+		ai_chance = {
+			factor = 90
+			modifier = {
+				factor = 200
+				threat > 0.25
+			}
+		}
+    add_state_claim = 306
+    add_political_power = -100
+		add_opinion_modifier = {
+			target = FROM
+			modifier = holds_our_claims
+	  }
+	  FROM = {
+      add_opinion_modifier = {
+        target = ROOT
+        modifier = claims_on_us
+      }
+	  }
+	}
+	option = {#Declare war
+		name = suriname.23.b
+    add_state_claim = 306
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 100
+				threat < 0.25
+			}
+		}
+    create_wargoal = {
+      type = take_state
+      target = FROM
+      generator = { 306 }
+    }
+	}
+}
+
+# Suriname seeks common defense, message for Ecuador 
+country_event = {
+	id = suriname.24
+	title = suriname.24.t
+	desc = suriname.24.d
+	
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.24.a
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 200
+				threat > 25
+			}
+			modifier = {
+				factor = 200
+				has_war = yes
+				NOT = { has_war_with = FROM }
+			}
+			modifier = {
+				factor = 0
+				is_in_faction = yes
+			}
+		}
+		FROM = {
+			country_event = suriname.25
+      diplomatic_relation = {
+        country = ROOT
+        relation = guarantee
+        active = yes
+      }
+    }
+	}
+	
+	option = {
+		name = suriname.24.b
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 200
+				has_war_with = FROM
+			}
+		}
+		FROM = {
+			country_event = suriname.26
+      add_opinion_modifier = {
+        target = ROOT
+        modifier = refused_help
+      }
+		}
+	}
+}
+
+# Ecuador agrees, message for Suriname
+country_event = {
+	id = suriname.25
+	title = suriname.25.t
+	desc = suriname.25.d
+	
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.25.a
+		ai_chance = {
+			factor = 10
+		}
+		effect_tooltip = {
+      diplomatic_relation = {
+        country = FROM
+        relation = guarantee
+        active = yes
+      }
+    }
+	}
+}
+
+# Ecuador rejects, message for Suriname
+country_event = {
+	id = suriname.26
+	title = suriname.26.t
+	desc = suriname.26.d
+	
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.26.a
+		ai_chance = {
+			factor = 10
+		}
+		effect_tooltip = {
+      add_opinion_modifier = {
+        target = FROM
+        modifier = refused_help
+      }
+    }
+	}
+}
+
+
+# Suriname claims on our territories, message for ROOT
+country_event = {
+	id = suriname.27
+	title = suriname.27.t
+	desc = suriname.27.d
+	
+	picture = GFX_report_event_soldiers_marching
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.27.a
+		ai_chance = {
+			factor = 40
+			modifier = {
+				has_war = yes
+				NOT = { has_war_with = FROM }
+				factor = 200
+			}
+			modifier = {
+				FROM = { is_justifying_wargoal_against = ROOT }
+				factor = 200
+			}
+		}
+		add_political_power = -50
+		add_stability = -0.05
+		every_state = {
+      limit = {
+        is_core_of = FROM
+        is_owned_by = ROOT
+      }
+      FROM = { transfer_state = PREV }
+		}
+		FROM = {
+			country_event = suriname.28
+		}
+	}
+	option = {
+		name = suriname.27.b
+		ai_chance = {
+			factor = 10
+			modifier = {
+				has_war = no
+				factor = 100
+			}
+			modifier = {
+				has_war = no
+				is_historical_focus_on = yes
+				factor = 100
+			}
+		}
+		add_political_power = 50
+		add_war_support = 0.05
+		FROM = {
+			country_event = suriname.29
+		}
+	}
+}
+
+
+# Suriname claims territories, FROM accepts, message for Suriname
+country_event = {
+	id = suriname.28
+	title = suriname.28.t
+	desc = suriname.28.d
+	
+	picture = GFX_report_event_soldiers_marching
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.28.a
+		ai_chance = {
+			factor = 10
+		}
+		add_political_power = 50
+		add_war_support = 0.05
+		effect_tooltip = {
+      every_state = {
+        limit = {
+          is_core_of = ROOT
+          is_owned_by = FROM
+        }
+        ROOT = { transfer_state = PREV }
+      }
+		}
+	}
+}
+
+# Suriname claims territories, FROM rejects, message for Suriname
+country_event = {
+	id = suriname.29
+	title = suriname.29.t
+	desc = suriname.29.d
+	
+	picture = GFX_report_event_soldiers_marching
+	
+	is_triggered_only = yes
+
+	option = {
+		name = suriname.23.b
+		ai_chance = {
+			factor = 10
+		}
+		if = {
+      limit = {
+        FROM = { 
+          AND = {
+            owns_state = 859  
+            owns_state = 851 
+            owns_state = 852
+          }
+        }
+      }
+      ROOT = {
+        create_wargoal = {
+          type = take_core_state
+          target = FROM
+          generator = { 859 851 852 }
+        }
+      }
+    }
+    else_if = {
+      limit = {
+        FROM = { owns_state = 859 }
+      }
+      create_wargoal = {
+        type = take_core_state
+        target = FROM
+        generator = { 859 }
+      }
+    }
+    else_if = {
+      limit = {
+        FROM = { owns_state = 851 }
+      }
+      create_wargoal = {
+        type = take_core_state
+        target = FROM
+        generator = { 851 }
+      }
+    }
+    else_if = {
+      limit = {
+        FROM = { owns_state = 852 }
+      }
+      create_wargoal = {
+        type = take_core_state
+        target = FROM
+        generator = { 852 }
+      }
+    }
+    if = {
+      limit = {
+        FROM = { owns_state = 486 }
+      }
+      create_wargoal = {
+        type = take_core_state
+        target = FROM
+        generator = { 486 }
+      }
+    }
+    if = {
+      limit = {
+        FROM = { owns_state = 488 }
+      }
+      create_wargoal = {
+        type = take_core_state
+        target = FROM
+        generator = { 488 }
+      }
+    }
+    if = {
+      limit = {
+        FROM = {
+          NOT = {
+            owns_state = 486  
+            owns_state = 488 
+            owns_state = 859  
+            owns_state = 851 
+            owns_state = 852
+          }
+        }
+      }
+      create_wargoal = {
+        type = annex_everything
+        target = FROM
+      }
+		}
+		
+	}
+}
+
+
+
+
