@@ -1,0 +1,118 @@
+﻿#Only appears when in civil war
+capital = 823
+
+oob = "URB_urbanlian_civil_war_fascist"
+add_political_power = 10
+
+# Starting tech
+set_technology = {
+	infantry_weapons = 1
+	infantry_weapons1 = 1
+	tech_recon = 1
+	tech_support = 1		
+	tech_engineers = 1
+	tech_mountaineers = 1
+	motorised_infantry = 1
+	gw_artillery = 1
+	interwar_antiair = 1
+	gwtank = 1
+	basic_light_tank = 1
+	improved_light_tank = 1
+	basic_heavy_tank = 1
+	early_fighter = 1
+	fighter1 = 1
+	early_bomber = 1
+	tactical_bomber1 = 1
+	strategic_bomber1 = 1
+	CAS1 = 1
+	naval_bomber1 = 1
+	early_submarine = 1
+	basic_submarine = 1
+	early_destroyer = 1
+	basic_destroyer = 1
+	early_light_cruiser = 1
+	basic_light_cruiser = 1
+	early_heavy_cruiser = 1
+	early_battleship = 1
+	early_battlecruiser = 1
+	mobile_warfare = 1
+	trade_interdiction = 1
+	formation_flying = 1
+	synth_oil_experiments = 1
+	transport = 1
+}
+
+1939.1.1 = {
+	remove_ideas = {
+    urb_lack_of_military_talent_1
+	}
+}
+
+set_research_slots = 2
+set_convoys = 200
+set_stability = 0.65
+set_war_support = 0.8
+
+add_ideas = {
+	chelenism_specialities
+	urb_lack_of_military_talent_1
+}
+
+set_politics = {
+	ruling_party = fascism
+	last_election = "1936.1.1"
+	election_frequency = 48
+	elections_allowed = no
+}
+
+set_popularities = {
+	democratic = 10
+	fascism = 55
+	communism = 10
+	neutrality = 25
+}
+
+create_country_leader = {
+  name = "James Curley"
+  desc = "POLITICS_JAMES_MICHAEL_CURLEY_DESC"
+  picture = "gfx/leaders/URB/portrait_urb_james_michael_curley.dds"
+  expire = "1967.1.1"
+  ideology = national_populism
+  traits = {
+    connected_citizen
+  }
+}
+
+#create_country_leader = {
+#	name = "Challen Reardon"
+#  desc = "POLITICS_CHALLEN_REARDON_DESC"
+#	picture = "gfx/leaders/URB/portrait_urb_challen_reardon.dds"
+#	expire = "1965.1.1"
+#	ideology = national_populism
+#	traits = {
+#    warrior_code
+#    cornered_fox
+#	}
+#}
+
+#create_field_marshal = {
+#	name = "Challen Reardon"
+#	gfx = "GFX_portrait_urb_challen_reardon"
+#	traits = { organisational_leader offensive_doctrine urban_assault_specialist }
+#	skill = 4
+#	attack_skill = 4
+#	defense_skill = 2
+#	planning_skill = 3
+#	logistics_skill = 4
+#}
+
+#create_navy_leader = {
+#	name = "Challen Reardon"
+#	gfx = "GFX_portrait_urb_challen_reardon"
+#	traits = { superior_tactician blockade_runner ironside }
+#	skill = 3
+#	attack_skill = 4
+#	defense_skill = 3
+#	planning_skill = 2
+#	logistics_skill = 2
+#}

@@ -1,0 +1,106 @@
+﻿#Only appears when in civil war
+capital = 818
+
+oob = "UBC_1936"
+add_political_power = 10
+
+add_ideas = {
+	call_of_commune
+	urb_lack_of_military_talent_1
+}
+
+# Starting tech
+set_technology = {
+	infantry_weapons = 1
+	infantry_weapons1 = 1
+	tech_recon = 1
+	tech_support = 1		
+	tech_engineers = 1
+	tech_mountaineers = 1
+	motorised_infantry = 1
+	gw_artillery = 1
+	interwar_antiair = 1
+	gwtank = 1
+	basic_light_tank = 1
+	improved_light_tank = 1
+	basic_heavy_tank = 1
+	early_fighter = 1
+	fighter1 = 1
+	early_bomber = 1
+	tactical_bomber1 = 1
+	strategic_bomber1 = 1
+	CAS1 = 1
+	naval_bomber1 = 1
+	early_submarine = 1
+	basic_submarine = 1
+	early_destroyer = 1
+	basic_destroyer = 1
+	early_light_cruiser = 1
+	basic_light_cruiser = 1
+	early_heavy_cruiser = 1
+	early_battleship = 1
+	early_battlecruiser = 1
+	mobile_warfare = 1
+	trade_interdiction = 1
+	formation_flying = 1
+	synth_oil_experiments = 1
+	transport = 1
+}
+
+1939.1.1 = {
+	remove_ideas = {
+    urb_lack_of_military_talent_1
+	}
+}
+
+set_research_slots = 2
+set_convoys = 200
+set_stability = 0.55
+set_war_support = 0.65
+
+set_politics = {
+	ruling_party = communism
+	last_election = "1936.1.1"
+	election_frequency = 48
+	elections_allowed = no
+}
+
+set_popularities = {
+	democratic = 5
+	communism = 80
+	neutrality = 15
+}
+
+#create_country_leader = {
+#	name = "Calyor Teilchen"
+#  desc = "POLITICS_CALYOR_TEILCHEN_DESC"
+#	picture = "gfx/leaders/URB/portrait_urb_calyor_teilchen.dds"
+#	expire = "1965.1.1"
+#	ideology = communalism
+#	traits = {
+#    staunch_constitutionalist
+#    camarilla_leader
+#	}
+#}
+
+create_country_leader = {
+	name = "William Foster"
+	desc = "POLITICS_WILLIAM_Z_FOSTER_DESC"
+	picture = "gfx/leaders/URB/portrait_urb_william_zebulon_foster.dds"
+	expire = "1965.1.1"
+	ideology = stalinism
+	traits = {
+		labor_organizer
+	}
+}
+
+#create_field_marshal = {
+#	name = "Calyor Teilchen"
+#	gfx = "GFX_portrait_urb_calyor_teilchen"
+#	traits = { offensive_doctrine inflexible_strategist urban_assault_specialist }
+#	skill = 3
+#	attack_skill = 3
+#	defense_skill = 3
+#	planning_skill = 2
+#	logistics_skill = 2
+#}
