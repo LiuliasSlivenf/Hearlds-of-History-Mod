@@ -1,0 +1,92 @@
+﻿capital = 525 #South Korea
+
+oob = "KOR_1936"
+
+# Starting tech
+set_technology = {
+	infantry_weapons = 1
+	mass_assault = 1
+}
+
+set_convoys = 5
+
+set_politics = {
+	ruling_party = communism
+	last_election = "1936.1.1"
+	election_frequency = 48
+	elections_allowed = no
+}
+set_popularities = {
+	communism = 90
+	neutrality = 10
+}
+
+create_country_leader = {
+	name = "Yi Kang"
+	desc = ""
+	picture = "gfx/leaders/KOR/portrait_kor_yi_kang.tga"
+	expire = "1965.1.1"
+	ideology = despotism
+	traits = {
+		#
+	}
+}
+
+create_country_leader = {
+	name = "Kim Gu"
+	desc = ""
+	picture = "gfx/leaders/KOR/portrait_kor_kim_gu.tga"
+	expire = "1965.1.1"
+	ideology = conservatism
+	traits = {
+		#
+	}
+}
+
+create_country_leader = {
+	name = "Kim Il-sung"
+	desc = ""
+	picture = "gfx/leaders/KOR/portrait_kor_kim_il_sung.tga"
+	expire = "1965.1.1"
+	ideology = stalinism
+	traits = {
+		#
+	}
+}
+
+create_country_leader = {
+	name = "Yi Un"
+	desc = ""
+	picture = "gfx/leaders/KOR/portrait_kor_yi_un.tga"
+	expire = "1965.1.1"
+	ideology = fascism_ideology
+	traits = {
+		#
+	}
+}
+
+create_field_marshal = { 
+	name = "Kim Il-sung"
+	portrait_path = "gfx/leaders/KOR/portrait_kor_kim_il_sung.tga"
+	traits = {
+		career_officer
+	}
+	skill = 2
+	attack_skill = 3
+	defense_skill = 2
+	planning_skill = 1
+	logistics_skill = 1
+}
+
+create_corps_commander = {
+	name = "Kim Won Bong"
+	portrait_path = "gfx/leaders/KOR/portrait_kor_kim_won_bong.tga"
+	traits = {
+		trickster
+	}
+	skill = 3
+	attack_skill = 1
+	defense_skill = 3
+	planning_skill = 1
+	logistics_skill = 2
+}

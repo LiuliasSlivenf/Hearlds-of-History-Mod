@@ -1,0 +1,285 @@
+﻿capital = 714 # Heilungkiang - Qiqihar
+
+oob = "CEN_1936"
+if = {
+	limit = { has_dlc = "Man the Guns" }
+		set_naval_oob = "CEN_1936_naval_mtg"
+	else = {
+		set_naval_oob = "CEN_1936_naval_legacy"
+	}
+}
+
+set_stability = 0.25
+set_war_support = 0.2
+# Starting tech
+set_technology = {
+	infantry_weapons = 1
+	motorised_infantry = 1
+	support_weapons = 1
+	gwtank = 1
+	interwar_antiair = 1
+	early_fighter = 1
+	early_bomber = 1
+	mass_assault = 1
+	fleet_in_being = 1
+}
+if = {
+	limit = { not = { has_dlc = "Man the Guns" } }
+	set_technology = {
+		early_destroyer = 1
+		early_light_cruiser = 1
+	}
+}
+if = {
+	limit = { has_dlc = "Man the Guns" }
+	set_technology = {
+		basic_naval_mines = 1
+		early_ship_hull_light = 1
+		early_ship_hull_cruiser = 1
+		basic_battery = 1
+		basic_secondary_battery = 1
+		basic_torpedo = 1
+		coastal_defense_ships = 1
+	}
+}
+
+add_ideas = {
+  cen_our_own_fight
+  cen_banditry
+  cen_discordant_republic
+	#MAN_five_year_plan_tank
+	#MAN_five_year_plan_air
+	#MAN_five_year_plan_industry
+	#MAN_national_defense_state
+}
+
+if = {
+	limit = {
+		NOT = {
+			has_dlc = "Waking the Tiger"
+		}
+	}
+	add_ideas = {
+		CHI_communist_uprisings
+	}
+}
+
+
+set_convoys = 100
+
+1939.1.1 = {
+
+	add_political_power = 1198
+	set_stability = 0.7
+	set_war_support = 0.75
+
+	oob = "CEN_1936"
+	if = {
+		limit = { has_dlc = "Man the Guns" }
+			set_naval_oob = "CEN_1939_naval_mtg"
+		else = {
+			set_naval_oob = "CEN_1939_naval_legacy"
+		}
+	}
+  remove_ideas = {
+    cen_our_own_fight
+    cen_banditry
+    cen_discordant_republic
+  }
+	set_technology = {
+
+		#PLACEHOLDER techs for vehicles
+		motorised_infantry = 1
+    support_weapons = 1
+		tech_support = 1		
+		tech_recon = 1
+		tech_engineers = 1
+
+		#doctrines
+		air_superiority = 1
+		pocket_defence = 1
+		defence_in_depth = 1
+		battlefleet_concentration = 1
+		convoy_sailing = 1
+
+		#electronics
+		electronic_mechanical_engineering = 1
+		radio = 1
+		radio_detection = 1
+		mechanical_computing = 1
+		computing_machine = 1
+		basic_encryption = 1
+		basic_decryption = 1
+
+		#industry
+		basic_machine_tools = 1
+		improved_machine_tools = 1
+		advanced_machine_tools = 1
+		synth_oil_experiments = 1
+		fuel_silos = 1
+		oil_processing = 1
+		improved_oil_processing = 1
+		construction1 = 1
+		construction2 = 1
+		construction3 = 1
+		concentrated_industry = 1
+		concentrated_industry2 = 1
+		concentrated_industry3 = 1
+	}
+}
+
+set_politics = {
+	ruling_party = neutrality
+	last_election = "1936.1.1"
+	election_frequency = 48
+	elections_allowed = no
+}
+set_popularities = {
+	democratic = 5
+	fascism = 5
+	communism = 5
+	neutrality = 85
+}
+
+create_country_leader = {
+	name = "Supreme Command Council"
+	desc = "POLITICS_SUPREME_COMMAND_COUNCIL_DESC"
+	picture = "gfx/leaders/CEN/portrait_cen_supreme_command_council.dds"
+	expire = "1967.1.1"
+	ideology = radical_socialism
+	traits = {
+    emergency_powers
+	}
+}
+
+create_country_leader = {
+	name = "Lin Feng"
+	desc = "POLITICS_LIN_FENG_DESC"
+	picture = "gfx/leaders/CEN/portrait_cen_lin_feng.dds"
+	expire = "1967.1.1"
+	ideology = socialism
+	traits = {
+	}
+}
+
+#create_country_leader = {
+#	name = "Mu-he Hidden"
+#	picture = "gfx/leaders/CEN/portrait_cen_mu_he_hidden.dds"
+#	expire = "1967.1.1"
+#	ideology = conservatism
+#	traits = {
+#	}
+#}
+
+create_field_marshal = {
+	name = "Ran Cai"
+	gfx = "GFX_portrait_cen_ran_cai"
+	traits = { organizer skilled_staffer }
+	skill = 3
+	attack_skill = 2
+	defense_skill = 3
+	planning_skill = 2
+	logistics_skill = 3
+}
+
+create_field_marshal = {
+	name = "Ji Qingwu"
+	gfx = "GFX_portrait_cen_ji_qingwu"
+	traits = { organizer skilled_staffer }
+	skill = 3
+	attack_skill = 2
+	defense_skill = 3
+	planning_skill = 2
+	logistics_skill = 3
+}
+
+create_corps_commander = {
+	name = "Shu Wenkai"
+	gfx = "GFX_portrait_cen_shu_wenkai"
+	traits = { organizer skilled_staffer }
+	skill = 3
+	attack_skill = 2
+	defense_skill = 3
+	planning_skill = 2
+	logistics_skill = 3
+}
+
+### VARIANTS ###
+# 1936 Start #
+if = {
+	limit = { not = { has_dlc = "Man the Guns" } }
+}
+if = {
+	limit = { has_dlc = "Man the Guns" }
+	# Destroyers #
+	create_equipment_variant = {
+		name = "Jianwei Class"			
+		type = ship_hull_light_1
+		name_group = CHI_DD_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = light_ship_engine_1
+			fixed_ship_torpedo_slot = empty
+			mid_1_custom_slot = empty
+			rear_1_custom_slot = empty
+		}
+	}
+	# Light Cruisers #
+	create_equipment_variant = {
+		name = "Hairong Class"					# Hairong protected cruisers and Zhaohe, Yingrui training cruisers
+		type = ship_hull_cruiser_coastal_defense_ship
+		name_group = CHI_CL_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Haiqi Class"
+		type = ship_hull_cruiser_coastal_defense_ship
+		name_group = CHI_CL_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_medium_battery_1
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Ninghai Class"
+		type = ship_hull_cruiser_1
+		name_group = CHI_CL_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_anti_air_slot = ship_anti_air_1
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			mid_1_custom_slot = ship_torpedo_1
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = empty
+		}
+	}
+}

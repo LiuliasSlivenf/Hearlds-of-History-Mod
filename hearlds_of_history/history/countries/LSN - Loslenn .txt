@@ -1,0 +1,164 @@
+﻿capital = 823
+
+OOB = "LSN_1936"
+
+set_convoys = 100
+
+set_research_slots = 3
+add_political_power = 10
+set_stability = 0.6
+set_war_support = 0.76
+
+add_ideas = {
+	chelenism_specialities
+}
+
+# Starting tech
+set_technology = {
+	infantry_weapons = 1
+	infantry_weapons1 = 1
+	tech_recon = 1
+	tech_support = 1		
+	tech_engineers = 1
+	tech_mountaineers = 1
+	motorised_infantry = 1
+	gw_artillery = 1
+	interwar_antiair = 1
+	gwtank = 1
+	basic_light_tank = 1
+	improved_light_tank = 1
+	basic_heavy_tank = 1
+	early_fighter = 1
+	fighter1 = 1
+	early_bomber = 1
+	tactical_bomber1 = 1
+	strategic_bomber1 = 1
+	CAS1 = 1
+	naval_bomber1 = 1
+	early_submarine = 1
+	basic_submarine = 1
+	early_destroyer = 1
+	basic_destroyer = 1
+	early_light_cruiser = 1
+	basic_light_cruiser = 1
+	early_heavy_cruiser = 1
+	early_battleship = 1
+	early_battlecruiser = 1
+	mobile_warfare = 1
+	trade_interdiction = 1
+	formation_flying = 1
+	synth_oil_experiments = 1
+	transport = 1
+}
+
+### Navy - MtG ###
+
+if = {
+	limit = {
+		has_dlc = "Man the Guns"
+	}
+	set_technology = {
+		weltkrieg_light_ship_hull = 1
+		basic_naval_mines = 1
+		interwar_light_ship_hull = 1
+		improved_light_ship_hull = 1
+		weltkrieg_cruiser_hull = 1
+		interwar_cruiser_hull = 1
+		improved_cruiser_hull = 1
+		weltkrieg_submarine_hull = 1
+		submarine_mine_laying = 1
+		interwar_submarine_hull = 1
+		improved_submarine_hull = 1
+		weltkrieg_carrier_hull = 1
+		interwar_carrier_hull = 1
+		weltkrieg_panzerschiff_hull = 1
+		interwar_panzerschiff_hull = 1
+		improved_panzerschiff_hull = 1
+		weltkrieg_fast_battleship_hull = 1
+		interwar_fast_battleship_hull = 1
+		improved_fast_battleship_hull = 1
+		weltkrieg_dreadnought_hull = 1
+		interwar_dreadnought_hull = 1
+		improved_dreadnought_hull = 1
+		interwar_heavy_carrier_hull = 1
+
+		transport = 1
+	}
+}
+
+### Navy - Non MtG ###
+
+if = {
+	limit = {
+		not = {
+			has_dlc = "Man the Guns"
+		}
+	}
+	set_technology = {
+    CAS1 = 1
+    naval_bomber1 = 1
+    early_submarine = 1
+    basic_submarine = 1
+    early_destroyer = 1
+    basic_destroyer = 1
+    early_light_cruiser = 1
+    basic_light_cruiser = 1
+    early_heavy_cruiser = 1
+    early_battleship = 1
+    early_battlecruiser = 1
+    mobile_warfare = 1
+    trade_interdiction = 1
+    formation_flying = 1
+    synth_oil_experiments = 1
+    transport = 1
+
+	}
+}
+
+set_politics = {
+	ruling_party = neutrality
+	last_election = "1935.1.1"
+	election_frequency = 48
+	elections_allowed = yes
+
+}
+
+set_popularities = {
+	democratic = 20
+	communism = 10
+	neutrality = 30
+	fascism = 40
+}
+
+create_country_leader = {
+	name = "Kleim Shishford"
+	desc = "POLITICS_KLEIM_SHISHFORD_DESC"
+	picture = "gfx//leaders//URB//portrait_urb_kleim_shishford.dds"
+	expire = "1956.1.1"
+	ideology = despotism
+	traits = {
+    retired_officer
+	}
+}
+
+create_country_leader = {
+	name = "John Gates"
+	desc = "POLITICS_JOHN_GATES_DESC"
+	picture = "gfx//leaders//URB//portrait_urb_john_gates.dds"
+	expire = "1956.1.1"
+	ideology = anti_revisionism
+	traits = {
+    communist_business_man
+	}
+}
+
+create_country_leader = {
+	name = "Jay Lovestone"
+	desc = "POLITICS_JAY_LOVESTONE_DESC"
+	picture = "gfx//leaders//URB//portrait_urb_jay_lovestone.dds"
+	expire = "1956.1.1"
+	ideology = socialism
+	traits = {
+    anti_communist_unionist
+	}
+}

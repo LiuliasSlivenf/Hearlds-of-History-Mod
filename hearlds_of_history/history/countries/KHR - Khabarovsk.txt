@@ -1,0 +1,145 @@
+capital = 409
+
+oob = "SIB_1936"
+set_stability = 0.5
+set_war_support = 0.45
+set_research_slots = 2
+
+# Starting tech
+set_technology = {
+	infantry_weapons = 1
+	infantry_weapons1 = 1
+	tech_recon = 1
+	tech_support = 1		
+	tech_engineers = 1
+	tech_military_police = 1
+	tech_mountaineers = 1
+	motorised_infantry = 1
+	paratroopers = 1
+	gw_artillery = 1
+	gwtank = 1
+	basic_light_tank = 1  # PLACEHOLDER
+	#basic_heavy_tank = 1  # PLACEHOLDER
+	#basic_medium_tank = 1 # PLACEHOLDER
+	early_fighter = 1
+	fighter1 = 1
+	early_bomber = 1
+	strategic_bomber1 = 1
+	naval_bomber1 = 1
+	mass_assault = 1
+	fleet_in_being = 1
+}
+
+if = {
+	limit = {
+		not = { has_dlc = "Man the Guns" }
+	}
+	set_technology = {
+		early_submarine = 1
+		basic_submarine = 1
+		early_destroyer = 1
+		early_light_cruiser = 1
+		early_heavy_cruiser = 1
+		early_battleship = 1
+		early_battlecruiser = 1
+		transport = 1
+	}
+}
+if = {
+	limit = {
+		has_dlc = "Man the Guns"
+	}
+	set_technology = {
+		early_ship_hull_submarine = 1
+		basic_ship_hull_submarine = 1
+		early_ship_hull_light = 1
+		early_ship_hull_cruiser = 1
+		early_ship_hull_heavy = 1
+		mtg_transport = 1
+		basic_battery = 1
+		basic_torpedo = 1
+	}
+}
+
+add_opinion_modifier = { target = SOV modifier = embargo }
+
+1939.1.1 = {
+
+	add_political_power = 1198
+	
+	#generic focuses
+	complete_national_focus = army_effort
+	complete_national_focus = equipment_effort
+	complete_national_focus = motorization_effort
+	complete_national_focus = aviation_effort
+	complete_national_focus = construction_effort_2
+	complete_national_focus = production_effort_2
+	complete_national_focus = infrastructure_effort
+	complete_national_focus = industrial_effort
+	complete_national_focus = construction_effort
+	complete_national_focus = production_effort
+	
+	oob = "SIB_1939"
+	set_technology = {
+		infantry_weapons = 1
+
+		#doctrines
+		grand_battle_plan = 1
+		trench_warfare = 1
+
+		#electronics
+		electronic_mechanical_engineering = 1
+		radio = 1
+		radio_detection = 1
+		mechanical_computing = 1
+
+		#industry
+		basic_machine_tools = 1
+		improved_machine_tools = 1
+		advanced_machine_tools = 1
+		construction1 = 1
+		construction2 = 1
+		concentrated_industry = 1
+		concentrated_industry2 = 1
+	}
+}
+
+set_politics = {
+	ruling_party = neutrality
+	last_election = "1930.11.10"
+	election_frequency = 48
+	elections_allowed = no
+}
+
+set_popularities = {
+	communism = 35
+	democratic = 20
+	neutrality = 45
+}
+
+create_country_leader = {
+	name = "Vasily Blyukher"
+	desc = "POLITICS_VASILY_KONSTANTINOVICH_BLYUKHER_DESC"
+	picture = "gfx//leaders//SOV//portrait_sov_vasily_konstantinovich_blyukher.dds"
+	expire = "1965.1.1"
+	ideology = marxism
+	traits = {
+    
+	}
+}
+
+create_country_leader = {
+	name = "Innokentiy Smolin"
+	desc = "POLITICS_INNOKENTIY_SMOLIN_DESC"
+	picture = "gfx//leaders//SOV//portrait_sov_innokentiy_smolin.dds"
+	expire = "1965.1.1"
+	ideology = despotism
+	traits = {
+    
+	}
+}
+
+add_namespace = {
+	name = "unit_leader_sov"
+	type = unit_leader
+}
